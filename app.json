@@ -1,0 +1,31 @@
+{
+    "name": "slasti-od-ua",
+    "description": "Just site where homemade bakery lives",
+    "keywords": [
+        "react",
+        "webpack",
+        "production",
+        "sass",
+        "hot",
+        "cake",
+        "muffin",
+        "pie",
+        "sweet pie",
+        "odessa",
+        "bakery",
+        "slasti"
+    ],
+    "website": "http://kblnsk.me",
+    "repository": "https://github.com/slantz/cv",
+    "logo": "http://placehold.it/200x200",
+    "env": {
+        "NODE_ENV": {
+            "description": "Set the `NODE_ENV` environment variable to `production` to disable debugging etc.",
+            "value": "production"
+        },
+        "NPM_CONFIG_PRODUCTION": {
+            "description": "By default Heroku is not installing `devDependencies`, so let's do that.",
+            "value": "false"
+        }
+    }
+}

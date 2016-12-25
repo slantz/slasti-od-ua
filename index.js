@@ -9,6 +9,8 @@ var app = express();
 var compress = require('compression');
 var layouts = require('express-ejs-layouts');
 
+var MongoClient = require('mongodb').MongoClient;
+
 app.set('layout');
 app.set('view engine', 'ejs');
 app.set('view options', {layout: 'layout'});
@@ -66,3 +68,12 @@ if (env.production === false) {
     console.log('webpack dev server listening on localhost:3000');
   });
 }
+
+
+var url = 'mongodb://localhost:27017';
+MongoClient.connect(url, function(err, db) {
+    if (db !== null) {
+        console.log("Connected correctly to server.");
+    }
+    db.close();
+});

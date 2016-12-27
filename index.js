@@ -1,15 +1,29 @@
 'use strict';
 
+require('dotenv').config();
+
 var fs = require('fs');
 var path = require('path');
+var join = require('path').join;
 
 var express = require('express');
 var app = express();
 
 var compress = require('compression');
 var layouts = require('express-ejs-layouts');
+var passport = require('passport');
 
-var MongoClient = require('mongodb').MongoClient;
+var mongoose = require('mongoose');
+
+const models = join(__dirname, 'server/api/models');
+
+// Bootstrap models
+fs.readdirSync(models)
+  .filter(file => ~file.search(/^[^\.].*\.js$/))
+  .forEach(file => require(join(models, file)));
+
+// Bootstrap routes
+require('./server/config/passport')(passport);
 
 app.set('layout');
 app.set('view engine', 'ejs');
@@ -19,6 +33,9 @@ app.set('views', path.join(process.cwd(), '/server/views'));
 app.use(compress());
 app.use(layouts);
 app.use('/client', express.static(path.join(process.cwd(), '/client')));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.disable('x-powered-by');
 
@@ -32,16 +49,42 @@ if (env.production) {
   });
 }
 
-app.get(/^\/.*(?!playground).*$/, function(req, res) {
+
+// order of routes matters!
+app.get('/auth/vk', passport.authenticate('vkontakte'));
+
+app.get('/auth/vk/callback',
+    passport.authenticate('vkontakte', {
+        successRedirect: '/',
+        failureRedirect: '/login'
+    })
+);
+
+app.get(/^\/.*(?!(auth|api)).*$/, function(req, res) {
   res.render('index', {
-    env: env
+    env: env,
+    user: req.user
   });
 });
 
+connect()
+    .on('error', console.log)
+    .on('disconnected', connect)
+    .once('open', listen);
+
 var port = Number(process.env.PORT || 3001);
-app.listen(port, function () {
-  console.log('server running at localhost:3001, go refresh and see magic');
-});
+
+function listen () {
+    if (app.get('env') === 'test') return;
+    app.listen(port ,function() {
+        console.log('server running at localhost:' + port + ', go refresh and see magic');
+    });
+}
+
+function connect () {
+    var options = { server: { socketOptions: { keepAlive: 1 } } };
+    return mongoose.connect(process.env.DB, options).connection;
+}
 
 if (env.production === false) {
   var webpack = require('webpack');
@@ -68,12 +111,3 @@ if (env.production === false) {
     console.log('webpack dev server listening on localhost:3000');
   });
 }
-
-
-var url = 'mongodb://localhost:27017';
-MongoClient.connect(url, function(err, db) {
-    if (db !== null) {
-        console.log("Connected correctly to server.");
-    }
-    db.close();
-});

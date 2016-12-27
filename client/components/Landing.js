@@ -16,6 +16,10 @@ class Landing extends Component {
         toggleBackInBlack()
     }
 
+    loginToVk = () => {
+        window.location.href = '/auth/vk'
+    }
+
     render() {
         const { backInBlack, backInBlackButton } = this.props
 
@@ -28,6 +32,7 @@ class Landing extends Component {
               </Link>
               <h3 className="name i-transit-all i-inline-block">{CORE_CONSTANTS.ALEX_KOBYLINSKI}</h3>
                 <button className={'cv-landing-back-in-black-button ui-button' + backInBlackButton.className} onClick={this.toggleBackInBlack}>{backInBlackButton.text}</button>
+                <button onClick={this.loginToVk}>azaza vk login</button>
             </article>
         )
     }

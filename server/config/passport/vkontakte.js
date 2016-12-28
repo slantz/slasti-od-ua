@@ -31,6 +31,7 @@ module.exports = new VKontakteStrategy({
           name: profile.displayName,
           username: profile.username,
           provider: profile.provider,
+          typeId: Number(profile.id),
           vk: profile._json
         });
         user.save(function (err) {

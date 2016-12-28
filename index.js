@@ -110,10 +110,11 @@ app.get('/auth/vk/callback',
     })
 );
 
+// TODO move this to some authorization middleware module
 var userTypes = {
     any: function(types) {
         return function(req, res, next) {
-            if (req.user && types.indexOf(Number(req.user.typeId)) != -1) {
+            if (req.isAuthenticated() && types.indexOf(Number(req.user.typeId)) != -1) {
                 return next();
             } else {
                 return next(new Error('permission denied'));

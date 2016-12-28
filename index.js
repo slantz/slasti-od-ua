@@ -26,6 +26,7 @@ var mongoose = require('mongoose');
 
 const models = join(__dirname, 'server/api/models');
 const pkg = require('./package.json');
+const AdminUserIdTypes = process.env.ADMIN.split(',').reduce(function(prev, next){ return prev.concat(Number(next)); }, []) || [];
 
 // Bootstrap models
 fs.readdirSync(models)
@@ -109,11 +110,31 @@ app.get('/auth/vk/callback',
     })
 );
 
+var userTypes = {
+    any: function(types) {
+        return function(req, res, next) {
+            if (req.user && types.indexOf(Number(req.user.typeId)) != -1) {
+                return next();
+            } else {
+                return next(new Error('permission denied'));
+            }
+        }
+    }
+}
+
+app.get('/auth/user/me', userTypes.any(AdminUserIdTypes), function(req, res, next) {
+    res.json(req.user);
+});
+
 app.get(/^\/.*(?!(auth|api)).*$/, function(req, res) {
   res.render('index', {
     env: env,
     user: req.user
   });
+});
+
+app.use(function(err, req, res) {
+    res.send(err);
 });
 
 var port = Number(process.env.PORT || 3001);

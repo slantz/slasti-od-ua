@@ -84,7 +84,7 @@
     "autoprefixer-loader": "3.2.0",
     "babel-jest": "18.0.0",
     "coveralls": "2.11.15",
-    "jest-cli": "18.0.0",
+    "jest-cli": "18.1.0",
     "react-addons-test-utils": "15.4.1",
     "webpack-dev-server": "1.16.2",
     "autoprefixer": "^6.3.1",

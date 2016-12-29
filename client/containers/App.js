@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 import * as LANDING_CONSTANTS from '../constants/Landing'
 import * as landingActions from '../actions/LandingActions'
 import * as infoActions from '../actions/infoActions'
-import * as FIREBASE_CONSTANTS from "../constants/Firebase";
+import * as coreActions from '../actions/coreActions'
 import * as DOM_CONSTANTS from "../constants/Dom";
 
 class App extends Component {
@@ -13,18 +13,17 @@ class App extends Component {
         super(props)
     }
 
-    hideLanding = () => {
-        const { landingActions: { hide }} = this.props
-        hide()
+    getCurrentUser = () => {
+        const { coreActions: { getCurrentUser } } = this.props;
+        getCurrentUser()
     };
 
     componentWillMount() {
-      window.firebase.initializeApp({
-        apiKey: FIREBASE_CONSTANTS.API_KEY,
-        authDomain: FIREBASE_CONSTANTS.AUTH_DOMAIN,
-        databaseURL: FIREBASE_CONSTANTS.DATABASE_URL,
-        storageBucket: FIREBASE_CONSTANTS.STORAGE_BUCKET
-      });
+      this.getCurrentUser();
+    }
+
+    componentWillReceiveProps() {
+        this.getCurrentUser();
     }
 
     render() {
@@ -53,6 +52,7 @@ class App extends Component {
 // Все что хотим вытащить из стора указываем здесь, после чего они будут доступны в компоненте (App) через this.props
 function mapStateToProps(state) {
     return {
+        user: state.core.user,
         info: state.info,
         landing: state.landing
     }
@@ -63,8 +63,9 @@ function mapStateToProps(state) {
 // Нахера связать экшны с диспатчером? Чтоб редакс увидел вызов этого экшна
 function mapDispatchToProps(dispatch) {
     return {
+        coreActions: bindActionCreators(coreActions, dispatch),
         infoActions: bindActionCreators(infoActions, dispatch),
-        landingActions: bindActionCreators(landingActions, dispatch),
+        landingActions: bindActionCreators(landingActions, dispatch)
     }
 }
 

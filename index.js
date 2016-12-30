@@ -117,7 +117,7 @@ var userTypes = {
             if (req.isAuthenticated() && types.indexOf(Number(req.user.typeId)) != -1) {
                 return next();
             } else {
-                return next(new Error('permission denied'));
+                res.status(401).json({ error: Error('unauthorized') });
             }
         }
     }
@@ -132,10 +132,6 @@ app.get(/^\/.*(?!(auth|api)).*$/, function(req, res) {
     env: env,
     user: req.user
   });
-});
-
-app.use(function(err, req, res) {
-    res.send(err);
 });
 
 var port = Number(process.env.PORT || 3001);

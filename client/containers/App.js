@@ -2,34 +2,38 @@ import React, {Component} from 'react'
 import ReactCSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import * as LANDING_CONSTANTS from '../constants/Landing'
-import * as landingActions from '../actions/LandingActions'
-import * as infoActions from '../actions/infoActions'
-import * as FIREBASE_CONSTANTS from "../constants/Firebase";
+import * as CoreActions from '../actions/CoreActions'
+import * as CatalogActions from '../actions/CatalogActions'
+import * as AdminActions from '../actions/AdminActions'
+import * as AboutActions from '../actions/AboutActions'
+import * as CartActions from '../actions/CartActions'
 import * as DOM_CONSTANTS from "../constants/Dom";
+import Header from "../components/sections/Header"
 
 class App extends Component {
     constructor(props) {
         super(props)
     }
 
-    hideLanding = () => {
-        const { landingActions: { hide }} = this.props
-        hide()
+    getCurrentUser = () => {
+        const { CoreActions: { getCurrentUser } } = this.props;
+        getCurrentUser()
     };
 
     componentWillMount() {
-      window.firebase.initializeApp({
-        apiKey: FIREBASE_CONSTANTS.API_KEY,
-        authDomain: FIREBASE_CONSTANTS.AUTH_DOMAIN,
-        databaseURL: FIREBASE_CONSTANTS.DATABASE_URL,
-        storageBucket: FIREBASE_CONSTANTS.STORAGE_BUCKET
-      });
+      this.getCurrentUser();
+    }
+
+    componentWillReceiveProps() {
+        this.getCurrentUser();
     }
 
     render() {
-        var path = this.props.location.pathname;
-        var segment = path.split('/')[1] || LANDING_CONSTANTS.LANDING;
+        let path,
+            segment;
+
+        path = this.props.location.pathname;
+        segment = path.split('/')[1] || DOM_CONSTANTS.CLASS_BACK_IN_BLACK;
 
         return (
             <ReactCSSTransitionGroup id={DOM_CONSTANTS.ID_CSS_TRANSITION_GROUP}
@@ -44,6 +48,7 @@ class App extends Component {
                                      }
                                      transitionEnterTimeout={3000}
                                      transitionLeaveTimeout={3000}>
+                <Header/>
                 {React.cloneElement(this.props.children, { key: segment })}
             </ReactCSSTransitionGroup>
         )
@@ -53,6 +58,7 @@ class App extends Component {
 // Все что хотим вытащить из стора указываем здесь, после чего они будут доступны в компоненте (App) через this.props
 function mapStateToProps(state) {
     return {
+        user: state.core.user,
         info: state.info,
         landing: state.landing
     }
@@ -63,8 +69,11 @@ function mapStateToProps(state) {
 // Нахера связать экшны с диспатчером? Чтоб редакс увидел вызов этого экшна
 function mapDispatchToProps(dispatch) {
     return {
-        infoActions: bindActionCreators(infoActions, dispatch),
-        landingActions: bindActionCreators(landingActions, dispatch),
+        CoreActions: bindActionCreators(CoreActions, dispatch),
+        CatalogActions: bindActionCreators(CatalogActions, dispatch),
+        CartActions: bindActionCreators(CartActions, dispatch),
+        AdminActions: bindActionCreators(AdminActions, dispatch),
+        AboutActions: bindActionCreators(AboutActions, dispatch)
     }
 }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, IndexRoute, IndexRedirect } from 'react-router'
+import { Route, IndexRedirect } from 'react-router'
 
 import App from './containers/App'
 import Catalog from './components/pages/Catalog'
@@ -20,7 +20,7 @@ export const routes = (
         <Route path="about" component={About}/>
         <Route path="cart" component={Cart}/>
         <Route path="admin" component={Admin} onEnter={REQUIRE_LOGIN}>
-            <Route path="update" component={AdminUpdate}/>
+            <Route path="update" component={AdminUpdate} onEnter={REQUIRE_LOGIN}/>
         </Route>
     </Route>
 );

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router'
+import { Link, IndexLink } from 'react-router'
+
+import { checkUserIsAuthorized } from '../../middleware/auth'
 
 export default class Header extends Component {
     constructor(props) {
@@ -7,8 +9,24 @@ export default class Header extends Component {
     }
 
     render() {
+        const { user } = this.props;
+
+        let adminLink = function() {
+            if (checkUserIsAuthorized(user)) {
+                return  <li>
+                            <Link to="admin">Admin</Link>
+                        </li>;
+            }
+            return null;
+        };
+
         return (
             <ul>
+                <li>
+                    <IndexLink to="/" activeClassName="active">
+                        Home
+                    </IndexLink>
+                </li>
                 <li>
                     <Link to="catalog">Catalog</Link>
                 </li>
@@ -18,9 +36,7 @@ export default class Header extends Component {
                 <li>
                     <Link to="cart">Cart</Link>
                 </li>
-                <li>
-                    <Link to="admin">Admin</Link>
-                </li>
+                {adminLink()}
             </ul>
         )
     }

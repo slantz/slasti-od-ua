@@ -1,8 +1,12 @@
-export const REQUIRE_LOGIN = (nextState, replace, cb) => {
+export function checkUserIsAuthorized(user) {
+    return user.status === "OK";
+}
+
+// TODO: handle this as async promise when page is loaded on this route
+export const REQUIRE_LOGIN = (nextState, replace, cb, store) => {
     function checkAuth() {
-        const { user } = nextState;
-        if (!user) {
-            // oops, not logged in, so can't be here!
+        const { core: { user } } = store.getState();
+        if (!checkUserIsAuthorized(user)) {
             replace('/');
         }
         cb();

@@ -48,7 +48,7 @@ class App extends Component {
                                      }
                                      transitionEnterTimeout={3000}
                                      transitionLeaveTimeout={3000}>
-                <Header/>
+                <Header user={this.props.user} />
                 {React.cloneElement(this.props.children, { key: segment })}
             </ReactCSSTransitionGroup>
         )

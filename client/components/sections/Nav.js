@@ -14,7 +14,7 @@ export default class Header extends Component {
         let adminLink = function() {
             if (checkUserIsAuthorized(user)) {
                 return  <li>
-                            <Link to="admin">Admin</Link>
+                            <Link to="/admin">Admin</Link>
                         </li>;
             }
             return null;
@@ -28,13 +28,13 @@ export default class Header extends Component {
                     </IndexLink>
                 </li>
                 <li>
-                    <Link to="catalog">Catalog</Link>
+                    <Link to="/catalog">Catalog</Link>
                 </li>
                 <li>
-                    <Link to="about">About</Link>
+                    <Link to="/about">About</Link>
                 </li>
                 <li>
-                    <Link to="cart">Cart</Link>
+                    <Link to="/cart">Cart</Link>
                 </li>
                 {adminLink()}
             </ul>

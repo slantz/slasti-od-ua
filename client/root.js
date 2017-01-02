@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { Provider } from 'react-redux'
-import RTRouter from './testaaa'
+import RTRouter from './routes'
 
 const Root = ({ store, history }) => (
     <Provider store={store}>

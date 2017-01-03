@@ -36,6 +36,21 @@ const BakerySchema = new Schema({
     numberOfPieces: {
         type: Number,
         default: 1
+    },
+    // shortcake
+    basis: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Basis'
+    },
+    // cream
+    filling: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Filling'
+    },
+    // glaze, cream, figures, sugar paste, icing
+    decor: {
+        type: String,
+        default: ''
     }
 });
 

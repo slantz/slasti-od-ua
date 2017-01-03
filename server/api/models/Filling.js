@@ -16,23 +16,15 @@ const Schema = mongoose.Schema;
  * User Schema
  */
 
-const IngredientSchema = new Schema({
-    type: {
-        type: String,
-        default: ''
-    },
+const FillingSchema = new Schema({
     taste: {
         type: String,
         default: ''
     },
-    substance: {
+    composition: {
         type: String,
         default: ''
-    },
-    price: {
-        type: Number,
-        default: null
     }
 });
 
-mongoose.model('Ingredient', IngredientSchema);
+mongoose.model('Filling', FillingSchema);

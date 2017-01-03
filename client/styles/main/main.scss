@@ -375,4 +375,17 @@ body {
     z-index: 0;
     display: flex;
     flex: 1 0 auto;
+    flex-direction: column;
+}
+
+header {
+    background-color: #e0e0e0;
+    .header__nav_holder {
+        flex-shrink: 0;
+        ul {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
 }

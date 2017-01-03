@@ -1,5 +1,6 @@
-import React from 'react'
-import { Route, IndexRoute, IndexRedirect } from 'react-router'
+import React, { Component } from 'react'
+import { Route, IndexRedirect } from 'react-router'
+import { Router } from 'react-router'
 
 import App from './containers/App'
 import Catalog from './components/pages/Catalog'
@@ -11,16 +12,36 @@ import AdminUpdate from './components/pages/AdminUpdate'
 
 import { REQUIRE_LOGIN } from './middleware/auth'
 
-export const routes = (
-    <Route path="/" component={App}>
-        <IndexRedirect to="/catalog"/>
-        <Route path="catalog" component={Catalog}>
-            <Route path="/:id" component={CatalogBakery}/>
-        </Route>
-        <Route path="about" component={About}/>
-        <Route path="cart" component={Cart}/>
-        <Route path="admin" component={Admin} onEnter={REQUIRE_LOGIN}>
-            <Route path="update" component={AdminUpdate}/>
-        </Route>
-    </Route>
-);
+export default class RTRouter extends Component {
+
+    constructor() {
+        super();
+        // Configure routes here as this solves a problem with hot loading where
+        // the routes are recreated each time.
+        this.routes = (
+            <Route path="/" component={App}>
+                <IndexRedirect to="/catalog"/>
+                <Route path="catalog" component={Catalog}>
+                    <Route path=":id" component={CatalogBakery}/>
+                </Route>
+                <Route path="about" component={About}/>
+                <Route path="cart" component={Cart}/>
+                <Route path="admin" component={Admin} onEnter={(nextState, replace, callback) => { this.requireLogin(nextState, replace, callback) }}>
+                    <Route path="update" component={AdminUpdate}/>
+                </Route>
+            </Route>
+        );
+    }
+
+    requireLogin = (nextState, replace, cb) => {
+        REQUIRE_LOGIN(nextState, replace, cb, this.props.store);
+    };
+
+    render() {
+        const { history } = this.props;
+        const routes = this.routes;
+        return (
+            <Router history={ history } routes={ routes } />
+        );
+    }
+}

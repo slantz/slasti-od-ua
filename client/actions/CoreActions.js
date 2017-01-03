@@ -8,8 +8,7 @@ function getCurrentUserAction() {
         [CALL_API]: {
             types: [ c.INFO_REQUEST, c.INFO_SUCCESS, c.INFO_FAILURE ],
             endpoint: "/auth/user/me",
-            payload: {},
-            isFetching: null
+            payload: {}
         }
     }
 }
@@ -19,13 +18,7 @@ function shouldGetCurrentUser(state) {
     const userStatus = state.core.user.status;
 
     if (isFetching === false) {
-        if (userStatus === null) {
-            return true;
-        } else if (userStatus === 'UNAUTHORIZED') {
-            return false;
-        } else {
-            return false;
-        }
+        return userStatus === null;
     }
 
     if (isFetching === true) {

@@ -13,4 +13,4 @@ export default combineReducers({
     admin,
     about,
     routing
-})
+});

@@ -1,7 +1,7 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import ReactCSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup'
-import {bindActionCreators} from 'redux'
-import {connect} from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import * as CoreActions from '../actions/CoreActions'
 import * as CatalogActions from '../actions/CatalogActions'
 import * as AdminActions from '../actions/AdminActions'
@@ -16,12 +16,12 @@ class App extends Component {
     }
 
     getCurrentUser = () => {
-        const { CoreActions: { getCurrentUser } } = this.props;
+        const {CoreActions: {getCurrentUser}} = this.props;
         getCurrentUser()
     };
 
     componentWillMount() {
-      this.getCurrentUser();
+        this.getCurrentUser();
     }
 
     componentWillReceiveProps() {
@@ -39,17 +39,17 @@ class App extends Component {
             <ReactCSSTransitionGroup id={DOM_CONSTANTS.ID_CSS_TRANSITION_GROUP}
                                      component="section"
                                      transitionName={
-                                      {
-                                        enter: 'js-move-in',
-                                        enterActive: 'js-move-in-active',
-                                        leave: 'js-move-away',
-                                        leaveActive: 'js-move-away-active'
-                                      }
+                                         {
+                                             enter : 'js-move-in',
+                                             enterActive : 'js-move-in-active',
+                                             leave : 'js-move-away',
+                                             leaveActive : 'js-move-away-active'
+                                         }
                                      }
                                      transitionEnterTimeout={3000}
                                      transitionLeaveTimeout={3000}>
-                <Header user={this.props.user} />
-                {React.cloneElement(this.props.children, { key: segment })}
+                <Header user={this.props.user}/>
+                {React.cloneElement(this.props.children, {key : segment})}
             </ReactCSSTransitionGroup>
         )
     }
@@ -58,9 +58,9 @@ class App extends Component {
 // Все что хотим вытащить из стора указываем здесь, после чего они будут доступны в компоненте (App) через this.props
 function mapStateToProps(state) {
     return {
-        user: state.core.user,
-        info: state.info,
-        landing: state.landing
+        user : state.core.user,
+        info : state.info,
+        landing : state.landing
     }
 }
 
@@ -69,11 +69,11 @@ function mapStateToProps(state) {
 // Нахера связать экшны с диспатчером? Чтоб редакс увидел вызов этого экшна
 function mapDispatchToProps(dispatch) {
     return {
-        CoreActions: bindActionCreators(CoreActions, dispatch),
-        CatalogActions: bindActionCreators(CatalogActions, dispatch),
-        CartActions: bindActionCreators(CartActions, dispatch),
-        AdminActions: bindActionCreators(AdminActions, dispatch),
-        AboutActions: bindActionCreators(AboutActions, dispatch)
+        CoreActions : bindActionCreators(CoreActions, dispatch),
+        CatalogActions : bindActionCreators(CatalogActions, dispatch),
+        CartActions : bindActionCreators(CartActions, dispatch),
+        AdminActions : bindActionCreators(AdminActions, dispatch),
+        AboutActions : bindActionCreators(AboutActions, dispatch)
     }
 }
 

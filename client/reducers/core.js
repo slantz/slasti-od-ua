@@ -77,6 +77,7 @@ export default function core(state = {
             return Object.assign({}, state, {
                 user: {
                     status: null,
+                    fetcher: userFetchingPromises.all,
                     isFetching: true
                 }
             });

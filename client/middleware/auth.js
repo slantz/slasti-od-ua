@@ -1,3 +1,5 @@
+import * as CoreActions from '../actions/CoreActions'
+
 export function checkUserIsAuthorized(user) {
     return user.status === "OK";
 }
@@ -12,16 +14,19 @@ export const REQUIRE_LOGIN = (nextState, replace, cb, store) => {
             }
             cb();
         } else {
-            user.fetcher.then(
-                function() {
-                    cb();
-                }
-            ).catch(
-                function() {
-                    replace('/');
-                    cb();
-                }
-            );
+            store.dispatch(CoreActions.getCurrentUser());
+            user.fetcher
+                .then(
+                    function() {
+                        cb();
+                    }
+                )
+                .catch(
+                    function() {
+                        replace('/');
+                        cb();
+                    }
+                );
         }
     }
 

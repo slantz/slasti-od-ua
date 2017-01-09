@@ -127,6 +127,90 @@ app.get('/auth/user/me', userTypes.any(AdminUserIdTypes), function(req, res, nex
     res.json(req.user);
 });
 
+// BAKERY CRUD
+app.get('/api/bakery', function(req, res, next) {
+    res.json(req.user);
+});
+
+app.post('/api/bakery', function(req, res, next) {
+    res.json(req.user);
+});
+
+app.get('/api/bakery/:id', function(req, res, next) {
+    res.json(req.user);
+});
+
+app.put('/api/bakery/:id', function(req, res, next) {
+    res.json(req.user);
+});
+
+app.delete('/api/bakery/:id', function(req, res, next) {
+    res.json(req.user);
+});
+
+//INGREDIENTS CRUD
+app.get('/api/ingredients', function(req, res, next) {
+    res.json(req.user);
+});
+
+app.post('/api/ingredients', function(req, res, next) {
+    res.json(req.user);
+});
+
+app.get('/api/ingredients/:id', function(req, res, next) {
+    res.json(req.user);
+});
+
+app.put('/api/ingredients/:id', function(req, res, next) {
+    res.json(req.user);
+});
+
+app.delete('/api/ingredients/:id', function(req, res, next) {
+    res.json(req.user);
+});
+
+//BASIS CRUD
+app.get('/api/basis', function(req, res, next) {
+    res.json(req.user);
+});
+
+app.post('/api/basis', function(req, res, next) {
+    res.json(req.user);
+});
+
+app.get('/api/basis/:id', function(req, res, next) {
+    res.json(req.user);
+});
+
+app.put('/api/basis/:id', function(req, res, next) {
+    res.json(req.user);
+});
+
+app.delete('/api/basis/:id', function(req, res, next) {
+    res.json(req.user);
+});
+
+//FILLING CRUD
+app.get('/api/filling', function(req, res, next) {
+    res.json(req.user);
+});
+
+app.post('/api/filling', function(req, res, next) {
+    res.json(req.user);
+});
+
+app.get('/api/filling/:id', function(req, res, next) {
+    res.json(req.user);
+});
+
+app.put('/api/filling/:id', function(req, res, next) {
+    res.json(req.user);
+});
+
+app.delete('/api/filling/:id', function(req, res, next) {
+    res.json(req.user);
+});
+
 app.get(/^\/.*(?!(auth|api)).*$/, function(req, res) {
   res.render('index', {
     env: env,

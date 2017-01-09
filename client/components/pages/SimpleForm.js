@@ -5,6 +5,12 @@ const SimpleForm = (props) => {
     const { handleSubmit, pristine, reset, submitting } = props;
     return (
         <form onSubmit={handleSubmit}>
+            <fieldset>
+                <label htmlFor="files">Upload files</label>
+                <div>
+                    <Field name="files" component="input" type="file" placeholder="Upload files" multiple="true" accept="image/*"/>
+                </div>
+            </fieldset>
             <div>
                 <label>First Name</label>
                 <div>

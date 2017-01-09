@@ -212,11 +212,17 @@ app.delete('/api/filling/:id', function(req, res, next) {
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, '/uploads')
+        cb(null, './uploads')
     },
     filename: function (req, file, cb) {
-        console.log(file);
-        cb(null, file.fieldname + '-' + Date.now())
+        var extension = '.png';
+        var stringWithoutExtension = file.originalname.substring(0, file.originalname.length-(file.originalname.lastIndexOf('.')));
+
+        if (file.mimetype === "image/jpeg") {
+            extension = '.jpg'
+        }
+
+        cb(null, file.fieldname + '_' + stringWithoutExtension + '_' + Date.now() + extension)
     }
 });
 
@@ -224,7 +230,7 @@ var upload = multer({ storage: storage });
 
 //UPLOAD ADMIN FILES
 app.post('/api/admin/upload/images', upload.array('images'), function(req, res, next) {
-    console.log(req.files);
+    console.log('req.files', req.files);
     res.json(req.files);
 });
 

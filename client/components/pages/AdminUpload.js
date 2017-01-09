@@ -1,29 +1,25 @@
 import React, { Component } from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import {Link} from 'react-router'
+import SimpleForm from './SimpleForm'
 import * as AdminActions from '../../actions/AdminActions'
 
-class Admin extends Component {
+class AdminUpload extends Component {
     constructor(props) {
         super(props)
     }
 
-    doStuff = () => {
+    handleSubmit = () => {
         const { AdminActions: { doStuff } } = this.props;
-        doStuff()
+        console.log('azaza')
+        // doStuff()
     };
 
     render() {
         const { user } = this.props
 
         return (
-            <article id="sou-catalog">
-                {user.isFetching === false && user.status !== null && <div>Hey, {user.payload.name}!</div>}
-                <Link to="admin/update">Go to admin update page</Link>
-                <Link to="admin/upload">Go to admin upload page</Link>
-                {this.props.children}
-            </article>
+            <SimpleForm onSubmit={this.handleSubmit} pristine={true} submitting={false} reset={() => console.log('reset')}/>
         )
     }
 }
@@ -31,7 +27,7 @@ class Admin extends Component {
 // Все что хотим вытащить из стора указываем здесь, после чего они будут доступны в компоненте (App) через this.props
 function mapStateToProps(state) {
     return {
-        user: state.core.user
+        form: state.form
     }
 }
 
@@ -43,4 +39,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Admin)
+export default connect(mapStateToProps, mapDispatchToProps)(AdminUpload)

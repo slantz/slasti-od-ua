@@ -14,7 +14,7 @@ var compress = require('compression');
 var cors = require('cors');
 var layouts = require('express-ejs-layouts');
 var passport = require('passport');
-const upload = require('multer')();
+const multer = require('multer');
 
 const mongoStore = require('connect-mongo')(session);
 const cookieParser = require('cookie-parser');
@@ -56,7 +56,6 @@ app.use(function (req, res, next) {
 // bodyParser should be above methodOverride
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(upload.single('image'));
 app.use(methodOverride(function (req) {
     if (req.body && typeof req.body === 'object' && '_method' in req.body) {
         // look in urlencoded POST bodies and delete it
@@ -209,6 +208,24 @@ app.put('/api/filling/:id', function(req, res, next) {
 
 app.delete('/api/filling/:id', function(req, res, next) {
     res.json(req.user);
+});
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, '/uploads')
+    },
+    filename: function (req, file, cb) {
+        console.log(file);
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+});
+
+var upload = multer({ storage: storage });
+
+//UPLOAD ADMIN FILES
+app.post('/api/admin/upload/images', upload.array('images'), function(req, res, next) {
+    console.log(req.files);
+    res.json(req.files);
 });
 
 app.get(/^\/.*(?!(auth|api)).*$/, function(req, res) {

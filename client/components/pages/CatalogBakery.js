@@ -18,7 +18,7 @@ class CatalogBakery extends Component {
 
         return (
             <article id="sou-catalog">
-                <div>Catalog Bakery {user.name}</div>
+                {user.isFetching === false && user.status !== null && <div>Catalog Bakery {user.payload.name}</div>}
                 <button onClick={this.doStuff}>Do some stuff</button>
             </article>
         )

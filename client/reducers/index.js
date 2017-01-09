@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import { routerReducer as routing } from 'react-router-redux'
+import { reducer as form } from 'redux-form'
 import core from './core'
 import catalog from './catalog'
 import cart from './cart'
@@ -12,5 +13,6 @@ export default combineReducers({
     cart,
     admin,
     about,
-    routing
+    routing,
+    form
 });

@@ -28,6 +28,7 @@ class Catalog extends Component {
                 <Link to="catalog/0">Go to catalog item #0 page</Link>
                 <Link to="admin">Go to catalog ADMIN page</Link>
                 <button onClick={this.loginToVk}>azaza vk login</button>
+                {this.props.children}
             </article>
         )
     }

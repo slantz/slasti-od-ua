@@ -15,6 +15,7 @@ var cors = require('cors');
 var layouts = require('express-ejs-layouts');
 var passport = require('passport');
 const multer = require('multer');
+const uuid = require('uuid');
 
 const mongoStore = require('connect-mongo')(session);
 const cookieParser = require('cookie-parser');
@@ -24,14 +25,17 @@ const methodOverride = require('method-override');
 
 var mongoose = require('mongoose');
 
-const models = join(__dirname, 'server/api/models');
 const pkg = require('./package.json');
 const AdminUserIdTypes = process.env.ADMIN.split(',').reduce(function(prev, next){ return prev.concat(Number(next)); }, []) || [];
+
+const models = join(__dirname, 'server/api/models');
 
 // Bootstrap models
 fs.readdirSync(models)
   .filter(file => ~file.search(/^[^\.].*\.js$/))
   .forEach(file => require(join(models, file)));
+
+const admin = require('./server/api/controllers/admin');
 
 // Bootstrap routes
 require('./server/config/passport')(passport);
@@ -212,27 +216,21 @@ app.delete('/api/filling/:id', function(req, res, next) {
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, './uploads')
+        cb(null, './client/static/images')
     },
     filename: function (req, file, cb) {
-        var extension = '.png';
-        var stringWithoutExtension = file.originalname.substring(0, file.originalname.length-(file.originalname.lastIndexOf('.')));
+        var extension;
 
-        if (file.mimetype === "image/jpeg") {
-            extension = '.jpg'
-        }
+        extension = file.originalname.substring(file.originalname.lastIndexOf('.'));
 
-        cb(null, file.fieldname + '_' + stringWithoutExtension + '_' + Date.now() + extension)
+        cb(null,  'img_' + uuid.v4() + '_' + Date.now() + extension);
     }
 });
 
 var upload = multer({ storage: storage });
 
 //UPLOAD ADMIN FILES
-app.post('/api/admin/upload/images', upload.array('images'), function(req, res, next) {
-    console.log('req.files', req.files);
-    res.json(req.files);
-});
+app.post('/api/admin/upload/images', upload.array('images'), admin.upload);
 
 app.get(/^\/.*(?!(auth|api)).*$/, function(req, res) {
   res.render('index', {

@@ -36,6 +36,7 @@ fs.readdirSync(models)
   .forEach(file => require(join(models, file)));
 
 const admin = require('./server/api/controllers/admin');
+const bakery = require('./server/api/controllers/bakery');
 
 // Bootstrap routes
 require('./server/config/passport')(passport);
@@ -131,9 +132,7 @@ app.get('/auth/user/me', userTypes.any(AdminUserIdTypes), function(req, res, nex
 });
 
 // BAKERY CRUD
-app.get('/api/bakery', function(req, res, next) {
-    res.json(req.user);
-});
+app.get('/api/bakery', bakery.all);
 
 app.post('/api/bakery', function(req, res, next) {
     res.json(req.user);
@@ -144,6 +143,10 @@ app.get('/api/bakery/:id', function(req, res, next) {
 });
 
 app.put('/api/bakery/:id', function(req, res, next) {
+    res.json(req.user);
+});
+
+app.delete('/api/bakery', function(req, res, next) {
     res.json(req.user);
 });
 

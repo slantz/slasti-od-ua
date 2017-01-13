@@ -21,7 +21,7 @@ exports.upload = async(function* (req, res) {
 
     yield Bakery.insertMany(bakeryFilenames, function(err, docs){
         if (err) {
-            console.log(err);
+            console.log('api/admin/upload/images | Bakery.insertMany | ', err);
         } else {
             console.log('%d bakeries were successfully stored.', docs.length);
         }

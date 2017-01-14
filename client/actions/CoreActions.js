@@ -1,4 +1,4 @@
-import * as c from '../constants/Core'
+import * as CORE_CONSTANTS from '../constants/Core'
 import { CALL_API } from '../middleware/api'
 
 // Fetches user information data from Express session, if request fails then user is not authenticated.
@@ -6,7 +6,8 @@ import { CALL_API } from '../middleware/api'
 function getCurrentUserAction() {
     return {
         [CALL_API]: {
-            types: [ c.INFO_REQUEST, c.INFO_SUCCESS, c.INFO_FAILURE ],
+            method: CORE_CONSTANTS.METHOD.GET,
+            types: [ CORE_CONSTANTS.REQUEST, CORE_CONSTANTS.SUCCESS, CORE_CONSTANTS.FAILURE ],
             endpoint: "/auth/user/me",
             payload: {}
         }

@@ -55,7 +55,7 @@ export default function core(state = {
     }
 }, { type, payload }) {
     switch(type) {
-        case CONSTANTS.INFO_SUCCESS:
+        case CONSTANTS.SUCCESS:
             actionPromisesCallbacks.success();
             return Object.assign({}, state, {
                 user: {
@@ -64,7 +64,7 @@ export default function core(state = {
                     payload
                 }
             });
-        case CONSTANTS.INFO_FAILURE:
+        case CONSTANTS.FAILURE:
             actionPromisesCallbacks.failure();
             return Object.assign({}, state, {
                 user: {
@@ -72,7 +72,7 @@ export default function core(state = {
                     isFetching: false,
                 }
             });
-        case CONSTANTS.INFO_REQUEST:
+        case CONSTANTS.REQUEST:
             actionPromisesCallbacks.request();
             return Object.assign({}, state, {
                 user: {

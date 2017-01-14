@@ -2,24 +2,31 @@ import React, { Component } from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as AdminActions from '../../actions/AdminActions'
+import localForage from '../../storage/localforage.config'
 
-class AdminUpdate extends Component {
+class AdminUploadInfoByUrl extends Component {
     constructor(props) {
         super(props)
     }
 
-    doStuff = () => {
-        const { AdminActions: { doStuff } } = this.props;
-        doStuff()
-    };
-
     render() {
-        const { user } = this.props
+        let { admin: { bakeryFilenames } } = this.props;
 
+        if (Array.isArray(bakeryFilenames) && bakeryFilenames.length == 0) {
+            localForage.getItem('bulkUploadBakeryFilenames').then(value => {
+                if (Array.isArray(value) && value.length > 0) {
+                    // TODO check update of props
+                    bakeryFilenames = value;
+                }
+            });
+        }
         return (
-            <article id="sou-catalog">
-                <div>Admin Update {user.name}</div>
-                <button onClick={this.doStuff}>Do some stuff</button>
+            <article id="sou-catalog-bulk-images-uploaded">
+                {bakeryFilenames.map(function(filename, filenameIndex){
+                    return <div key={filenameIndex}>
+                        {filename.imgUrl}
+                    </div>;
+                })}
             </article>
         )
     }
@@ -28,7 +35,7 @@ class AdminUpdate extends Component {
 // Все что хотим вытащить из стора указываем здесь, после чего они будут доступны в компоненте (App) через this.props
 function mapStateToProps(state) {
     return {
-        user: state.core.user
+        admin: state.admin
     }
 }
 
@@ -40,4 +47,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdminUpdate)
+export default connect(mapStateToProps, mapDispatchToProps)(AdminUploadInfoByUrl)

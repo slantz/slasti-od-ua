@@ -1,1 +1,5 @@
 export const STUFF = 'STUFF';
+
+export const REQUEST = 'ADMIN_BULK_UPLOAD_REQUEST';
+export const SUCCESS = 'ADMIN_BULK_UPLOAD_SUCCESS';
+export const FAILURE = 'ADMIN_BULK_UPLOAD_FAILURE';

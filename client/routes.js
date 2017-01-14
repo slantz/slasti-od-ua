@@ -9,7 +9,8 @@ import About from './components/pages/About'
 import Cart from './components/pages/Cart'
 import Admin from './components/pages/Admin'
 import AdminUpdate from './components/pages/AdminUpdate'
-import AdminUpload from './components/pages/AdminUpload'
+import AdminUpload from './components/pages/AdminUpload1'
+import AdminUploadInfoByUrl from './components/popover/AdminUploadInfoByUrl'
 
 import { REQUIRE_LOGIN } from './middleware/auth'
 
@@ -29,7 +30,9 @@ export default class RTRouter extends Component {
                 <Route path="cart" component={Cart}/>
                 <Route path="admin" component={Admin} onEnter={(nextState, replace, callback) => { this.requireLogin(nextState, replace, callback) }}>
                     <Route path="update" component={AdminUpdate}/>
-                    <Route path="upload" component={AdminUpload}/>
+                    <Route path="upload" component={AdminUpload}>
+                        <Route path="info/:url" component={AdminUploadInfoByUrl}/>
+                    </Route>
                 </Route>
             </Route>
         );

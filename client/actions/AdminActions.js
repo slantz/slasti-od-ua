@@ -1,6 +1,7 @@
 import * as CORE_CONSTANTS from '../constants/Core'
 import * as ADMIN_CONSTANTS from '../constants/Admin'
 import { CALL_API } from '../middleware/api'
+import localForage from '../storage/localforage.config'
 
 export const doStuff = () => ({
     type: CONSTANTS.STUFF
@@ -37,5 +38,18 @@ export function bulkUploadImages(data) {
             return dispatch(bulkUploadImagesAction(data))
         }
         return null;
+    }
+}
+
+export function getImagesFromLocalStorage() {
+    return (dispatch) => {
+        return localForage.getItem(ADMIN_CONSTANTS.BULK_UPLOAD_BAKERY_FILENAMES).then(value => {
+            if (Array.isArray(value) && value.length > 0) {
+                dispatch({
+                    type: ADMIN_CONSTANTS.IMAGES_FROM_LOCAL_STORAGE,
+                    payload: value
+                });
+            }
+        });
     }
 }

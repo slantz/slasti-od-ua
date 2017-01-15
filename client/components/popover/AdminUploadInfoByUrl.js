@@ -2,24 +2,28 @@ import React, { Component } from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as AdminActions from '../../actions/AdminActions'
-import localForage from '../../storage/localforage.config'
 
 class AdminUploadInfoByUrl extends Component {
     constructor(props) {
         super(props)
     }
 
-    render() {
+    getImagesFromLocalStorage = () => {
+        const { AdminActions: { getImagesFromLocalStorage } } = this.props;
+        getImagesFromLocalStorage();
+    };
+
+    componentDidMount() {
         let { admin: { bakeryFilenames } } = this.props;
 
         if (Array.isArray(bakeryFilenames) && bakeryFilenames.length == 0) {
-            localForage.getItem('bulkUploadBakeryFilenames').then(value => {
-                if (Array.isArray(value) && value.length > 0) {
-                    // TODO check update of props
-                    bakeryFilenames = value;
-                }
-            });
+            this.getImagesFromLocalStorage();
         }
+    }
+
+    render() {
+        let { admin: { bakeryFilenames } } = this.props;
+
         return (
             <article id="sou-catalog-bulk-images-uploaded">
                 {bakeryFilenames.map(function(filename, filenameIndex){

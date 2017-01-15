@@ -3,3 +3,6 @@ export const STUFF = 'STUFF';
 export const REQUEST = 'ADMIN_BULK_UPLOAD_REQUEST';
 export const SUCCESS = 'ADMIN_BULK_UPLOAD_SUCCESS';
 export const FAILURE = 'ADMIN_BULK_UPLOAD_FAILURE';
+
+export const BULK_UPLOAD_BAKERY_FILENAMES = 'bulkUploadBakeryFilenames';
+export const IMAGES_FROM_LOCAL_STORAGE = 'IMAGES_FROM_LOCAL_STORAGE';

@@ -1,25 +1,38 @@
-import * as CONSTANTS from '../constants/Admin'
+import * as ADMIN_CONSTANTS from '../constants/Admin'
 import localForage from '../storage/localforage.config'
 
 export default function admin(state = {
     bakeryFilenames: [],
     isFetching: false
 }, { type, payload }) {
+    let assignedState;
+
     switch(type) {
-        case CONSTANTS.SUCCESS:
-            localForage.setItem('bulkUploadBakeryFilenames', payload.bakeryFilenames);
-            return Object.assign({}, state, {
+        case ADMIN_CONSTANTS.SUCCESS:
+            localForage.setItem(ADMIN_CONSTANTS.BULK_UPLOAD_BAKERY_FILENAMES, payload.bakeryFilenames);
+            assignedState = Object.assign({}, state, {
                 isFetching: false,
                 bakeryFilenames: payload.bakeryFilenames
             });
-        case CONSTANTS.FAILURE:
-            return Object.assign({}, state, {
+            break;
+        case ADMIN_CONSTANTS.FAILURE:
+            assignedState = Object.assign({}, state, {
                 isFetching: false
             });
-        case CONSTANTS.REQUEST:
-            return Object.assign({}, state, {
+            break;
+        case ADMIN_CONSTANTS.REQUEST:
+            assignedState = Object.assign({}, state, {
                 isFetching: true
             });
-        default: return state
+            break;
+        case ADMIN_CONSTANTS.IMAGES_FROM_LOCAL_STORAGE:
+            assignedState = Object.assign({}, state, {
+                isFetching: false,
+                bakeryFilenames: payload
+            });
+            break;
+        default: assignedState = state
     }
+
+    return assignedState;
 }

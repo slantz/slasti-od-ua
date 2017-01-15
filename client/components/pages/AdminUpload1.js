@@ -26,8 +26,7 @@ class AdminUpload extends Component {
     render() {
         return (
             <section>
-                <SimpleForm onSubmit={this.handleSubmit} pristine={true} submitting={false}
-                            reset={() => console.log('reset')}/>
+                <SimpleForm onSubmit={this.handleSubmit} pristine={true} submitting={false} reset={() => console.log('reset')}/>
                 {this.props.children}
             </section>
         )

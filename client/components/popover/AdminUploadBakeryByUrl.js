@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as AdminActions from '../../actions/AdminActions'
 
-class AdminUploadInfoByUrl extends Component {
+class AdminUploadBakeryByUrl extends Component {
     constructor(props) {
         super(props)
     }
@@ -14,21 +14,21 @@ class AdminUploadInfoByUrl extends Component {
     };
 
     componentDidMount() {
-        let { admin: { bakeryFilenames } } = this.props;
+        let { admin: { bakery } } = this.props;
 
-        if (Array.isArray(bakeryFilenames) && bakeryFilenames.length == 0) {
+        if (Array.isArray(bakery) && bakery.length == 0) {
             this.getImagesFromLocalStorage();
         }
     }
 
     render() {
-        let { admin: { bakeryFilenames } } = this.props;
+        let { admin: { bakery } } = this.props;
 
         return (
             <article id="sou-catalog-bulk-images-uploaded">
-                {bakeryFilenames.map(function(filename, filenameIndex){
+                {bakery.map(function(filename, filenameIndex){
                     return <div key={filenameIndex}>
-                        {filename.imgUrl}
+                        {filename._id}
                     </div>;
                 })}
             </article>
@@ -51,4 +51,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdminUploadInfoByUrl)
+export default connect(mapStateToProps, mapDispatchToProps)(AdminUploadBakeryByUrl)

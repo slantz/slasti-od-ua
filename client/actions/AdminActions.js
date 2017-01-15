@@ -18,7 +18,7 @@ function bulkUploadImagesAction(data) {
             endpoint: "/api/admin/upload/images",
             payload: {},
             redirect: function(response) {
-                return `/admin/upload/info/${response.bakeryFilenames[0].imgUrl}`;
+                return `/admin/upload/bakery/${response.bakery[0]._id}`;
             }
         }
     }
@@ -43,7 +43,7 @@ export function bulkUploadImages(data) {
 
 export function getImagesFromLocalStorage() {
     return (dispatch) => {
-        return localForage.getItem(ADMIN_CONSTANTS.BULK_UPLOAD_BAKERY_FILENAMES).then(value => {
+        return localForage.getItem(ADMIN_CONSTANTS.KEY.LOCAL_FORAGE.BULK_UPLOAD_BAKERY).then(value => {
             if (Array.isArray(value) && value.length > 0) {
                 dispatch({
                     type: ADMIN_CONSTANTS.IMAGES_FROM_LOCAL_STORAGE,

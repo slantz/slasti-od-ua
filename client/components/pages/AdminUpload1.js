@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import SimpleForm from './SimpleForm'
+import AdminUploadImagesForm from './AdminUploadImagesForm'
 import * as AdminActions from '../../actions/AdminActions'
+import * as ADMIN_CONSTANTS from '../../constants/Admin'
 import 'isomorphic-fetch'
 
 class AdminUpload extends Component {
@@ -18,7 +19,13 @@ class AdminUpload extends Component {
     handleSubmit = () => {
         let formData = new FormData();
 
-        Object.keys(this.props.form.simple.values.files).forEach((key) => formData.append('images', this.props.form.simple.values.files[key], this.props.form.simple.values.files[key].name))
+        Object
+            .keys(this.props.form['admin-upload-images'].values.files)
+            .forEach((key) => formData.append(
+                ADMIN_CONSTANTS.KEY.API.IMAGES,
+                this.props.form['admin-upload-images'].values.files[key],
+                this.props.form['admin-upload-images'].values.files[key].name
+            ));
 
         this.bulkUploadImages(formData);
     };
@@ -26,7 +33,10 @@ class AdminUpload extends Component {
     render() {
         return (
             <section>
-                <SimpleForm onSubmit={this.handleSubmit} pristine={true} submitting={false} reset={() => console.log('reset')}/>
+                <AdminUploadImagesForm
+                    onSubmit={this.handleSubmit}
+                    pristine={true}
+                    submitting={false}/>
                 {this.props.children}
             </section>
         )

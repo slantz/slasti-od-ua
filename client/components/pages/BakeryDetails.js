@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import {Link} from 'react-router'
-import * as CatalogActions from '../../actions/CatalogActions'
+import * as BakeryActions from '../../actions/BakeryActions'
 
-class Catalog extends Component {
+class BakeryDetails extends Component {
     constructor(props) {
         super(props)
     }
@@ -14,21 +13,13 @@ class Catalog extends Component {
         doStuff()
     }
 
-    loginToVk = () => {
-        window.location.href = '/auth/vk'
-    }
-
     render() {
         const { user } = this.props
 
         return (
             <article id="sou-catalog">
-                <div>Catalog {user.name}</div>
+                {user.isFetching === false && user.status !== null && <div>Catalog Bakery {user.payload.name}</div>}
                 <button onClick={this.doStuff}>Do some stuff</button>
-                <Link to="catalog/0">Go to catalog item #0 page</Link>
-                <Link to="admin">Go to catalog ADMIN page</Link>
-                <button onClick={this.loginToVk}>azaza vk login</button>
-                {this.props.children}
             </article>
         )
     }
@@ -45,8 +36,8 @@ function mapStateToProps(state) {
 // Нахера связать экшны с диспатчером? Чтоб редакс увидел вызов этого экшна
 function mapDispatchToProps(dispatch) {
     return {
-        CatalogActions: bindActionCreators(CatalogActions, dispatch)
+        BakeryActions: bindActionCreators(BakeryActions, dispatch)
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Catalog)
+export default connect(mapStateToProps, mapDispatchToProps)(BakeryDetails)

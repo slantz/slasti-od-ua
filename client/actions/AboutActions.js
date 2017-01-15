@@ -1,4 +1,4 @@
-import * as CONSTANTS from '../constants/Catalog'
+import * as CONSTANTS from '../constants/Bakery'
 
 export const doStuff = () => ({
     type: CONSTANTS.STUFF

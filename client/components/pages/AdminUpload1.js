@@ -16,6 +16,15 @@ class AdminUpload extends Component {
         bulkUploadImages(data);
     };
 
+    /*
+        TODO:
+            1. handle cropping of images before sending them to the server
+            2. create images from files uploaded to form
+            3. send blob as form data instead of pure files
+            4. blob should contain properties of original filename and name name
+            5. after uploading cropped blobs to server proceed with popover flow by returning bakery models
+            6. update bakery models afterwards
+     */
     handleSubmit = () => {
         let formData = new FormData();
 

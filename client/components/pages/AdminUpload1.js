@@ -24,6 +24,10 @@ class AdminUpload extends Component {
             4. blob should contain properties of original filename and name name
             5. after uploading cropped blobs to server proceed with popover flow by returning bakery models
             6. update bakery models afterwards
+            7. add additional action that dispatched event to redirect
+            8. Use Linked List instead of array, though array.shift() is pretty enough
+            9. extend each element of an bakery files array with a created cropped blob
+            10. save blob in to save and go emthod, call action to redirect to next step if needed
      */
     handleSubmit = () => {
         let formData = new FormData();

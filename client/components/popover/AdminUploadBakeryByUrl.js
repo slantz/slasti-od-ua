@@ -9,6 +9,11 @@ class AdminUploadBakeryByUrl extends Component {
         super(props)
     }
 
+    submitAndGoToNextImage = (e) => {
+        console.log(e);
+        console.log(this.props);
+    };
+
     getImagesFromLocalStorage = () => {
         const { AdminActions: { getImagesFromLocalStorage } } = this.props;
         getImagesFromLocalStorage();
@@ -21,7 +26,6 @@ class AdminUploadBakeryByUrl extends Component {
         loadedImg.src = 'http://slasti.od.ua:3001/client/static/images/' + bakery[0].imgUrl;
 
         loadedImg.onload = function() {
-            console.log(loadedImg)
             var imageWidth = loadedImg.naturalWidth;
             var imageHeight = loadedImg.naturalHeight;
 
@@ -49,12 +53,13 @@ class AdminUploadBakeryByUrl extends Component {
                 console.log(blob);
                 console.log(url);
 
+                var imgDest = new Image();
+                imgDest.src = url;
+
                 imgDest.onload = function() {
                     URL.revokeObjectURL(url);
                     this.ready();
                 };
-
-                imgDest.src = url;
             });
         }
     };
@@ -78,6 +83,7 @@ class AdminUploadBakeryByUrl extends Component {
                     </div>;
                 })}
                 {bakery.length && <section style={{'max-width': '500px', 'height': 'auto'}}>
+                    <button onClick={this.submitAndGoToNextImage}>Submit {bakery[1] && <span>and go to next image</span>}</button>
                     <ReactCrop src={'http://slasti.od.ua:3001/client/static/images/' + bakery[0].imgUrl} crop={{aspect: 4/3}} onComplete={this.cropImage}/>
                     <canvas id="canvas111" style={{'max-width': '500px', 'height': 'auto'}}></canvas>
                 </section>}

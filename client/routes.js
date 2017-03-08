@@ -9,7 +9,7 @@ import About from './components/pages/About'
 import Cart from './components/pages/Cart'
 import Admin from './components/pages/Admin'
 import AdminUpdate from './components/pages/AdminUpdate'
-import AdminUpload from './components/pages/AdminUpload1'
+import AdminUpload from './components/pages/AdminUpload'
 import AdminUploadBakeryByUrl from './components/popover/AdminUploadBakeryByUrl'
 
 import { REQUIRE_LOGIN } from './middleware/auth'

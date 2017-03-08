@@ -19,6 +19,11 @@ class AdminUploadBakeryByUrl extends Component {
         getImagesFromLocalStorage();
     };
 
+    setImagesToLocalStorage = (newImages) => {
+        const { AdminActions: { setImagesToLocalStorage } } = this.props;
+        setImagesToLocalStorage(newImages);
+    };
+
     cropImage = (crop, pixelCrop) => {
         let { admin: { bakery } } = this.props;
 
@@ -49,17 +54,15 @@ class AdminUploadBakeryByUrl extends Component {
             canvas.toBlob(function(blob) {
                 var url = URL.createObjectURL(blob);
 
-                blob.name='azazaza';
                 console.log(blob);
                 console.log(url);
 
-                var imgDest = new Image();
-                imgDest.src = url;
+                var file = new File([blob], "azaza");
 
-                imgDest.onload = function() {
-                    URL.revokeObjectURL(url);
-                    this.ready();
-                };
+                console.log(file);
+
+                bakery[0].fileBlob = file;
+
             });
         }
     };
@@ -75,6 +78,9 @@ class AdminUploadBakeryByUrl extends Component {
     render() {
         let { admin: { bakery } } = this.props;
 
+        console.log("----------")
+        console.log(bakery)
+
         return (
             <article id="sou-catalog-bulk-images-uploaded">
                 {bakery.map(function(filename, filenameIndex){
@@ -83,7 +89,9 @@ class AdminUploadBakeryByUrl extends Component {
                     </div>;
                 })}
                 {bakery.length && <section style={{'max-width': '500px', 'height': 'auto'}}>
-                    <button onClick={this.submitAndGoToNextImage}>Submit {bakery[1] && <span>and go to next image</span>}</button>
+                    <button
+                        onClick={this.submitAndGoToNextImage}
+                        disabled={!bakery[0].fileBlob}>Submit {bakery[1] && <span>and go to next image</span>}</button>
                     <ReactCrop src={'http://slasti.od.ua:3001/client/static/images/' + bakery[0].imgUrl} crop={{aspect: 4/3}} onComplete={this.cropImage}/>
                     <canvas id="canvas111" style={{'max-width': '500px', 'height': 'auto'}}></canvas>
                 </section>}

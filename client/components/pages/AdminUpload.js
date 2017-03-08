@@ -16,6 +16,11 @@ class AdminUpload extends Component {
         bulkUploadImages(data);
     };
 
+    storeImagesAndRedirect = (images) => {
+        const { AdminActions: { storeImagesAndRedirect } } = this.props;
+        storeImagesAndRedirect(images);
+    };
+
     /*
         TODO:
             1. handle cropping of images before sending them to the server
@@ -40,7 +45,8 @@ class AdminUpload extends Component {
                 this.props.form['admin-upload-images'].values.files[key].name
             ));
 
-        this.bulkUploadImages(formData);
+        // this.bulkUploadImages(formData);
+        this.storeImagesAndRedirect(fileListToArrayConverter(this.props.form['admin-upload-images'].values.files));
     };
 
     render() {
@@ -54,6 +60,10 @@ class AdminUpload extends Component {
             </section>
         )
     }
+}
+
+function fileListToArrayConverter(fileList) {
+    return Array.prototype.slice.call(fileList);
 }
 
 // Все что хотим вытащить из стора указываем здесь, после чего они будут доступны в компоненте (App) через this.props

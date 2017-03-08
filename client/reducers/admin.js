@@ -9,7 +9,7 @@ export default function admin(state = {
 
     switch(type) {
         case ADMIN_CONSTANTS.SUCCESS:
-            localForage.setItem(ADMIN_CONSTANTS.KEY.LOCAL_FORAGE.BULK_UPLOAD_BAKERY, payload.bakery);
+            // localForage.setItem(ADMIN_CONSTANTS.KEY.LOCAL_FORAGE.BULK_UPLOAD_BAKERY, payload.bakery);
             assignedState = Object.assign({}, state, {
                 isFetching: false,
                 bakery: payload.bakery
@@ -26,6 +26,12 @@ export default function admin(state = {
             });
             break;
         case ADMIN_CONSTANTS.IMAGES_FROM_LOCAL_STORAGE:
+            assignedState = Object.assign({}, state, {
+                isFetching: false,
+                bakery: payload
+            });
+            break;
+        case ADMIN_CONSTANTS.IMAGES_TO_LOCAL_STORAGE:
             assignedState = Object.assign({}, state, {
                 isFetching: false,
                 bakery: payload

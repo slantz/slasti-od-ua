@@ -2,10 +2,15 @@ import * as CORE_CONSTANTS from '../constants/Core'
 import * as ADMIN_CONSTANTS from '../constants/Admin'
 import { CALL_API } from '../middleware/api'
 import localForage from '../storage/localforage.config'
+import { push } from 'react-router-redux';
 
 export const doStuff = () => ({
     type: CONSTANTS.STUFF
 });
+
+function redirect(redirectId) {
+    return `/admin/upload/bakery/${redirectId}`;
+}
 
 // Fetches user information data from Express session, if request fails then user is not authenticated.
 // Relies on the custom API middleware defined in ../middleware/api.js.
@@ -18,7 +23,7 @@ function bulkUploadImagesAction(data) {
             endpoint: "/api/admin/upload/images",
             payload: {},
             redirect: function(response) {
-                return `/admin/upload/bakery/${response.bakery[0]._id}`;
+                return redirect(response.bakery[0]._id);
             }
         }
     }
@@ -51,5 +56,28 @@ export function getImagesFromLocalStorage() {
                 });
             }
         });
+    }
+}
+
+export function setImagesFromLocalStorage(newImages) {
+    return (dispatch) => {
+        return localForage.setItem(ADMIN_CONSTANTS.KEY.LOCAL_FORAGE.BULK_UPLOAD_BAKERY, newImages).then(value => {
+            dispatch({
+                type: ADMIN_CONSTANTS.IMAGES_TO_LOCAL_STORAGE,
+                payload: value
+            });
+        });
+    }
+}
+
+export function storeImagesAndRedirect(images) {
+    return (dispatch) => {
+        let redirectId = images[0].name;
+
+        images[0] = new File([new Blob()], "soska");
+
+        setImagesFromLocalStorage(images);
+
+        dispatch(push(redirect(redirectId)));
     }
 }

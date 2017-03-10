@@ -40,6 +40,8 @@ fs.readdirSync(models)
 const admin = require('./server/api/controllers/admin');
 const bakery = require('./server/api/controllers/bakery');
 const ingredient = require('./server/api/controllers/ingredient');
+const basis = require('./server/api/controllers/basis');
+const filling = require('./server/api/controllers/filling');
 
 // Bootstrap routes
 require('./server/config/passport')(passport);
@@ -175,13 +177,9 @@ app.delete('/api/ingredients/:id', function(req, res, next) {
 });
 
 //BASIS CRUD
-app.get('/api/basis', function(req, res, next) {
-    res.json(req.user);
-});
+app.get('/api/basis', basis.all);
 
-app.post('/api/basis', function(req, res, next) {
-    res.json(req.user);
-});
+app.post('/api/basis', validation.validateBasis, basis.post);
 
 app.get('/api/basis/:id', function(req, res, next) {
     res.json(req.user);
@@ -196,13 +194,9 @@ app.delete('/api/basis/:id', function(req, res, next) {
 });
 
 //FILLING CRUD
-app.get('/api/filling', function(req, res, next) {
-    res.json(req.user);
-});
+app.get('/api/filling', filling.all);
 
-app.post('/api/filling', function(req, res, next) {
-    res.json(req.user);
-});
+app.post('/api/filling', validation.validateFilling, filling.post);
 
 app.get('/api/filling/:id', function(req, res, next) {
     res.json(req.user);

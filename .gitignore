@@ -41,3 +41,5 @@ assets.json
 
 # build files for development
 client/dist
+
+client/static/images

@@ -3,12 +3,14 @@ import { Route, IndexRedirect } from 'react-router'
 import { Router } from 'react-router'
 
 import App from './containers/App'
-import Catalog from './components/pages/Catalog'
-import CatalogBakery from './components/pages/CatalogBakery'
+import Bakery from './components/pages/Bakery'
+import BakeryDetails from './components/pages/BakeryDetails'
 import About from './components/pages/About'
 import Cart from './components/pages/Cart'
 import Admin from './components/pages/Admin'
 import AdminUpdate from './components/pages/AdminUpdate'
+import AdminUpload from './components/pages/AdminUpload'
+import AdminUploadBakeryByUrl from './components/popover/AdminUploadBakeryByUrl'
 
 import { REQUIRE_LOGIN } from './middleware/auth'
 
@@ -20,14 +22,17 @@ export default class RTRouter extends Component {
         // the routes are recreated each time.
         this.routes = (
             <Route path="/" component={App}>
-                <IndexRedirect to="/catalog"/>
-                <Route path="catalog" component={Catalog}>
-                    <Route path=":id" component={CatalogBakery}/>
+                <IndexRedirect to="/bakery"/>
+                <Route path="bakery" component={Bakery}>
+                    <Route path=":id" component={BakeryDetails}/>
                 </Route>
                 <Route path="about" component={About}/>
                 <Route path="cart" component={Cart}/>
                 <Route path="admin" component={Admin} onEnter={(nextState, replace, callback) => { this.requireLogin(nextState, replace, callback) }}>
                     <Route path="update" component={AdminUpdate}/>
+                    <Route path="upload" component={AdminUpload}>
+                        <Route path="bakery/:url" component={AdminUploadBakeryByUrl}/>
+                    </Route>
                 </Route>
             </Route>
         );

@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import * as CatalogActions from '../../actions/CatalogActions'
+import * as BakeryActions from '../../actions/BakeryActions'
 
-class CatalogBakery extends Component {
+class BakeryDetails extends Component {
     constructor(props) {
         super(props)
     }
@@ -18,7 +18,7 @@ class CatalogBakery extends Component {
 
         return (
             <article id="sou-catalog">
-                <div>Catalog Bakery {user.name}</div>
+                {user.isFetching === false && user.status !== null && <div>Catalog Bakery {user.payload.name}</div>}
                 <button onClick={this.doStuff}>Do some stuff</button>
             </article>
         )
@@ -36,8 +36,8 @@ function mapStateToProps(state) {
 // Нахера связать экшны с диспатчером? Чтоб редакс увидел вызов этого экшна
 function mapDispatchToProps(dispatch) {
     return {
-        CatalogActions: bindActionCreators(CatalogActions, dispatch)
+        BakeryActions: bindActionCreators(BakeryActions, dispatch)
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CatalogBakery)
+export default connect(mapStateToProps, mapDispatchToProps)(BakeryDetails)

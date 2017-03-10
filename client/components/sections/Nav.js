@@ -28,7 +28,7 @@ export default class Header extends Component {
                     </IndexLink>
                 </li>
                 <li>
-                    <Link to="/catalog">Catalog</Link>
+                    <Link to="/bakery">Bakery</Link>
                 </li>
                 <li>
                     <Link to="/about">About</Link>

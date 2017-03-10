@@ -11,7 +11,7 @@ class AdminUpdate extends Component {
     doStuff = () => {
         const { AdminActions: { doStuff } } = this.props;
         doStuff()
-    }
+    };
 
     render() {
         const { user } = this.props

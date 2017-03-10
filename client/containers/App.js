@@ -3,7 +3,7 @@ import ReactCSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as CoreActions from '../actions/CoreActions'
-import * as CatalogActions from '../actions/CatalogActions'
+import * as BakeryActions from '../actions/BakeryActions'
 import * as AdminActions from '../actions/AdminActions'
 import * as AboutActions from '../actions/AboutActions'
 import * as CartActions from '../actions/CartActions'
@@ -70,7 +70,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         CoreActions : bindActionCreators(CoreActions, dispatch),
-        CatalogActions : bindActionCreators(CatalogActions, dispatch),
+        BakeryActions : bindActionCreators(BakeryActions, dispatch),
         CartActions : bindActionCreators(CartActions, dispatch),
         AdminActions : bindActionCreators(AdminActions, dispatch),
         AboutActions : bindActionCreators(AboutActions, dispatch)

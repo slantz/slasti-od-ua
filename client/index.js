@@ -2,6 +2,7 @@ import React from 'react'
 import {render} from 'react-dom'
 import {syncHistoryWithStore} from 'react-router-redux'
 import {IntlProvider} from 'react-intl'
+import './storage/localforage.config'
 import {configureStore, browserHistory} from './store/configureStore'
 import Root from './root'
 import * as CONSTANTS from "./constants/Dom";

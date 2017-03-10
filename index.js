@@ -14,7 +14,8 @@ var compress = require('compression');
 var cors = require('cors');
 var layouts = require('express-ejs-layouts');
 var passport = require('passport');
-const upload = require('multer')();
+const multer = require('multer');
+const uuid = require('uuid');
 
 const mongoStore = require('connect-mongo')(session);
 const cookieParser = require('cookie-parser');
@@ -24,14 +25,18 @@ const methodOverride = require('method-override');
 
 var mongoose = require('mongoose');
 
-const models = join(__dirname, 'server/api/models');
 const pkg = require('./package.json');
 const AdminUserIdTypes = process.env.ADMIN.split(',').reduce(function(prev, next){ return prev.concat(Number(next)); }, []) || [];
+
+const models = join(__dirname, 'server/api/models');
 
 // Bootstrap models
 fs.readdirSync(models)
   .filter(file => ~file.search(/^[^\.].*\.js$/))
   .forEach(file => require(join(models, file)));
+
+const admin = require('./server/api/controllers/admin');
+const bakery = require('./server/api/controllers/bakery');
 
 // Bootstrap routes
 require('./server/config/passport')(passport);
@@ -56,7 +61,6 @@ app.use(function (req, res, next) {
 // bodyParser should be above methodOverride
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(upload.single('image'));
 app.use(methodOverride(function (req) {
     if (req.body && typeof req.body === 'object' && '_method' in req.body) {
         // look in urlencoded POST bodies and delete it
@@ -128,9 +132,7 @@ app.get('/auth/user/me', userTypes.any(AdminUserIdTypes), function(req, res, nex
 });
 
 // BAKERY CRUD
-app.get('/api/bakery', function(req, res, next) {
-    res.json(req.user);
-});
+app.get('/api/bakery', bakery.all);
 
 app.post('/api/bakery', function(req, res, next) {
     res.json(req.user);
@@ -141,6 +143,10 @@ app.get('/api/bakery/:id', function(req, res, next) {
 });
 
 app.put('/api/bakery/:id', function(req, res, next) {
+    res.json(req.user);
+});
+
+app.delete('/api/bakery', function(req, res, next) {
     res.json(req.user);
 });
 
@@ -210,6 +216,24 @@ app.put('/api/filling/:id', function(req, res, next) {
 app.delete('/api/filling/:id', function(req, res, next) {
     res.json(req.user);
 });
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './client/static/images')
+    },
+    filename: function (req, file, cb) {
+        var extension;
+
+        extension = file.originalname.substring(file.originalname.lastIndexOf('.'));
+
+        cb(null,  'img_' + uuid.v4() + '_' + Date.now() + extension);
+    }
+});
+
+var upload = multer({ storage: storage });
+
+//UPLOAD ADMIN FILES
+app.post('/api/admin/upload/images', upload.array('images'), admin.upload);
 
 app.get(/^\/.*(?!(auth|api)).*$/, function(req, res) {
   res.render('index', {

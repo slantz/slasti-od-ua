@@ -22,7 +22,7 @@ export default class RTRouter extends Component {
         // the routes are recreated each time.
         this.routes = (
             <Route path="/" component={App}>
-                <IndexRedirect to="/bakery"/>
+                <IndexRedirect to="bakery"/>
                 <Route path="bakery" component={Bakery}>
                     <Route path=":id" component={BakeryDetails}/>
                 </Route>

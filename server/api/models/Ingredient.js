@@ -31,7 +31,7 @@ const IngredientSchema = new Schema({
     },
     price: {
         type: Number,
-        default: null
+        default: 0
     }
 });
 

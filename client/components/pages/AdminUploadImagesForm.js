@@ -8,7 +8,12 @@ const AdminUploadImagesForm = (props) => {
             <fieldset>
                 <label htmlFor="files">Upload files</label>
                 <div>
-                    <Field name="files" component="input" type="file" placeholder="Upload files" multiple="true" accept="image/*"/>
+                    <Field name="files"
+                           component="input"
+                           type="file"
+                           placeholder="Upload files"
+                           multiple="true"
+                           accept="image/*"/>
                 </div>
             </fieldset>
             <fieldset>

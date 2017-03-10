@@ -3,15 +3,46 @@ import ReactCrop from 'react-image-crop'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as AdminActions from '../../actions/AdminActions'
+import * as ADMIN_CONSTANTS from '../../constants/Admin'
 
 class AdminUploadBakeryByUrl extends Component {
     constructor(props) {
         super(props)
     }
 
-    submitAndGoToNextImage = (e) => {
-        console.log(e);
-        console.log(this.props);
+    bulkUploadImages = (images) => {
+        const { AdminActions: { bulkUploadImages }} = this.props;
+        let formData = new FormData();
+
+        images.forEach((image) => formData.append(
+            ADMIN_CONSTANTS.KEY.API.IMAGES,
+            image.fileBlob,
+            image.fileBlob.name
+        ));
+
+        bulkUploadImages(formData);
+    };
+
+    submitAndGoToNextImage = () => {
+        const { admin: { bakery, nextFileIndex }, AdminActions: { storeImagesAndRedirect, removeImages }} = this.props;
+        let modifiedBakery = bakery.map(function(bakeryItem, index){
+            if (index == tempCroppedFile.index) {
+                return {
+                    fileBlob: tempCroppedFile.file
+                };
+            } else {
+                return bakeryItem;
+            }
+        });
+        if (!tempCroppedFile) {
+            alert('please crop an image first');
+            return;
+        }
+        if (bakery[nextFileIndex + 1]) {
+            return storeImagesAndRedirect(modifiedBakery);
+        }
+        removeImages();
+        return this.bulkUploadImages(modifiedBakery);
     };
 
     getImagesFromLocalStorage = () => {
@@ -19,16 +50,20 @@ class AdminUploadBakeryByUrl extends Component {
         getImagesFromLocalStorage();
     };
 
-    setImagesToLocalStorage = (newImages) => {
-        const { AdminActions: { setImagesToLocalStorage } } = this.props;
-        setImagesToLocalStorage(newImages);
+    createIntermediateFileReaderObject = (currentFileToCrop, nextFileIndex) => {
+        const { AdminActions: { createIntermediateFileReaderObject } } = this.props;
+        let reader = new FileReader();
+
+        reader.readAsDataURL(currentFileToCrop);
+        reader.onload = function(e) {
+            createIntermediateFileReaderObject(e, nextFileIndex);
+        };
     };
 
     cropImage = (crop, pixelCrop) => {
-        let { admin: { bakery } } = this.props;
-
+        let { admin: { bakery, currentFileToCrop } } = this.props;
         var loadedImg = new Image();
-        loadedImg.src = 'http://slasti.od.ua:3001/client/static/images/' + bakery[0].imgUrl;
+        loadedImg.src = currentFileToCrop.target.result;
 
         loadedImg.onload = function() {
             var imageWidth = loadedImg.naturalWidth;
@@ -52,17 +87,15 @@ class AdminUploadBakeryByUrl extends Component {
             }
 
             canvas.toBlob(function(blob) {
-                var url = URL.createObjectURL(blob);
-
-                console.log(blob);
-                console.log(url);
-
-                var file = new File([blob], "azaza");
-
-                console.log(file);
-
-                bakery[0].fileBlob = file;
-
+                bakery.some(function(bakeryItem, index) {
+                    if (!bakeryItem.fileBlob) {
+                        tempCroppedFile = {
+                            file: new File([blob], bakeryItem.name),
+                            index: index
+                        };
+                        return true;
+                    }
+                });
             });
         }
     };
@@ -75,30 +108,53 @@ class AdminUploadBakeryByUrl extends Component {
         }
     }
 
-    render() {
-        let { admin: { bakery } } = this.props;
+    componentWillReceiveProps(newProps) {
+        let { admin: { currentFileToCrop, bakery } } = newProps;
 
-        console.log("----------")
-        console.log(bakery)
+        if (!bakery.length) {
+            return;
+        }
+
+        if (!currentFileToCrop) {
+            let file = null;
+            let tempIndex = null;
+
+            if (bakery.length) {
+                bakery.some(function(bakeryItem, index) {
+                     if (!bakeryItem.fileBlob && !bakeryItem.imgUrl) {
+                         file = bakeryItem;
+                         tempIndex = index;
+                         return true;
+                     }
+                     return false;
+                });
+                file && this.createIntermediateFileReaderObject(file, tempIndex);
+            }
+        }
+    }
+
+    render() {
+        let { admin: { bakery, currentFileToCrop, nextFileIndex } } = this.props;
+        let isNextItem = false;
+
+        if (currentFileToCrop) {
+            isNextItem = (nextFileIndex < (bakery.length - 1));
+        }
 
         return (
             <article id="sou-catalog-bulk-images-uploaded">
-                {bakery.map(function(filename, filenameIndex){
-                    return <div key={filenameIndex}>
-                        {filename._id}
-                    </div>;
-                })}
-                {bakery.length && <section style={{'max-width': '500px', 'height': 'auto'}}>
+                {currentFileToCrop && <section style={{'max-width': '500px', 'height': 'auto'}}>
                     <button
-                        onClick={this.submitAndGoToNextImage}
-                        disabled={!bakery[0].fileBlob}>Submit {bakery[1] && <span>and go to next image</span>}</button>
-                    <ReactCrop src={'http://slasti.od.ua:3001/client/static/images/' + bakery[0].imgUrl} crop={{aspect: 4/3}} onComplete={this.cropImage}/>
+                        onClick={this.submitAndGoToNextImage}>Submit {isNextItem && <span>and go to next image</span>}</button>
+                    <ReactCrop src={currentFileToCrop.target.result} crop={{aspect: 4/3}} onComplete={this.cropImage}/>
                     <canvas id="canvas111" style={{'max-width': '500px', 'height': 'auto'}}></canvas>
                 </section>}
             </article>
         )
     }
 }
+
+let tempCroppedFile = null;
 
 // Все что хотим вытащить из стора указываем здесь, после чего они будут доступны в компоненте (App) через this.props
 function mapStateToProps(state) {

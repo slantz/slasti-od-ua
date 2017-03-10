@@ -8,8 +8,12 @@ export const doStuff = () => ({
     type: CONSTANTS.STUFF
 });
 
-function redirect(redirectId) {
+function redirectToImageUploadUrl(redirectId) {
     return `/admin/upload/bakery/${redirectId}`;
+}
+
+function redirectToAllBakery() {
+    return "/bakery";
 }
 
 // Fetches user information data from Express session, if request fails then user is not authenticated.
@@ -22,8 +26,8 @@ function bulkUploadImagesAction(data) {
             types: [ ADMIN_CONSTANTS.REQUEST, ADMIN_CONSTANTS.SUCCESS, ADMIN_CONSTANTS.FAILURE ],
             endpoint: "/api/admin/upload/images",
             payload: {},
-            redirect: function(response) {
-                return redirect(response.bakery[0]._id);
+            redirect: function() {
+                return redirectToAllBakery();
             }
         }
     }
@@ -33,6 +37,23 @@ function shouldBulkUploadImages(state) {
     const isFetching = state.admin.isFetching;
 
     return isFetching !== true;
+}
+
+function setImagesFromLocalStorage(newImages, dispatch) {
+    return localForage.setItem(ADMIN_CONSTANTS.KEY.LOCAL_FORAGE.BULK_UPLOAD_BAKERY, newImages).then(() => {
+        dispatch({
+            type: ADMIN_CONSTANTS.IMAGES_TO_LOCAL_STORAGE,
+            payload: newImages
+        });
+    });
+}
+
+function removeImagesFromLocalStorage(dispatch) {
+    return localForage.removeItem(ADMIN_CONSTANTS.KEY.LOCAL_FORAGE.BULK_UPLOAD_BAKERY).then(() => {
+        dispatch({
+            type: ADMIN_CONSTANTS.REMOVE_IMAGES_FROM_LOCAL_STORAGE
+        });
+    });
 }
 
 // Fetches user user from express api, unless is cached.
@@ -59,25 +80,36 @@ export function getImagesFromLocalStorage() {
     }
 }
 
-export function setImagesFromLocalStorage(newImages) {
+export function storeImagesAndRedirect(images) {
     return (dispatch) => {
-        return localForage.setItem(ADMIN_CONSTANTS.KEY.LOCAL_FORAGE.BULK_UPLOAD_BAKERY, newImages).then(value => {
-            dispatch({
-                type: ADMIN_CONSTANTS.IMAGES_TO_LOCAL_STORAGE,
-                payload: value
-            });
+        let redirectId = '';
+        images.some(function(imageItem) {
+            if (!imageItem.fileBlob) {
+                redirectId = encodeURIComponent(imageItem.name);
+                return true;
+            }
         });
+
+        setImagesFromLocalStorage(images, dispatch);
+
+        dispatch(push(redirectToImageUploadUrl(redirectId)));
     }
 }
 
-export function storeImagesAndRedirect(images) {
+export function removeImages() {
     return (dispatch) => {
-        let redirectId = images[0].name;
+        removeImagesFromLocalStorage(dispatch);
+    }
+}
 
-        images[0] = new File([new Blob()], "soska");
-
-        setImagesFromLocalStorage(images);
-
-        dispatch(push(redirect(redirectId)));
+export function createIntermediateFileReaderObject(currentFileToCrop, nextFileIndex) {
+    return (dispatch) => {
+        return dispatch({
+            type: ADMIN_CONSTANTS.SET_CURRENT_FILE_TO_CROP,
+            payload: {
+                currentFileToCrop,
+                nextFileIndex
+            }
+        });
     }
 }

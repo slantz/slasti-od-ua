@@ -100,7 +100,7 @@ export default store => next => action => {
                         payload : response,
                         type : successType
                     }));
-                    redirect && store.dispatch(push(redirect(response)));
+                    redirect && store.dispatch(push(redirect()));
                 },
                 error => next(actionWith({
                     type : failureType,
@@ -115,7 +115,7 @@ export default store => next => action => {
                         payload : response,
                         type : successType
                     }));
-                    redirect && store.dispatch(push(redirect(response)));
+                    redirect && store.dispatch(push(redirect()));
                 },
                 error => next(actionWith({
                     type : failureType,

@@ -3,38 +3,65 @@ import localForage from '../storage/localforage.config'
 
 export default function admin(state = {
     bakery: [],
+    currentFileToCrop: null,
+    nextFileIndex: null,
     isFetching: false
 }, { type, payload }) {
     let assignedState;
 
     switch(type) {
         case ADMIN_CONSTANTS.SUCCESS:
-            // localForage.setItem(ADMIN_CONSTANTS.KEY.LOCAL_FORAGE.BULK_UPLOAD_BAKERY, payload.bakery);
             assignedState = Object.assign({}, state, {
                 isFetching: false,
-                bakery: payload.bakery
+                currentFileToCrop: null,
+                bakery: payload.bakery,
+                nextFileIndex: null
             });
             break;
         case ADMIN_CONSTANTS.FAILURE:
             assignedState = Object.assign({}, state, {
-                isFetching: false
+                isFetching: false,
+                currentFileToCrop: null,
+                nextFileIndex: null
             });
             break;
         case ADMIN_CONSTANTS.REQUEST:
             assignedState = Object.assign({}, state, {
-                isFetching: true
+                isFetching: true,
+                currentFileToCrop: null,
+                nextFileIndex: null
             });
             break;
         case ADMIN_CONSTANTS.IMAGES_FROM_LOCAL_STORAGE:
             assignedState = Object.assign({}, state, {
                 isFetching: false,
-                bakery: payload
+                currentFileToCrop: null,
+                bakery: payload,
+                nextFileIndex: null
             });
             break;
         case ADMIN_CONSTANTS.IMAGES_TO_LOCAL_STORAGE:
             assignedState = Object.assign({}, state, {
                 isFetching: false,
-                bakery: payload
+                currentFileToCrop: null,
+                bakery: payload,
+                nextFileIndex: null
+            });
+            break;
+        case ADMIN_CONSTANTS.SET_CURRENT_FILE_TO_CROP:
+            assignedState = Object.assign({}, state, {
+                isFetching: false,
+                bakery: state.bakery,
+                currentFileToCrop: payload.currentFileToCrop,
+                nextFileIndex: payload.nextFileIndex
+            });
+            break;
+        case ADMIN_CONSTANTS.REMOVE_IMAGES_FROM_LOCAL_STORAGE:
+            assignedState = Object.assign({}, state, {
+                isFetching: false,
+                bakery: [],
+                currentFileToCrop: null,
+                nextFileIndex: null
             });
             break;
         default: assignedState = state

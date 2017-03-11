@@ -15,51 +15,32 @@ class AdminUpload extends Component {
         storeImagesAndRedirect(images);
     };
 
-    componentWillReceiveProps(newProps) {
-        let images = [];
-        const { form, admin: { bakery: { bakery, savedBakery } } } = newProps;
+    handleFilesChange = () => {
+        let that = this;
+        setTimeout(() => {
+            const { form, admin: { bakery: { bakery, savedBakery } } } = that.props;
 
-        if (!bakery.length &&
-            form['admin-upload-images'] &&
-            form['admin-upload-images'].values &&
-            form['admin-upload-images'].values.files &&
-            form['admin-upload-images'].values.files.length > 0) {
+            if (!bakery.length &&
+                form['admin-upload-images'] &&
+                form['admin-upload-images'].values &&
+                form['admin-upload-images'].values.files) {
 
-            images = fileListToArrayConverter(form['admin-upload-images'].values.files);
-
-            //todo after images were initially uploaded then coming back to this page makes this be ignored
-            // as images are uploaded is set to true
-            if (!areImagesUploaded()) {
-                this.storeImagesAndRedirect(images);
-                areImagesUploaded(images);
+                this.storeImagesAndRedirect(fileListToArrayConverter(form['admin-upload-images'].values.files));
             }
-        }
-    }
+        },0);
+    };
 
     render() {
         return (
             <section>
                 <AdminUploadImagesForm
                     onSubmit={dummyOnChangeHandlerForValidation}
+                    onChange={this.handleFilesChange}
                     pristine={true}
                     submitting={false}/>
                 {this.props.children}
             </section>
         )
-    }
-}
-
-let areImagesUploaded = areImagesAlreadyUploaded();
-
-function areImagesAlreadyUploaded() {
-    let images = [];
-    return function(newImages) {
-        if (!newImages) {
-            return images.length !== 0;
-        }
-
-        images = newImages;
-        return true;
     }
 }
 

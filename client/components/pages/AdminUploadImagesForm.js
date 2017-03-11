@@ -2,9 +2,9 @@ import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 
 const AdminUploadImagesForm = (props) => {
-    const { handleSubmit, pristine, submitting } = props;
+    const { handleSubmit, onChange, pristine, submitting } = props;
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} onChange={onChange}>
             <fieldset>
                 <label htmlFor="files">Upload files</label>
                 <div>

@@ -23,7 +23,7 @@ function bulkUploadImagesAction(data) {
         [CALL_API]: {
             method: CORE_CONSTANTS.METHOD.POST,
             body: data,
-            types: [ ADMIN_CONSTANTS.REQUEST, ADMIN_CONSTANTS.SUCCESS, ADMIN_CONSTANTS.FAILURE ],
+            types: [ ADMIN_CONSTANTS.ADMIN_BULK_UPLOAD_REQUEST, ADMIN_CONSTANTS.ADMIN_BULK_UPLOAD_SUCCESS, ADMIN_CONSTANTS.ADMIN_BULK_UPLOAD_FAILURE ],
             endpoint: "/api/admin/upload/images",
             payload: {},
             redirect: function() {
@@ -34,7 +34,7 @@ function bulkUploadImagesAction(data) {
 }
 
 function shouldBulkUploadImages(state) {
-    const isFetching = state.admin.isFetching;
+    const isFetching = state.isFetching;
 
     return isFetching !== true;
 }
@@ -60,7 +60,7 @@ function removeImagesFromLocalStorage(dispatch) {
 // Relies on Redux Thunk middleware.
 export function bulkUploadImages(data) {
     return (dispatch, getState) => {
-        if (shouldBulkUploadImages(getState())) {
+        if (shouldBulkUploadImages(getState().admin.bakery)) {
             return dispatch(bulkUploadImagesAction(data))
         }
         return null;
@@ -77,6 +77,12 @@ export function getImagesFromLocalStorage() {
                 });
             }
         });
+    }
+}
+
+export function getIngredients() {
+    return (dispatch) => {
+        return
     }
 }
 

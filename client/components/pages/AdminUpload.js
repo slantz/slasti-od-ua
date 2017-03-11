@@ -17,7 +17,7 @@ class AdminUpload extends Component {
 
     componentWillReceiveProps(newProps) {
         let images = [];
-        const { form, admin: { bakery }} = newProps;
+        const { form, admin: { bakery: { bakery } } } = newProps;
 
         if (!bakery.length &&
             form['admin-upload-images'] &&
@@ -38,6 +38,7 @@ class AdminUpload extends Component {
         return (
             <section>
                 <AdminUploadImagesForm
+                    onSubmit={dummyOnChangeHandlerForValidation}
                     pristine={true}
                     submitting={false}/>
                 {this.props.children}
@@ -59,6 +60,8 @@ function areImagesAlreadyUploaded() {
         return true;
     }
 }
+
+function dummyOnChangeHandlerForValidation() {}
 
 function fileListToArrayConverter(fileList) {
     return Array.prototype.slice.call(fileList);

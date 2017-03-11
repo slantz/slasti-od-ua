@@ -2,64 +2,93 @@ import * as ADMIN_CONSTANTS from '../constants/Admin'
 import localForage from '../storage/localforage.config'
 
 export default function admin(state = {
-    bakery: [],
+    bakery: {
+        bakery: [],
+        isFetching: false
+    },
+    ingredientsVault: {
+        ingredients: [],
+        isFetching: false
+    },
+    fillingVault: {
+        filling: [],
+        isFetching: false
+    },
+    basisVault: {
+        basis: [],
+        isFetching: false
+    },
     currentFileToCrop: null,
     nextFileIndex: null,
-    isFetching: false
 }, { type, payload }) {
     let assignedState;
 
     switch(type) {
-        case ADMIN_CONSTANTS.SUCCESS:
+        case ADMIN_CONSTANTS.ADMIN_BULK_UPLOAD_SUCCESS:
             assignedState = Object.assign({}, state, {
-                isFetching: false,
-                currentFileToCrop: null,
-                bakery: payload.bakery,
-                nextFileIndex: null
-            });
-            break;
-        case ADMIN_CONSTANTS.FAILURE:
-            assignedState = Object.assign({}, state, {
-                isFetching: false,
+                bakery: {
+                    bakery: payload.bakery,
+                    isFetching: false
+                },
                 currentFileToCrop: null,
                 nextFileIndex: null
             });
             break;
-        case ADMIN_CONSTANTS.REQUEST:
+        case ADMIN_CONSTANTS.ADMIN_BULK_UPLOAD_FAILURE:
             assignedState = Object.assign({}, state, {
-                isFetching: true,
+                bakery: {
+                    isFetching: false
+                },
+                currentFileToCrop: null,
+                nextFileIndex: null
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_BULK_UPLOAD_REQUEST:
+            assignedState = Object.assign({}, state, {
+                bakery: {
+                    isFetching: true,
+                    bakery: []
+                },
                 currentFileToCrop: null,
                 nextFileIndex: null
             });
             break;
         case ADMIN_CONSTANTS.IMAGES_FROM_LOCAL_STORAGE:
             assignedState = Object.assign({}, state, {
-                isFetching: false,
+                bakery: {
+                    isFetching: false,
+                    bakery: payload
+                },
                 currentFileToCrop: null,
-                bakery: payload,
                 nextFileIndex: null
             });
             break;
         case ADMIN_CONSTANTS.IMAGES_TO_LOCAL_STORAGE:
             assignedState = Object.assign({}, state, {
-                isFetching: false,
+                bakery: {
+                    isFetching: false,
+                    bakery: payload
+                },
                 currentFileToCrop: null,
-                bakery: payload,
                 nextFileIndex: null
             });
             break;
         case ADMIN_CONSTANTS.SET_CURRENT_FILE_TO_CROP:
             assignedState = Object.assign({}, state, {
-                isFetching: false,
-                bakery: state.bakery,
+                bakery: {
+                    isFetching: false,
+                    bakery: state.bakery.bakery
+                },
                 currentFileToCrop: payload.currentFileToCrop,
                 nextFileIndex: payload.nextFileIndex
             });
             break;
         case ADMIN_CONSTANTS.REMOVE_IMAGES_FROM_LOCAL_STORAGE:
             assignedState = Object.assign({}, state, {
-                isFetching: false,
-                bakery: [],
+                bakery: {
+                    isFetching: false,
+                    bakery: []
+                },
                 currentFileToCrop: null,
                 nextFileIndex: null
             });

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ReactCrop from 'react-image-crop'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
+import Select from 'react-select';
 import * as AdminActions from '../../actions/AdminActions'
 import * as ADMIN_CONSTANTS from '../../constants/Admin'
 
@@ -24,7 +25,7 @@ class AdminUploadBakeryByUrl extends Component {
     };
 
     submitAndGoToNextImage = () => {
-        const { admin: { bakery, nextFileIndex }, AdminActions: { storeImagesAndRedirect, removeImages }} = this.props;
+        const { admin: { bakery: { bakery }, nextFileIndex }, AdminActions: { storeImagesAndRedirect, removeImages }} = this.props;
         let modifiedBakery = bakery.map(function(bakeryItem, index){
             if (index == tempCroppedFile.index) {
                 return {
@@ -61,7 +62,7 @@ class AdminUploadBakeryByUrl extends Component {
     };
 
     cropImage = (crop, pixelCrop) => {
-        let { admin: { bakery, currentFileToCrop } } = this.props;
+        let { admin: { bakery: {bakery}, currentFileToCrop } } = this.props;
         var loadedImg = new Image();
         loadedImg.src = currentFileToCrop.target.result;
 
@@ -100,8 +101,26 @@ class AdminUploadBakeryByUrl extends Component {
         }
     };
 
+    getIngredients = () => {
+        const { AdminActions: { getIngredients } } = this.props;
+        // getIngredients();
+        return [];
+    };
+
+    getFilling = () => {
+        const { AdminActions: { getFilling } } = this.props;
+        // getFilling();
+        return [];
+    };
+
+    getBasis = () => {
+        const { AdminActions: { getBasis } } = this.props;
+        return [];
+        // getBasis();
+    };
+
     componentDidMount() {
-        let { admin: { bakery } } = this.props;
+        let { admin: { bakery: { bakery } } } = this.props;
 
         if (Array.isArray(bakery) && bakery.length == 0) {
             this.getImagesFromLocalStorage();
@@ -109,7 +128,7 @@ class AdminUploadBakeryByUrl extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        let { admin: { currentFileToCrop, bakery } } = newProps;
+        let { admin: { currentFileToCrop, bakery: { bakery } } } = newProps;
 
         if (!bakery.length) {
             return;
@@ -134,7 +153,7 @@ class AdminUploadBakeryByUrl extends Component {
     }
 
     render() {
-        let { admin: { bakery, currentFileToCrop, nextFileIndex } } = this.props;
+        let { admin: { bakery: { bakery }, currentFileToCrop, nextFileIndex } } = this.props;
         let isNextItem = false;
 
         if (currentFileToCrop) {
@@ -142,14 +161,46 @@ class AdminUploadBakeryByUrl extends Component {
         }
 
         return (
-            <article id="sou-catalog-bulk-images-uploaded">
-                {currentFileToCrop && <section style={{'max-width': '500px', 'height': 'auto'}}>
-                    <button
-                        onClick={this.submitAndGoToNextImage}>Submit {isNextItem && <span>and go to next image</span>}</button>
-                    <ReactCrop src={currentFileToCrop.target.result} crop={{aspect: 4/3}} onComplete={this.cropImage}/>
-                    <canvas id="canvas111" style={{'max-width': '500px', 'height': 'auto'}}></canvas>
-                </section>}
-            </article>
+            <aside>
+                <section id="sou-catalog-bulk-images-uploaded">
+                    {currentFileToCrop &&
+                        <article style={{'max-width': '500px', 'height': 'auto'}}>
+                            <button onClick={this.submitAndGoToNextImage}>Submit {isNextItem && <span>and go to next image</span>}</button>
+                            <ReactCrop src={currentFileToCrop.target.result} crop={{aspect: 4/3}} onComplete={this.cropImage}/>
+                            <canvas
+                                id="canvas111"
+                                style={{'max-width': '500px', 'height': 'auto'}}>
+                            </canvas>
+                        </article>
+                    }
+                </section>
+                <section>
+                    <article>
+                        <Select.Creatable
+                            name="select-admin-upload-bakery-ingredients"
+                            value={[]}
+                            multi={true}
+                            loadOptions={this.getIngredients}
+                        />
+                    </article>
+                    <article>
+                        <Select.Creatable
+                            name="select-admin-upload-bakery-filling"
+                            value={[]}
+                            multi={true}
+                            loadOptions={this.getFilling}
+                        />
+                    </article>
+                    <article>
+                        <Select.Creatable
+                            name="select-admin-upload-bakery-basis"
+                            value={[]}
+                            multi={true}
+                            loadOptions={this.getBasis}
+                        />
+                    </article>
+                </section>
+            </aside>
         )
     }
 }

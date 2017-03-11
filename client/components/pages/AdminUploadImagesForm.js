@@ -13,11 +13,12 @@ const AdminUploadImagesForm = (props) => {
                            type="file"
                            placeholder="Upload files"
                            multiple="true"
+                           value="[object FileList]"
                            accept="image/*"/>
                 </div>
             </fieldset>
             <fieldset>
-                <button type="submit" disabled={pristine || submitting}>Upload images</button>
+                <button type="submit" disabled={pristine || submitting}>Dummy submit</button>
             </fieldset>
         </form>
     )

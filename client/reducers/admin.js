@@ -27,8 +27,9 @@ export default function admin(state = {
         case ADMIN_CONSTANTS.ADMIN_BULK_UPLOAD_SUCCESS:
             assignedState = Object.assign({}, state, {
                 bakery: {
-                    bakery: payload.bakery,
-                    isFetching: false
+                    savedBakery: payload.bakery,
+                    isFetching: false,
+                    bakery: []
                 },
                 currentFileToCrop: null,
                 nextFileIndex: null

@@ -17,7 +17,7 @@ class AdminUpload extends Component {
 
     componentWillReceiveProps(newProps) {
         let images = [];
-        const { form, admin: { bakery: { bakery } } } = newProps;
+        const { form, admin: { bakery: { bakery, savedBakery } } } = newProps;
 
         if (!bakery.length &&
             form['admin-upload-images'] &&
@@ -27,6 +27,8 @@ class AdminUpload extends Component {
 
             images = fileListToArrayConverter(form['admin-upload-images'].values.files);
 
+            //todo after images were initially uploaded then coming back to this page makes this be ignored
+            // as images are uploaded is set to true
             if (!areImagesUploaded()) {
                 this.storeImagesAndRedirect(images);
                 areImagesUploaded(images);

@@ -15,19 +15,10 @@ class AdminUpload extends Component {
         storeImagesAndRedirect(images);
     };
 
-    handleFilesChange = () => {
-        let that = this;
-        setTimeout(() => {
-            const { form, admin: { bakery: { bakery, savedBakery } } } = that.props;
-
-            if (!bakery.length &&
-                form['admin-upload-images'] &&
-                form['admin-upload-images'].values &&
-                form['admin-upload-images'].values.files) {
-
-                this.storeImagesAndRedirect(fileListToArrayConverter(form['admin-upload-images'].values.files));
-            }
-        },0);
+    handleFilesChange = (event, newValue) => {
+        if (newValue.length > 0) {
+            this.storeImagesAndRedirect(fileListToArrayConverter(newValue));
+        }
     };
 
     render() {

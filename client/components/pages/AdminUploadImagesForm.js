@@ -4,7 +4,7 @@ import { Field, reduxForm } from 'redux-form'
 const AdminUploadImagesForm = (props) => {
     const { handleSubmit, onChange, pristine, submitting } = props;
     return (
-        <form onSubmit={handleSubmit} onChange={onChange}>
+        <form onSubmit={handleSubmit}>
             <fieldset>
                 <label htmlFor="files">Upload files</label>
                 <div>
@@ -14,7 +14,7 @@ const AdminUploadImagesForm = (props) => {
                            placeholder="Upload files"
                            multiple="true"
                            value="[object FileList]"
-                           accept="image/*"/>
+                           accept="image/*" onChange={onChange}/>
                 </div>
             </fieldset>
             <fieldset>

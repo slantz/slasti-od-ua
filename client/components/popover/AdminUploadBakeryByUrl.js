@@ -66,6 +66,8 @@ class AdminUploadBakeryByUrl extends Component {
         var loadedImg = new Image();
         loadedImg.src = currentFileToCrop.target.result;
 
+        console.log(currentFileToCrop)
+
         loadedImg.onload = function() {
             var imageWidth = loadedImg.naturalWidth;
             var imageHeight = loadedImg.naturalHeight;
@@ -80,6 +82,8 @@ class AdminUploadBakeryByUrl extends Component {
             canvas.width = pixelCrop.width;
             canvas.height = pixelCrop.height;
             var ctx = canvas.getContext('2d');
+
+
 
             ctx.drawImage(loadedImg, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
 

@@ -11,9 +11,57 @@ class AdminUploadBakeryByUrl extends Component {
         super(props)
     }
 
+    showIngredientsNewForm = () => {
+        const { AdminActions: { showIngredientsNewForm } } = this.props;
+        showIngredientsNewForm();
+    };
+
+    showFillingNewForm = () => {
+        const { AdminActions: { showFillingNewForm } } = this.props;
+        showFillingNewForm();
+    };
+
+    showBasisNewForm = () => {
+        const { AdminActions: { showBasisNewForm } } = this.props;
+        showBasisNewForm();
+    };
     bulkUploadImages = (images) => {
-        const { AdminActions: { bulkUploadImages }} = this.props;
+        const {
+            admin: {
+                ingredients: {
+                    currentIngredients
+                },
+                filling: {
+                    currentFilling
+                },
+                basis: {
+                    currentBasis
+                }
+            },
+            AdminActions: {
+                bulkUploadImages,
+                removeImages
+            }
+        } = this.props;
         let formData = new FormData();
+        let ingredientsToBeSaved = currentIngredients.filter((ingredient) => ingredient._id === ingredient.type);
+        let fillingToBeSaved = currentFilling.filter((filling) => filling._id === filling.composition);
+        let basisToBeSaved = currentBasis.filter((basis) => basis._id === basis.type);
+
+        if (ingredientsToBeSaved.length) {
+            alert('save custom ingredients');
+            return this.showIngredientsNewForm();
+        }
+
+        if (fillingToBeSaved.length) {
+            alert('save custom filling');
+            return this.showFillingNewForm();
+        }
+
+        if (basisToBeSaved.length) {
+            alert('save custom basis');
+            return this.showBasisNewForm();
+        }
 
         images.forEach((image) => formData.append(
             ADMIN_CONSTANTS.KEY.API.IMAGES,
@@ -21,28 +69,64 @@ class AdminUploadBakeryByUrl extends Component {
             image.fileBlob.name
         ));
 
+        removeImages();
         bulkUploadImages(formData);
     };
 
     submitAndGoToNextImage = () => {
-        const { admin: { bakery: { bakery }, nextFileIndex }, AdminActions: { storeImagesAndRedirect, removeImages }} = this.props;
+        const {
+            admin: {
+                bakery: {
+                    bakery
+                },
+                ingredients: {
+                    currentIngredients
+                },
+                filling: {
+                    currentFilling
+                },
+                basis: {
+                    currentBasis
+                },
+                nextFileIndex
+            },
+            AdminActions: {
+                storeImagesAndRedirect
+            }
+        } = this.props;
+
+        if (!tempCroppedFile) {
+            alert('please crop an image first');
+            return;
+        }
+
         let modifiedBakery = bakery.map(function(bakeryItem, index){
             if (index == tempCroppedFile.index) {
                 return {
-                    fileBlob: tempCroppedFile.file
+                    fileBlob: tempCroppedFile.file,
+                    currentIngredients,
+                    currentFilling,
+                    currentBasis
                 };
             } else {
                 return bakeryItem;
             }
         });
-        if (!tempCroppedFile) {
-            alert('please crop an image first');
-            return;
+
+        if (currentIngredients.length === 0) {
+            return alert('Set at least one ingredient');
         }
+        if (currentFilling.length === 0) {
+            return alert('Set at least one filling');
+        }
+        if (currentBasis.length === 0) {
+            return alert('Set at least one basis');
+        }
+
         if (bakery[nextFileIndex + 1]) {
+            tempCroppedFile = null;
             return storeImagesAndRedirect(modifiedBakery);
         }
-        removeImages();
         return this.bulkUploadImages(modifiedBakery);
     };
 
@@ -65,8 +149,6 @@ class AdminUploadBakeryByUrl extends Component {
         let { admin: { bakery: {bakery}, currentFileToCrop } } = this.props;
         var loadedImg = new Image();
         loadedImg.src = currentFileToCrop.target.result;
-
-        console.log(currentFileToCrop)
 
         loadedImg.onload = function() {
             var imageWidth = loadedImg.naturalWidth;
@@ -105,23 +187,41 @@ class AdminUploadBakeryByUrl extends Component {
         }
     };
 
-    getIngredients = () => {
+    getIngredients = (input, callback) => {
         const { AdminActions: { getIngredients } } = this.props;
-        // getIngredients();
-        return [];
+        return getIngredients();
     };
 
     getFilling = () => {
         const { AdminActions: { getFilling } } = this.props;
-        // getFilling();
-        return [];
+        return getFilling();
     };
 
     getBasis = () => {
         const { AdminActions: { getBasis } } = this.props;
-        return [];
-        // getBasis();
+        return getBasis();
     };
+
+    setCurrentIngredients = (value) => {
+        const { AdminActions: { setCurrentIngredients } } = this.props;
+        return setCurrentIngredients(value);
+    };
+
+    setCurrentFilling = (value) => {
+        const { AdminActions: { setCurrentFilling } } = this.props;
+        return setCurrentFilling(value);
+    };
+
+    setCurrentBasis = (value) => {
+        const { AdminActions: { setCurrentBasis } } = this.props;
+        return setCurrentBasis(value);
+    };
+
+    componentWillMount() {
+        this.getIngredients();
+        this.getFilling();
+        this.getBasis();
+    }
 
     componentDidMount() {
         let { admin: { bakery: { bakery } } } = this.props;
@@ -157,8 +257,31 @@ class AdminUploadBakeryByUrl extends Component {
     }
 
     render() {
-        let { admin: { bakery: { bakery }, currentFileToCrop, nextFileIndex } } = this.props;
-        let isNextItem = false;
+        let {
+            admin: {
+                bakery: {
+                    bakery
+                },
+                ingredients: {
+                    ingredients,
+                    currentIngredients
+                },
+                filling: {
+                    filling,
+                    currentFilling
+                },
+                basis: {
+                    basis,
+                    currentBasis
+                },
+                currentFileToCrop,
+                nextFileIndex,
+                ingredients_showCreateNewForm,
+                filling_showCreateNewForm,
+                basis_showCreateNewForm
+            }
+        } = this.props,
+            isNextItem = false;
 
         if (currentFileToCrop) {
             isNextItem = (nextFileIndex < (bakery.length - 1));
@@ -182,28 +305,52 @@ class AdminUploadBakeryByUrl extends Component {
                     <article>
                         <Select.Creatable
                             name="select-admin-upload-bakery-ingredients"
-                            value={[]}
+                            value={currentIngredients}
                             multi={true}
-                            loadOptions={this.getIngredients}
+                            valueKey="_id"
+                            labelKey="type"
+                            options={ingredients}
+                            onChange={this.setCurrentIngredients}
                         />
                     </article>
                     <article>
                         <Select.Creatable
                             name="select-admin-upload-bakery-filling"
-                            value={[]}
+                            value={currentFilling}
                             multi={true}
-                            loadOptions={this.getFilling}
+                            valueKey="_id"
+                            labelKey="composition"
+                            options={filling}
+                            onChange={this.setCurrentFilling}
                         />
                     </article>
                     <article>
                         <Select.Creatable
                             name="select-admin-upload-bakery-basis"
-                            value={[]}
+                            value={currentBasis}
                             multi={true}
-                            loadOptions={this.getBasis}
+                            valueKey="_id"
+                            labelKey="type"
+                            options={basis}
+                            onChange={this.setCurrentBasis}
                         />
                     </article>
                 </section>
+                {ingredients_showCreateNewForm &&
+                    <section id="admin-create-new-ingredients-form">
+                        Here will be create new ingredients form
+                    </section>
+                }
+                {filling_showCreateNewForm &&
+                <section id="admin-create-new-filling-form">
+                    Here will be create new filling form
+                </section>
+                }
+                {basis_showCreateNewForm &&
+                <section id="admin-create-new-basis-form">
+                    Here will be create new basis form
+                </section>
+                }
             </aside>
         )
     }

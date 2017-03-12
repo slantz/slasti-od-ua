@@ -23,9 +23,12 @@ function bulkUploadImagesAction(data) {
         [CALL_API]: {
             method: CORE_CONSTANTS.METHOD.POST,
             body: data,
-            types: [ ADMIN_CONSTANTS.ADMIN_BULK_UPLOAD_REQUEST, ADMIN_CONSTANTS.ADMIN_BULK_UPLOAD_SUCCESS, ADMIN_CONSTANTS.ADMIN_BULK_UPLOAD_FAILURE ],
+            types: [
+                ADMIN_CONSTANTS.ADMIN_BULK_UPLOAD_REQUEST,
+                ADMIN_CONSTANTS.ADMIN_BULK_UPLOAD_SUCCESS,
+                ADMIN_CONSTANTS.ADMIN_BULK_UPLOAD_FAILURE
+            ],
             endpoint: "/api/admin/upload/images",
-            payload: {},
             redirect: function() {
                 return redirectToAllBakery();
             }
@@ -33,7 +36,49 @@ function bulkUploadImagesAction(data) {
     }
 }
 
-function shouldBulkUploadImages(state) {
+function getAllIngredients() {
+    return {
+        [CALL_API]: {
+            method: CORE_CONSTANTS.METHOD.GET,
+            types : [
+                ADMIN_CONSTANTS.ADMIN_GET_INGREDIENTS_REQUEST,
+                ADMIN_CONSTANTS.ADMIN_GET_INGREDIENTS_SUCCESS,
+                ADMIN_CONSTANTS.ADMIN_GET_INGREDIENTS_FAILURE
+            ],
+            endpoint: "/api/ingredients"
+        }
+    }
+}
+
+function getAllFilling() {
+    return {
+        [CALL_API]: {
+            method: CORE_CONSTANTS.METHOD.GET,
+            types: [
+                ADMIN_CONSTANTS.ADMIN_GET_FILLING_REQUEST,
+                ADMIN_CONSTANTS.ADMIN_GET_FILLING_SUCCESS,
+                ADMIN_CONSTANTS.ADMIN_GET_FILLING_FAILURE
+            ],
+            endpoint: "/api/filling"
+        }
+    }
+}
+
+function getAllBasis() {
+    return {
+        [CALL_API]: {
+            method: CORE_CONSTANTS.METHOD.GET,
+            types: [
+                ADMIN_CONSTANTS.ADMIN_GET_BASIS_REQUEST,
+                ADMIN_CONSTANTS.ADMIN_GET_BASIS_SUCCESS,
+                ADMIN_CONSTANTS.ADMIN_GET_BASIS_FAILURE
+            ],
+            endpoint: "/api/basis"
+        }
+    }
+}
+
+function shouldMakeAdminRequest(state) {
     const isFetching = state.isFetching;
 
     return isFetching !== true;
@@ -60,10 +105,64 @@ function removeImagesFromLocalStorage(dispatch) {
 // Relies on Redux Thunk middleware.
 export function bulkUploadImages(data) {
     return (dispatch, getState) => {
-        if (shouldBulkUploadImages(getState().admin.bakery)) {
+        if (shouldMakeAdminRequest(getState().admin.bakery)) {
             return dispatch(bulkUploadImagesAction(data))
         }
         return null;
+    }
+}
+
+export function getIngredients() {
+    return (dispatch, getState) => {
+        if (shouldMakeAdminRequest(getState().admin.ingredients)) {
+            return dispatch(getAllIngredients())
+        }
+        return null;
+    }
+}
+
+export function getFilling() {
+    return (dispatch, getState) => {
+        if (shouldMakeAdminRequest(getState().admin.filling)) {
+            return dispatch(getAllFilling())
+        }
+        return null;
+    }
+}
+
+export function getBasis() {
+    return (dispatch, getState) => {
+        if (shouldMakeAdminRequest(getState().admin.basis)) {
+            return dispatch(getAllBasis())
+        }
+        return null;
+    }
+}
+
+export function setCurrentIngredients(value) {
+    return (dispatch) => {
+        dispatch({
+            type: ADMIN_CONSTANTS.SET_CURRENT_INGREDIENTS,
+            payload: value
+        });
+    }
+}
+
+export function setCurrentFilling(value) {
+    return (dispatch) => {
+        dispatch({
+            type: ADMIN_CONSTANTS.SET_CURRENT_FILLING,
+            payload: value
+        });
+    }
+}
+
+export function setCurrentBasis(value) {
+    return (dispatch) => {
+        dispatch({
+            type: ADMIN_CONSTANTS.SET_CURRENT_BASIS,
+            payload: value
+        });
     }
 }
 
@@ -77,12 +176,6 @@ export function getImagesFromLocalStorage() {
                 });
             }
         });
-    }
-}
-
-export function getIngredients() {
-    return (dispatch) => {
-        return
     }
 }
 
@@ -116,6 +209,30 @@ export function createIntermediateFileReaderObject(currentFileToCrop, nextFileIn
                 currentFileToCrop,
                 nextFileIndex
             }
+        });
+    }
+}
+
+export function showIngredientsNewForm() {
+    return (dispatch) => {
+        return dispatch({
+            type: ADMIN_CONSTANTS.SHOW_INGREDIENTS_NEW_FORM
+        });
+    }
+}
+
+export function showFillingNewForm() {
+    return (dispatch) => {
+        return dispatch({
+            type: ADMIN_CONSTANTS.SHOW_FILLING_NEW_FORM
+        });
+    }
+}
+
+export function showBasisNewForm() {
+    return (dispatch) => {
+        return dispatch({
+            type: ADMIN_CONSTANTS.SHOW_BASIS_NEW_FORM
         });
     }
 }

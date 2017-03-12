@@ -166,6 +166,33 @@ export function setCurrentBasis(value) {
     }
 }
 
+export function setCurrentIngredientForCreationForm(ingredient) {
+    return (dispatch) => {
+        dispatch({
+            type: ADMIN_CONSTANTS.SET_CURRENT_INGREDIENT_FOR_CREATION_FORM,
+            payload: ingredient
+        });
+    }
+}
+
+export function setCurrentFillingForCreationForm(filling) {
+    return (dispatch) => {
+        dispatch({
+            type: ADMIN_CONSTANTS.SET_CURRENT_FILLING_FOR_CREATION_FORM,
+            payload: filling
+        });
+    }
+}
+
+export function setCurrentBasisForCreationForm(basis) {
+    return (dispatch) => {
+        dispatch({
+            type: ADMIN_CONSTANTS.SET_CURRENT_BASIS_FOR_CREATION_FORM,
+            payload: basis
+        });
+    }
+}
+
 export function getImagesFromLocalStorage() {
     return (dispatch) => {
         return localForage.getItem(ADMIN_CONSTANTS.KEY.LOCAL_FORAGE.BULK_UPLOAD_BAKERY).then(value => {

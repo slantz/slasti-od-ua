@@ -3,6 +3,9 @@ import ReactCrop from 'react-image-crop'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import Select from 'react-select';
+import AdminCreateIngredientsForm from './AdminCreateIngredientsForm';
+import AdminCreateFillingForm from './AdminCreateFillingForm';
+import AdminCreateBasisForm from './AdminCreateBasisForm';
 import * as AdminActions from '../../actions/AdminActions'
 import * as ADMIN_CONSTANTS from '../../constants/Admin'
 
@@ -25,6 +28,7 @@ class AdminUploadBakeryByUrl extends Component {
         const { AdminActions: { showBasisNewForm } } = this.props;
         showBasisNewForm();
     };
+
     bulkUploadImages = (images) => {
         const {
             admin: {
@@ -217,6 +221,22 @@ class AdminUploadBakeryByUrl extends Component {
         return setCurrentBasis(value);
     };
 
+    setCurrentIngredientForCreationForm = (ingredient) => {
+        console.log(ingredient);
+        const { AdminActions: { setCurrentIngredientForCreationForm } } = this.props;
+        return setCurrentIngredientForCreationForm(ingredient);
+    };
+
+    setCurrentFillingForCreationForm = (filling) => {
+        const { AdminActions: { setCurrentFillingForCreationForm } } = this.props;
+        return setCurrentFillingForCreationForm(filling);
+    };
+
+    setCurrentBasisForCreationForm = (basis) => {
+        const { AdminActions: { setCurrentBasisForCreationForm } } = this.props;
+        return setCurrentBasisForCreationForm(basis);
+    };
+
     componentWillMount() {
         this.getIngredients();
         this.getFilling();
@@ -279,12 +299,28 @@ class AdminUploadBakeryByUrl extends Component {
                 ingredients_showCreateNewForm,
                 filling_showCreateNewForm,
                 basis_showCreateNewForm
-            }
+            },
+            form,
         } = this.props,
             isNextItem = false;
+        let adminCreateIngredientForm = null;
+        let adminCreateFillingForm = null;
+        let adminCreateBasisForm = null;
 
         if (currentFileToCrop) {
             isNextItem = (nextFileIndex < (bakery.length - 1));
+        }
+
+        if (form && form['admin-create-ingredient']) {
+            adminCreateIngredientForm = form['admin-create-ingredient'];
+        }
+
+        if (form && form['admin-create-filling']) {
+            adminCreateFillingForm = form['admin-create-filling'];
+        }
+
+        if (form && form['admin-create-basis']) {
+            adminCreateBasisForm = form['admin-create-basis'];
         }
 
         return (
@@ -338,17 +374,23 @@ class AdminUploadBakeryByUrl extends Component {
                 </section>
                 {ingredients_showCreateNewForm &&
                     <section id="admin-create-new-ingredients-form">
-                        Here will be create new ingredients form
+                        <AdminCreateIngredientsForm
+                            currentForm={adminCreateIngredientForm}
+                            onSubmit={this.setCurrentIngredientForCreationForm}/>
                     </section>
                 }
                 {filling_showCreateNewForm &&
                 <section id="admin-create-new-filling-form">
-                    Here will be create new filling form
+                    <AdminCreateFillingForm
+                        currentForm={adminCreateFillingForm}
+                        onSubmit={this.setCurrentFillingForCreationForm}/>
                 </section>
                 }
                 {basis_showCreateNewForm &&
                 <section id="admin-create-new-basis-form">
-                    Here will be create new basis form
+                    <AdminCreateBasisForm
+                        currentForm={adminCreateBasisForm}
+                        onSubmit={this.setCurrentBasisForCreationForm}/>
                 </section>
                 }
             </aside>
@@ -361,7 +403,8 @@ let tempCroppedFile = null;
 // Все что хотим вытащить из стора указываем здесь, после чего они будут доступны в компоненте (App) через this.props
 function mapStateToProps(state) {
     return {
-        admin: state.admin
+        admin: state.admin,
+        form: state.form
     }
 }
 

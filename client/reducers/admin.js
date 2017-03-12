@@ -25,7 +25,10 @@ export default function admin(state = {
     nextFileIndex: null,
     ingredients_showCreateNewForm: false,
     filling_showCreateNewForm: false,
-    basis_showCreateNewForm: false
+    basis_showCreateNewForm: false,
+    ingredients_currentIngredientForCreationForm: null,
+    ingredients_currentFillingForCreationForm: null,
+    ingredients_currentBasisForCreationForm: null
 }, { type, payload }) {
     let assignedState;
 

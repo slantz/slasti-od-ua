@@ -31,41 +31,13 @@ class AdminUploadBakeryByUrl extends Component {
 
     bulkUploadImages = (images) => {
         const {
-            admin: {
-                ingredients: {
-                    currentIngredients
-                },
-                filling: {
-                    currentFilling
-                },
-                basis: {
-                    currentBasis
-                }
-            },
             AdminActions: {
                 bulkUploadImages,
                 removeImages
             }
         } = this.props;
+
         let formData = new FormData();
-        let ingredientsToBeSaved = currentIngredients.filter((ingredient) => ingredient._id === ingredient.type);
-        let fillingToBeSaved = currentFilling.filter((filling) => filling._id === filling.composition);
-        let basisToBeSaved = currentBasis.filter((basis) => basis._id === basis.type);
-
-        if (ingredientsToBeSaved.length) {
-            alert('save custom ingredients');
-            return this.showIngredientsNewForm();
-        }
-
-        if (fillingToBeSaved.length) {
-            alert('save custom filling');
-            return this.showFillingNewForm();
-        }
-
-        if (basisToBeSaved.length) {
-            alert('save custom basis');
-            return this.showBasisNewForm();
-        }
 
         images.forEach((image) => formData.append(
             ADMIN_CONSTANTS.KEY.API.IMAGES,
@@ -104,6 +76,44 @@ class AdminUploadBakeryByUrl extends Component {
             return;
         }
 
+        if (currentIngredients.length === 0) {
+            return alert('Set at least one ingredient');
+        }
+        if (currentFilling.length === 0) {
+            return alert('Set at least one filling');
+        }
+        if (currentBasis.length === 0) {
+            return alert('Set at least one basis');
+        }
+
+        /**
+         * TODO:
+         * 1. there can be several ingredients or elements to be saved
+         * current algorithm is simple, after form is successfully submitted call this submitAndGoToNextImage
+         * method again, next form will be shown if needed, as this requires no arguments
+         * after all are passed then submit or redirect
+         * 2. form should be prefilled with new values.
+         */
+
+        let ingredientsToBeSaved = currentIngredients.filter((ingredient) => ingredient._id === ingredient.type);
+        let fillingToBeSaved = currentFilling.filter((filling) => filling._id === filling.composition);
+        let basisToBeSaved = currentBasis.filter((basis) => basis._id === basis.type);
+
+        if (ingredientsToBeSaved.length) {
+            alert('save custom ingredients');
+            return this.showIngredientsNewForm();
+        }
+
+        if (fillingToBeSaved.length) {
+            alert('save custom filling');
+            return this.showFillingNewForm();
+        }
+
+        if (basisToBeSaved.length) {
+            alert('save custom basis');
+            return this.showBasisNewForm();
+        }
+
         let modifiedBakery = bakery.map(function(bakeryItem, index){
             if (index == tempCroppedFile.index) {
                 return {
@@ -116,16 +126,6 @@ class AdminUploadBakeryByUrl extends Component {
                 return bakeryItem;
             }
         });
-
-        if (currentIngredients.length === 0) {
-            return alert('Set at least one ingredient');
-        }
-        if (currentFilling.length === 0) {
-            return alert('Set at least one filling');
-        }
-        if (currentBasis.length === 0) {
-            return alert('Set at least one basis');
-        }
 
         if (bakery[nextFileIndex + 1]) {
             tempCroppedFile = null;

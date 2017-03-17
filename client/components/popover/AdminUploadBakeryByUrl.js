@@ -234,6 +234,10 @@ class AdminUploadBakeryByUrl extends Component {
 
     setCurrentBasisForCreationForm = (basis) => {
         const { AdminActions: { setCurrentBasisForCreationForm } } = this.props;
+        /**
+         * TODO make a call to backend here with submitted form data, to create new basis and submitAndGoToNext on success
+         */
+        console.log(basis);
         return setCurrentBasisForCreationForm(basis);
     };
 
@@ -303,24 +307,9 @@ class AdminUploadBakeryByUrl extends Component {
             form,
         } = this.props,
             isNextItem = false;
-        let adminCreateIngredientForm = null;
-        let adminCreateFillingForm = null;
-        let adminCreateBasisForm = null;
 
         if (currentFileToCrop) {
             isNextItem = (nextFileIndex < (bakery.length - 1));
-        }
-
-        if (form && form['admin-create-ingredient']) {
-            adminCreateIngredientForm = form['admin-create-ingredient'];
-        }
-
-        if (form && form['admin-create-filling']) {
-            adminCreateFillingForm = form['admin-create-filling'];
-        }
-
-        if (form && form['admin-create-basis']) {
-            adminCreateBasisForm = form['admin-create-basis'];
         }
 
         return (
@@ -374,23 +363,17 @@ class AdminUploadBakeryByUrl extends Component {
                 </section>
                 {ingredients_showCreateNewForm &&
                     <section id="admin-create-new-ingredients-form">
-                        <AdminCreateIngredientsForm
-                            currentForm={adminCreateIngredientForm}
-                            onSubmit={this.setCurrentIngredientForCreationForm}/>
+                        <AdminCreateIngredientsForm onSubmit={this.setCurrentIngredientForCreationForm}/>
                     </section>
                 }
                 {filling_showCreateNewForm &&
                 <section id="admin-create-new-filling-form">
-                    <AdminCreateFillingForm
-                        currentForm={adminCreateFillingForm}
-                        onSubmit={this.setCurrentFillingForCreationForm}/>
+                    <AdminCreateFillingForm onSubmit={this.setCurrentFillingForCreationForm}/>
                 </section>
                 }
                 {basis_showCreateNewForm &&
                 <section id="admin-create-new-basis-form">
-                    <AdminCreateBasisForm
-                        currentForm={adminCreateBasisForm}
-                        onSubmit={this.setCurrentBasisForCreationForm}/>
+                    <AdminCreateBasisForm onSubmit={this.setCurrentBasisForCreationForm}/>
                 </section>
                 }
             </aside>

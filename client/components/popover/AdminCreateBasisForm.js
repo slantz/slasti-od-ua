@@ -1,9 +1,11 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
+import {connect} from 'react-redux'
 import * as InputWithValidation from '../elements/InputWithValidation'
+import * as UTIL from '../../util/util'
 
-const AdminCreateBasisForm = (props) => {
-    const { handleSubmit, form } = props;
+let AdminCreateBasisForm = (props) => {
+    const { handleSubmit } = props;
 
     return (
         <form onSubmit={handleSubmit}>
@@ -28,8 +30,17 @@ const AdminCreateBasisForm = (props) => {
     )
 };
 
-export default reduxForm({
+AdminCreateBasisForm = reduxForm({
     form: 'admin-create-basis',
+    enableReinitialize: true,
     validate: InputWithValidation.validate,
     warn: InputWithValidation.warn
-})(AdminCreateBasisForm)
+})(AdminCreateBasisForm);
+
+AdminCreateBasisForm = connect(
+    state => ({
+        initialValues: UTIL.getFirstInitialValue(state.admin.basis.currentBasis, 'type')
+    })
+)(AdminCreateBasisForm);
+
+export default AdminCreateBasisForm

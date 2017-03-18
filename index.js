@@ -143,6 +143,10 @@ app.post('/api/bakery', function(req, res, next) {
     res.json(req.user);
 });
 
+app.put('/api/bakery', validation.validateBakeryBulkUpdate, function(req, res, next) {
+    res.json(req.user);
+});
+
 app.get('/api/bakery/:id', function(req, res, next) {
     res.json(req.user);
 });

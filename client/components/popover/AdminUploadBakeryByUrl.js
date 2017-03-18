@@ -29,6 +29,17 @@ class AdminUploadBakeryByUrl extends Component {
         showBasisNewForm();
     };
 
+    updateBakeryWithStuff = () => {
+        const {
+            admin: {
+                bakery: {
+                    bakery
+                }
+            }
+        } = this.props;
+        console.debug(bakery);
+    };
+
     bulkUploadImages = (images) => {
         const {
             AdminActions: {
@@ -45,8 +56,20 @@ class AdminUploadBakeryByUrl extends Component {
             image.fileBlob.name
         ));
 
+        this.clearCurrentStuff();
         removeImages();
-        bulkUploadImages(formData);
+        bulkUploadImages(formData, images).then(() => {
+            this.updateBakeryWithStuff();
+        });
+    };
+
+    clearCurrentStuff = () => {
+        const {
+            AdminActions: {
+                clearCurrentStuff
+            }
+        } = this.props;
+        clearCurrentStuff();
     };
 
     submitAndGoToNextImage = () => {
@@ -129,6 +152,7 @@ class AdminUploadBakeryByUrl extends Component {
 
         if (bakery[nextFileIndex + 1]) {
             tempCroppedFile = null;
+            this.clearCurrentStuff();
             return storeImagesAndRedirect(modifiedBakery);
         }
         return this.bulkUploadImages(modifiedBakery);
@@ -222,7 +246,6 @@ class AdminUploadBakeryByUrl extends Component {
     };
 
     setCurrentIngredientForCreationForm = (ingredient) => {
-        console.log(ingredient);
         const { AdminActions: { setCurrentIngredientForCreationForm } } = this.props;
         return setCurrentIngredientForCreationForm(ingredient);
     };
@@ -233,12 +256,13 @@ class AdminUploadBakeryByUrl extends Component {
     };
 
     setCurrentBasisForCreationForm = (basis) => {
-        const { AdminActions: { setCurrentBasisForCreationForm } } = this.props;
-        /**
-         * TODO make a call to backend here with submitted form data, to create new basis and submitAndGoToNext on success
-         */
-        console.log(basis);
-        return setCurrentBasisForCreationForm(basis);
+        const { AdminActions: { createNewBasis } } = this.props;
+        createNewBasis({
+            basis: [{
+                type: basis.type,
+                composition: basis.composition
+            }]
+        }).then(() => this.submitAndGoToNextImage());
     };
 
     componentWillMount() {
@@ -304,7 +328,6 @@ class AdminUploadBakeryByUrl extends Component {
                 filling_showCreateNewForm,
                 basis_showCreateNewForm
             },
-            form,
         } = this.props,
             isNextItem = false;
 

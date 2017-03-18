@@ -29,6 +29,10 @@ const BakerySchema = new Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'Ingredient'
     }],
+    originalName: {
+        type: String,
+        default: '',
+    },
     imgUrl: {
         type: String,
         default: ''

@@ -36,9 +36,8 @@ export default function admin(state = {
         case ADMIN_CONSTANTS.ADMIN_BULK_UPLOAD_SUCCESS:
             assignedState = Object.assign({}, state, {
                 bakery: {
-                    savedBakery: payload.bakery,
                     isFetching: false,
-                    bakery: []
+                    bakery: payload.bakery
                 },
                 currentFileToCrop: null,
                 nextFileIndex: null
@@ -145,6 +144,46 @@ export default function admin(state = {
                 }
             });
             break;
+        case ADMIN_CONSTANTS.ADMIN_CREATE_NEW_BASIS_SUCCESS:
+            assignedState = Object.assign({}, state, {
+                basis: {
+                    basis: state.basis.basis.map((base) => {
+                        if (base.type === payload.basis[0].type) {
+                            return payload.basis[0];
+                        }
+                        return base;
+                    }),
+                    currentBasis: state.basis.currentBasis.map((base) => {
+                        if (base.type === payload.basis[0].type) {
+                            return payload.basis[0];
+                        }
+                        return base;
+                    }),
+                    isFetching: false,
+                    showCreateNewForm: false
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_CREATE_NEW_BASIS_FAILURE:
+            assignedState = Object.assign({}, state, {
+                basis: {
+                    basis: state.basis.basis,
+                    currentBasis: state.basis.currentBasis,
+                    isFetching: false,
+                    showCreateNewForm: false
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_CREATE_NEW_BASIS_REQUEST:
+            assignedState = Object.assign({}, state, {
+                basis: {
+                    basis: state.basis.basis,
+                    currentBasis: state.basis.currentBasis,
+                    isFetching: true,
+                    showCreateNewForm: false
+                }
+            });
+            break;
         case ADMIN_CONSTANTS.IMAGES_FROM_LOCAL_STORAGE:
             assignedState = Object.assign({}, state, {
                 bakery: {
@@ -222,6 +261,28 @@ export default function admin(state = {
         case ADMIN_CONSTANTS.SHOW_BASIS_NEW_FORM:
             assignedState = Object.assign({}, state, {
                 basis_showCreateNewForm: !state.basis_showCreateNewForm
+            });
+            break;
+        case ADMIN_CONSTANTS.CLEAR_CURRENT_STUFF:
+            assignedState = Object.assign({}, state, {
+                filling: {
+                    isFetching: false,
+                    filling: state.filling.filling,
+                    currentFilling: [],
+                    showCreateNewForm: false
+                },
+                basis: {
+                    isFetching: false,
+                    basis: state.basis.basis,
+                    currentBasis: [],
+                    showCreateNewForm: false
+                },
+                ingredients: {
+                    isFetching: false,
+                    ingredients: state.ingredients.ingredients,
+                    currentIngredients: [],
+                    showCreateNewForm: false
+                }
             });
             break;
         default: assignedState = state

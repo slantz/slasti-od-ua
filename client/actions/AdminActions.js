@@ -28,10 +28,27 @@ function bulkUploadImagesAction(data) {
                 ADMIN_CONSTANTS.ADMIN_BULK_UPLOAD_SUCCESS,
                 ADMIN_CONSTANTS.ADMIN_BULK_UPLOAD_FAILURE
             ],
+            defaultHeaders: true,
+            dontStringify: true,
             endpoint: "/api/admin/upload/images",
             redirect: function() {
                 return redirectToAllBakery();
             }
+        }
+    }
+}
+
+function createNewBasisAction(data) {
+    return {
+        [CALL_API]: {
+            method: CORE_CONSTANTS.METHOD.POST,
+            body: data,
+            types: [
+                ADMIN_CONSTANTS.ADMIN_CREATE_NEW_BASIS_REQUEST,
+                ADMIN_CONSTANTS.ADMIN_CREATE_NEW_BASIS_SUCCESS,
+                ADMIN_CONSTANTS.ADMIN_CREATE_NEW_BASIS_FAILURE
+            ],
+            endpoint: "/api/basis"
         }
     }
 }
@@ -103,10 +120,20 @@ function removeImagesFromLocalStorage(dispatch) {
 
 // Fetches user user from express api, unless is cached.
 // Relies on Redux Thunk middleware.
-export function bulkUploadImages(data) {
+export function bulkUploadImages(data, images) {
     return (dispatch, getState) => {
         if (shouldMakeAdminRequest(getState().admin.bakery)) {
+            setImagesFromLocalStorage(images, dispatch);
             return dispatch(bulkUploadImagesAction(data))
+        }
+        return null;
+    }
+}
+
+export function createNewBasis(data) {
+    return (dispatch, getState) => {
+        if (shouldMakeAdminRequest(getState().admin.basis)) {
+            return dispatch(createNewBasisAction(data))
         }
         return null;
     }
@@ -225,6 +252,14 @@ export function storeImagesAndRedirect(images) {
 export function removeImages() {
     return (dispatch) => {
         removeImagesFromLocalStorage(dispatch);
+    }
+}
+
+export function clearCurrentStuff() {
+    return (dispatch) => {
+        dispatch({
+            type: ADMIN_CONSTANTS.CLEAR_CURRENT_STUFF,
+        });
     }
 }
 

@@ -8,7 +8,7 @@ function badRequestError(res, message) {
     return res.status(400).json({ error: new Error(message).toString() });
 }
 
-exports.validateIngredient = function(req, res, next) {
+function validateIngredient(req, res) {
     if (!req.body.ingredients || req.body.ingredients.length === 0) {
         return badRequestError(res, "No or empty ingredients collection");
     }
@@ -24,11 +24,9 @@ exports.validateIngredient = function(req, res, next) {
     if (!req.body.ingredients.every(function(ingredient){ return ingredient.substance !== undefined; })) {
         return badRequestError(res, "Ingredient should have [substance] property set");
     }
+}
 
-    return next();
-};
-
-exports.validateBasis = function(req, res, next) {
+function validateBasis(req, res) {
     if (!req.body.basis || req.body.basis.length === 0) {
         return badRequestError(res, "No or empty basis collection");
     }
@@ -40,11 +38,9 @@ exports.validateBasis = function(req, res, next) {
     if (!req.body.basis.every(function(ingredient){ return ingredient.composition !== undefined; })) {
         return badRequestError(res, "Basis should have [composition] property set");
     }
+}
 
-    return next();
-};
-
-exports.validateFilling = function(req, res, next) {
+function validateFilling(req, res) {
     if (!req.body.filling || req.body.filling.length === 0) {
         return badRequestError(res, "No or empty filling collection");
     }
@@ -56,6 +52,38 @@ exports.validateFilling = function(req, res, next) {
     if (!req.body.filling.every(function(ingredient){ return ingredient.composition !== undefined; })) {
         return badRequestError(res, "Filling should have [composition] property set");
     }
+}
 
+function validateBakeryBulkUpdate(req, res) {
+    validateIngredient(req, res);
+    validateBasis(req, res);
+    validateFilling(req, res);
+
+    if (!req.body.ids || req.body.ids.length === 0) {
+        return badRequestError(res, "No or empty ids collection");
+    }
+
+    if (!req.body.ids.every(function(id){ return typeof id === "string" || typeof id === "number"; })) {
+        return badRequestError(res, "Id should be either a string or number");
+    }
+}
+
+exports.validateIngredient = function(req, res, next) {
+    validateIngredient(req, res);
+    return next();
+};
+
+exports.validateBasis = function(req, res, next) {
+    validateBasis(req, res);
+    return next();
+};
+
+exports.validateFilling = function(req, res, next) {
+    validateFilling(req, res);
+    return next();
+};
+
+exports.validateBakeryBulkUpdate = function(req, res, next) {
+    validateBakeryBulkUpdate(req, res);
     return next();
 };

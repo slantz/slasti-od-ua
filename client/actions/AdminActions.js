@@ -31,9 +31,9 @@ function bulkUploadImagesAction(data) {
             defaultHeaders: true,
             dontStringify: true,
             endpoint: "/api/admin/upload/images",
-            redirect: function() {
-                return redirectToAllBakery();
-            }
+            // redirect: function() {
+            //     return redirectToAllBakery();
+            // }
         }
     }
 }
@@ -123,7 +123,6 @@ function removeImagesFromLocalStorage(dispatch) {
 export function bulkUploadImages(data, images) {
     return (dispatch, getState) => {
         if (shouldMakeAdminRequest(getState().admin.bakery)) {
-            setImagesFromLocalStorage(images, dispatch);
             return dispatch(bulkUploadImagesAction(data))
         }
         return null;
@@ -246,6 +245,12 @@ export function storeImagesAndRedirect(images) {
         setImagesFromLocalStorage(images, dispatch);
 
         dispatch(push(redirectToImageUploadUrl(redirectId)));
+    }
+}
+
+export function redirectToBakery() {
+    return (dispatch) => {
+        dispatch(push(redirectToAllBakery()));
     }
 }
 

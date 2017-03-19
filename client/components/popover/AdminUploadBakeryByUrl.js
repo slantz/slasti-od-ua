@@ -29,22 +29,38 @@ class AdminUploadBakeryByUrl extends Component {
         showBasisNewForm();
     };
 
-    updateBakeryWithStuff = () => {
+    /**
+     * TODO:
+     * 1. update endpoint to receive "bakeryWithStuff" map of bakery ids
+     * 2. save each bakery in parallel with proper ingredients and filling and so on
+     * 3. remove all current saved temp images
+     * 4. remove current items
+     * 5. redirect to bakery page
+     * @param images
+     */
+    updateBakeryWithStuff = (images) => {
         const {
             admin: {
                 bakery: {
                     bakery
                 }
+            },
+            AdminActions: {
+                removeImages,
+                redirectToBakery,
+                clearCurrentStuff
             }
         } = this.props;
-        console.debug(bakery);
+
+        // clearCurrentStuff();
+        // removeImages();
+        // redirectToBakery();
     };
 
     bulkUploadImages = (images) => {
         const {
             AdminActions: {
                 bulkUploadImages,
-                removeImages
             }
         } = this.props;
 
@@ -56,20 +72,9 @@ class AdminUploadBakeryByUrl extends Component {
             image.fileBlob.name
         ));
 
-        this.clearCurrentStuff();
-        removeImages();
-        bulkUploadImages(formData, images).then(() => {
-            this.updateBakeryWithStuff();
+        bulkUploadImages(formData).then(() => {
+            this.updateBakeryWithStuff(images);
         });
-    };
-
-    clearCurrentStuff = () => {
-        const {
-            AdminActions: {
-                clearCurrentStuff
-            }
-        } = this.props;
-        clearCurrentStuff();
     };
 
     submitAndGoToNextImage = () => {

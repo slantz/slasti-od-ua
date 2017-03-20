@@ -35,7 +35,7 @@ exports.all = async(function* (req, res) {
         } else {
             console.log('all of %d bakeries were successfully fetched.', docs.length);
         }
-    });
+    }).populate("ingredients filling basis");
 
     res.json({
         bakery

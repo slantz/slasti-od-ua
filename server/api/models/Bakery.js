@@ -26,7 +26,7 @@ const BakerySchema = new Schema({
         default: null
     },
     ingredients: [{
-        type: mongoose.Schema.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Ingredient'
     }],
     originalName: {
@@ -43,12 +43,12 @@ const BakerySchema = new Schema({
     },
     // shortcake
     basis: {
-        type: mongoose.Schema.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Basis'
     },
     // cream
     filling: {
-        type: mongoose.Schema.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Filling'
     },
     // glaze, cream, figures, sugar paste, icing

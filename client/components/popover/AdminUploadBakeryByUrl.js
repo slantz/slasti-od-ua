@@ -49,8 +49,8 @@ class AdminUploadBakeryByUrl extends Component {
             })[0];
 
             bake.ingredients = updateBake.currentIngredients.map((currentIngredient) => currentIngredient._id);
-            bake.basis = updateBake.currentFilling.map((currentFilling) => currentFilling._id)[0];
-            bake.filling = updateBake.currentBasis.map((currentBasis) => currentBasis._id)[0];
+            bake.filling = updateBake.currentFilling.map((currentFilling) => currentFilling._id)[0];
+            bake.basis = updateBake.currentBasis.map((currentBasis) => currentBasis._id)[0];
 
             return bake;
         });

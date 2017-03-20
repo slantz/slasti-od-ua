@@ -42,15 +42,15 @@ const BakerySchema = new Schema({
         default: 1
     },
     // shortcake
-    basis: {
+    basis: [{
         type: Schema.Types.ObjectId,
         ref: 'Basis'
-    },
+    }],
     // cream
-    filling: {
+    filling: [{
         type: Schema.Types.ObjectId,
         ref: 'Filling'
-    },
+    }],
     // glaze, cream, figures, sugar paste, icing
     decor: {
         type: String,

@@ -63,6 +63,36 @@ export default function admin(state = {
                 nextFileIndex: null
             });
             break;
+        case ADMIN_CONSTANTS.ADMIN_BULK_UDATE_BAKERY_SUCCESS:
+            assignedState = Object.assign({}, state, {
+                bakery: {
+                    isFetching: false,
+                    bakery: payload.bakery
+                },
+                currentFileToCrop: null,
+                nextFileIndex: null
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_BULK_UDATE_BAKERY_FAILURE:
+            assignedState = Object.assign({}, state, {
+                bakery: {
+                    isFetching: false,
+                    bakery: [],
+                },
+                currentFileToCrop: null,
+                nextFileIndex: null
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_BULK_UDATE_BAKERY_REQUEST:
+            assignedState = Object.assign({}, state, {
+                bakery: {
+                    isFetching: true,
+                    bakery: []
+                },
+                currentFileToCrop: null,
+                nextFileIndex: null
+            });
+            break;
         case ADMIN_CONSTANTS.ADMIN_GET_INGREDIENTS_SUCCESS:
             assignedState = Object.assign({}, state, {
                 ingredients: {

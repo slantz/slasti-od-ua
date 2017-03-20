@@ -30,10 +30,28 @@ function bulkUploadImagesAction(data) {
             ],
             defaultHeaders: true,
             dontStringify: true,
-            endpoint: "/api/admin/upload/images",
+            endpoint: "/api/admin/upload/images"
             // redirect: function() {
             //     return redirectToAllBakery();
             // }
+        }
+    }
+}
+
+function bulkUpdateBakeryAction(data) {
+    return {
+        [CALL_API]: {
+            method: CORE_CONSTANTS.METHOD.PUT,
+            body: data,
+            types: [
+                ADMIN_CONSTANTS.ADMIN_BULK_UDATE_BAKERY_REQUEST,
+                ADMIN_CONSTANTS.ADMIN_BULK_UDATE_BAKERY_SUCCESS,
+                ADMIN_CONSTANTS.ADMIN_BULK_UDATE_BAKERY_FAILURE
+            ],
+            endpoint: "/api/bakery",
+            redirect: function() {
+                return redirectToAllBakery();
+            }
         }
     }
 }
@@ -120,10 +138,19 @@ function removeImagesFromLocalStorage(dispatch) {
 
 // Fetches user user from express api, unless is cached.
 // Relies on Redux Thunk middleware.
-export function bulkUploadImages(data, images) {
+export function bulkUploadImages(data) {
     return (dispatch, getState) => {
         if (shouldMakeAdminRequest(getState().admin.bakery)) {
             return dispatch(bulkUploadImagesAction(data))
+        }
+        return null;
+    }
+}
+
+export function bulkUpdateBakery(data) {
+    return (dispatch, getState) => {
+        if (shouldMakeAdminRequest(getState().admin.bakery)) {
+            return dispatch(bulkUpdateBakeryAction(data))
         }
         return null;
     }

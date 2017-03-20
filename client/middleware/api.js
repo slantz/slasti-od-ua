@@ -30,11 +30,11 @@ function callApi(endpoint) {
         });
 }
 
-function postApi(endpoint, data, headers, dontStringify) {
+function postPutApi(endpoint, method, data, headers, dontStringify) {
     const fullUrl = constructEndpoint(endpoint);
     let request = {
         credentials: 'include',
-        method : 'POST',
+        method : method,
         body : dontStringify ? data : JSON.stringify(data),
     };
 
@@ -119,8 +119,9 @@ export default store => next => action => {
                 }))
             );
         }
-        case CORE_CONSTANTS.METHOD.POST: {
-            return postApi(endpoint, body, headers, dontStringify).then(
+        case CORE_CONSTANTS.METHOD.POST:
+        case CORE_CONSTANTS.METHOD.PUT: {
+            return postPutApi(endpoint, method, body, headers, dontStringify).then(
                 response => {
                     next(actionWith({
                         payload : response,

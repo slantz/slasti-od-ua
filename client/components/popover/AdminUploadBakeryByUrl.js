@@ -29,15 +29,6 @@ class AdminUploadBakeryByUrl extends Component {
         showBasisNewForm();
     };
 
-    /**
-     * TODO:
-     * 1. update endpoint to receive "bakeryWithStuff" map of bakery ids
-     * 2. save each bakery in parallel with proper ingredients and filling and so on
-     * 3. remove all current saved temp images
-     * 4. remove current items
-     * 5. redirect to bakery page
-     * @param images
-     */
     updateBakeryWithStuff = (images) => {
         const {
             admin: {
@@ -47,14 +38,37 @@ class AdminUploadBakeryByUrl extends Component {
             },
             AdminActions: {
                 removeImages,
-                redirectToBakery,
+                bulkUpdateBakery,
                 clearCurrentStuff
             }
         } = this.props;
 
-        // clearCurrentStuff();
-        // removeImages();
-        // redirectToBakery();
+        let updatedBakery = bakery.map((bake) => {
+            let updateBake = images.filter((image) => {
+                return image.fileBlob.name === bake.originalName;
+            })[0];
+
+            bake.ingredients = updateBake.currentIngredients.map((currentIngredient) => currentIngredient._id);
+            bake.basis = updateBake.currentFilling.map((currentFilling) => currentFilling._id)[0];
+            bake.filling = updateBake.currentBasis.map((currentBasis) => currentBasis._id)[0];
+
+            return bake;
+        });
+
+        let request = updatedBakery.reduce((bakeryWithStuff, updatedBake) => {
+            bakeryWithStuff.bakeryWithStuff[updatedBake._id] = {
+                ["basis"] : updatedBake.basis,
+                ["filling"] : updatedBake.filling,
+                ["ingredients"] : updatedBake.ingredients,
+            };
+            return bakeryWithStuff;
+        }, {"bakeryWithStuff": {}});
+
+        console.log(request);
+
+        clearCurrentStuff();
+        removeImages();
+        bulkUpdateBakery(request);
     };
 
     bulkUploadImages = (images) => {
@@ -95,7 +109,8 @@ class AdminUploadBakeryByUrl extends Component {
                 nextFileIndex
             },
             AdminActions: {
-                storeImagesAndRedirect
+                storeImagesAndRedirect,
+                clearCurrentStuff
             }
         } = this.props;
 
@@ -157,7 +172,7 @@ class AdminUploadBakeryByUrl extends Component {
 
         if (bakery[nextFileIndex + 1]) {
             tempCroppedFile = null;
-            this.clearCurrentStuff();
+            clearCurrentStuff();
             return storeImagesAndRedirect(modifiedBakery);
         }
         return this.bulkUploadImages(modifiedBakery);

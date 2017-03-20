@@ -55,17 +55,17 @@ function validateFilling(req, res) {
 }
 
 function validateBakeryBulkUpdate(req, res) {
-    validateIngredient(req, res);
-    validateBasis(req, res);
-    validateFilling(req, res);
-
-    if (!req.body.ids || req.body.ids.length === 0) {
-        return badRequestError(res, "No or empty ids collection");
+    if (!req.body.bakeryWithStuff || Object.keys(req.body.bakeryWithStuff).length === 0) {
+        return badRequestError(res, "No or empty [bakeryWithStuff] body");
     }
 
-    if (!req.body.ids.every(function(id){ return typeof id === "string" || typeof id === "number"; })) {
-        return badRequestError(res, "Id should be either a string or number");
-    }
+    Object.keys(req.body.bakeryWithStuff).forEach((bakeryId) => {
+        let bakery = req.body.bakeryWithStuff[bakeryId];
+
+        if (!bakery.ingredients.every(function(ingredient){ return ingredient.composition !== undefined; })) {
+
+        }
+    });
 }
 
 exports.validateIngredient = function(req, res, next) {

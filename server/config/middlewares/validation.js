@@ -62,8 +62,16 @@ function validateBakeryBulkUpdate(req, res) {
     Object.keys(req.body.bakeryWithStuff).forEach((bakeryId) => {
         let bakery = req.body.bakeryWithStuff[bakeryId];
 
-        if (!bakery.ingredients.every(function(ingredient){ return ingredient.composition !== undefined; })) {
+        if (!bakery.ingredients.every(function(ingredient){ return ingredient.length > 0; })) {
+            return badRequestError(res, "Some [ingredient] ids are missing");
+        }
 
+        if (bakery.filling.length === 0) {
+            return badRequestError(res, "[filling] is empty");
+        }
+
+        if (bakery.basis.length === 0) {
+            return badRequestError(res, "[basis] is empty");
         }
     });
 }

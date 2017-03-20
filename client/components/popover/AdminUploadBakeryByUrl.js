@@ -64,8 +64,6 @@ class AdminUploadBakeryByUrl extends Component {
             return bakeryWithStuff;
         }, {"bakeryWithStuff": {}});
 
-        console.log(request);
-
         clearCurrentStuff();
         removeImages();
         bulkUpdateBakery(request);

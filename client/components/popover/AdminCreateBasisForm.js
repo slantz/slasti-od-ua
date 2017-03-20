@@ -33,7 +33,7 @@ let AdminCreateBasisForm = (props) => {
 AdminCreateBasisForm = reduxForm({
     form: 'admin-create-basis',
     enableReinitialize: true,
-    validate: InputWithValidation.validate,
+    validate: InputWithValidation.validateBasis,
     warn: InputWithValidation.warn
 })(AdminCreateBasisForm);
 

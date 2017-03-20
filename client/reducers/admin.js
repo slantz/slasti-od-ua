@@ -98,8 +98,7 @@ export default function admin(state = {
                 ingredients: {
                     ingredients: payload.ingredients,
                     currentIngredients: [],
-                    isFetching: false,
-                    showCreateNewForm: false
+                    isFetching: false
                 }
             });
             break;
@@ -108,8 +107,7 @@ export default function admin(state = {
                 ingredients: {
                     ingredients: [],
                     currentIngredients: [],
-                    isFetching: false,
-                    showCreateNewForm: false
+                    isFetching: false
                 }
             });
             break;
@@ -125,8 +123,7 @@ export default function admin(state = {
                 filling: {
                     filling: payload.filling,
                     currentFilling: [],
-                    isFetching: false,
-                    showCreateNewForm: false
+                    isFetching: false
                 }
             });
             break;
@@ -135,8 +132,7 @@ export default function admin(state = {
                 filling: {
                     filling: [],
                     currentFilling: [],
-                    isFetching: false,
-                    showCreateNewForm: false
+                    isFetching: false
                 }
             });
             break;
@@ -152,8 +148,7 @@ export default function admin(state = {
                 basis: {
                     basis: payload.basis,
                     currentBasis: [],
-                    isFetching: false,
-                    showCreateNewForm: false
+                    isFetching: false
                 }
             });
             break;
@@ -162,8 +157,7 @@ export default function admin(state = {
                 basis: {
                     basis: [],
                     currentBasis: [],
-                    isFetching: false,
-                    showCreateNewForm: false
+                    isFetching: false
                 }
             });
             break;
@@ -189,8 +183,7 @@ export default function admin(state = {
                         }
                         return base;
                     }),
-                    isFetching: false,
-                    showCreateNewForm: false
+                    isFetching: false
                 }
             });
             break;
@@ -199,8 +192,7 @@ export default function admin(state = {
                 basis: {
                     basis: state.basis.basis,
                     currentBasis: state.basis.currentBasis,
-                    isFetching: false,
-                    showCreateNewForm: false
+                    isFetching: false
                 }
             });
             break;
@@ -209,8 +201,81 @@ export default function admin(state = {
                 basis: {
                     basis: state.basis.basis,
                     currentBasis: state.basis.currentBasis,
-                    isFetching: true,
-                    showCreateNewForm: false
+                    isFetching: true
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_CREATE_NEW_FILLING_SUCCESS:
+            assignedState = Object.assign({}, state, {
+                filling: {
+                    filling: state.filling.filling.map((filling) => {
+                        if (filling.taste === payload.filling[0].taste) {
+                            return payload.filling[0];
+                        }
+                        return filling;
+                    }),
+                    currentFilling: state.filling.currentFilling.map((filling) => {
+                        if (filling.composition === payload.filling[0].composition) {
+                            return payload.filling[0];
+                        }
+                        return filling;
+                    }),
+                    isFetching: false
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_CREATE_NEW_FILLING_FAILURE:
+            assignedState = Object.assign({}, state, {
+                filling: {
+                    filling: state.filling.filling,
+                    currentFilling: state.filling.currentFilling,
+                    isFetching: false
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_CREATE_NEW_FILLING_REQUEST:
+            assignedState = Object.assign({}, state, {
+                filling: {
+                    filling: state.filling.filling,
+                    currentFilling: state.filling.currentFilling,
+                    isFetching: true
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_CREATE_NEW_INGREDIENT_SUCCESS:
+            assignedState = Object.assign({}, state, {
+                ingredients: {
+                    ingredients: state.ingredients.ingredients.map((ingredient) => {
+                        if (ingredient.type === payload.ingredients[0].type) {
+                            return payload.ingredients[0];
+                        }
+                        return ingredient;
+                    }),
+                    currentIngredients: state.ingredients.currentIngredients.map((ingredient) => {
+                        if (ingredient.type === payload.ingredients[0].type) {
+                            return payload.ingredients[0];
+                        }
+                        return ingredient;
+                    }),
+                    isFetching: false
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_CREATE_NEW_INGREDIENT_FAILURE:
+            assignedState = Object.assign({}, state, {
+                ingredients: {
+                    ingredients: state.ingredients.ingredients,
+                    currentIngredients: state.ingredients.currentIngredients,
+                    isFetching: false
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_CREATE_NEW_INGREDIENT_REQUEST:
+            assignedState = Object.assign({}, state, {
+                ingredients: {
+                    ingredients: state.ingredients.ingredients,
+                    currentIngredients: state.ingredients.currentIngredients,
+                    isFetching: true
                 }
             });
             break;
@@ -291,6 +356,13 @@ export default function admin(state = {
         case ADMIN_CONSTANTS.SHOW_BASIS_NEW_FORM:
             assignedState = Object.assign({}, state, {
                 basis_showCreateNewForm: !state.basis_showCreateNewForm
+            });
+            break;
+        case ADMIN_CONSTANTS.HIDE_ALL_FORMS:
+            assignedState = Object.assign({}, state, {
+                basis_showCreateNewForm: false,
+                ingredients_showCreateNewForm: false,
+                filling_showCreateNewForm: false,
             });
             break;
         case ADMIN_CONSTANTS.CLEAR_CURRENT_STUFF:

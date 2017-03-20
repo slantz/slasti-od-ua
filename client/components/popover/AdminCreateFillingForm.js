@@ -1,28 +1,32 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
+import {connect} from 'react-redux'
+import * as InputWithValidation from '../elements/InputWithValidation'
+import * as UTIL from '../../util/util'
 
-const AdminCreateFillingForm = (props) => {
+let AdminCreateFillingForm = (props) => {
     const { handleSubmit } = props;
+
     return (
         <form onSubmit={handleSubmit}>
             <fieldset>
                 <label htmlFor="taste">Create Filling Taste</label>
                 <div>
                     <Field name="taste"
-                           component="input"
+                           component={InputWithValidation.renderField}
                            type="text"
-                           placeholder="Taste"
-                           validate={tasteValidate}/>
+                           label="Taste"
+                           placeholder="Taste"/>
                 </div>
             </fieldset>
             <fieldset>
                 <label htmlFor="composition">Create Filling Composition</label>
                 <div>
                     <Field name="composition"
-                           component="input"
+                           component={InputWithValidation.renderField}
                            type="text"
-                           placeholder="Composition"
-                           validate={compositionValidate}/>
+                           label="Composition"
+                           placeholder="Composition"/>
                 </div>
             </fieldset>
             <fieldset>
@@ -32,18 +36,17 @@ const AdminCreateFillingForm = (props) => {
     )
 };
 
-function stringValidator(value) {
-    return !(!value || value.length === 0);
-}
+AdminCreateFillingForm = reduxForm({
+    form: 'admin-create-filling',
+    enableReinitialize: true,
+    validate: InputWithValidation.validateFilling,
+    warn: InputWithValidation.warn
+})(AdminCreateFillingForm);
 
-function tasteValidate(value, allValue, props) {
-    return stringValidator(value);
-}
+AdminCreateFillingForm = connect(
+    state => ({
+        initialValues: UTIL.getFirstInitialValue(state.admin.filling.currentFilling, 'composition')
+    })
+)(AdminCreateFillingForm);
 
-function compositionValidate(value, allValue, props) {
-    return stringValidator(value);
-}
-
-export default reduxForm({
-    form: 'admin-create-filling'
-})(AdminCreateFillingForm)
+export default AdminCreateFillingForm

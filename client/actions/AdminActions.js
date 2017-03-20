@@ -71,6 +71,36 @@ function createNewBasisAction(data) {
     }
 }
 
+function createNewFillingAction(data) {
+    return {
+        [CALL_API]: {
+            method: CORE_CONSTANTS.METHOD.POST,
+            body: data,
+            types: [
+                ADMIN_CONSTANTS.ADMIN_CREATE_NEW_FILLING_REQUEST,
+                ADMIN_CONSTANTS.ADMIN_CREATE_NEW_FILLING_SUCCESS,
+                ADMIN_CONSTANTS.ADMIN_CREATE_NEW_FILLING_FAILURE
+            ],
+            endpoint: "/api/filling"
+        }
+    }
+}
+
+function createNewIngredientAction(data) {
+    return {
+        [CALL_API]: {
+            method: CORE_CONSTANTS.METHOD.POST,
+            body: data,
+            types: [
+                ADMIN_CONSTANTS.ADMIN_CREATE_NEW_INGREDIENT_REQUEST,
+                ADMIN_CONSTANTS.ADMIN_CREATE_NEW_INGREDIENT_SUCCESS,
+                ADMIN_CONSTANTS.ADMIN_CREATE_NEW_FILLING_FAILURE
+            ],
+            endpoint: "/api/ingredients"
+        }
+    }
+}
+
 function getAllIngredients() {
     return {
         [CALL_API]: {
@@ -160,6 +190,24 @@ export function createNewBasis(data) {
     return (dispatch, getState) => {
         if (shouldMakeAdminRequest(getState().admin.basis)) {
             return dispatch(createNewBasisAction(data))
+        }
+        return null;
+    }
+}
+
+export function createNewFilling(data) {
+    return (dispatch, getState) => {
+        if (shouldMakeAdminRequest(getState().admin.filling)) {
+            return dispatch(createNewFillingAction(data))
+        }
+        return null;
+    }
+}
+
+export function createNewIngredient(data) {
+    return (dispatch, getState) => {
+        if (shouldMakeAdminRequest(getState().admin.ingredients)) {
+            return dispatch(createNewIngredientAction(data))
         }
         return null;
     }
@@ -327,6 +375,14 @@ export function showBasisNewForm() {
     return (dispatch) => {
         return dispatch({
             type: ADMIN_CONSTANTS.SHOW_BASIS_NEW_FORM
+        });
+    }
+}
+
+export function hideAllForms() {
+    return (dispatch) => {
+        return dispatch({
+            type: ADMIN_CONSTANTS.HIDE_ALL_FORMS
         });
     }
 }

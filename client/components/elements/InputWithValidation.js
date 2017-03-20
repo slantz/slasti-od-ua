@@ -2,10 +2,13 @@ import React from 'react'
 
 function stringValidator(value) {
     return !value || value.length === 0;
-
 }
 
-export const validate = values => {
+function numberValidator(value) {
+    return !value || value === 0;
+}
+
+export const validateBasis = values => {
     const errors = {};
 
     if (stringValidator(values.type)) {
@@ -14,6 +17,42 @@ export const validate = values => {
 
     if (stringValidator(values.composition)) {
         errors.composition = 'Required composition';
+    }
+
+    return errors;
+};
+
+export const validateFilling = values => {
+    const errors = {};
+
+    if (stringValidator(values.taste)) {
+        errors.taste = 'Required taste';
+    }
+
+    if (stringValidator(values.composition)) {
+        errors.composition = 'Required composition';
+    }
+
+    return errors;
+};
+
+export const validateIngredients = values => {
+    const errors = {};
+
+    if (stringValidator(values.type)) {
+        errors.type = 'Required type';
+    }
+
+    if (stringValidator(values.taste)) {
+        errors.taste = 'Required taste';
+    }
+
+    if (stringValidator(values.substance)) {
+        errors.substance = 'Required substance';
+    }
+
+    if (numberValidator(values.price)) {
+        errors.price = 'Required price';
     }
 
     return errors;

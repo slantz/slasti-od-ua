@@ -108,7 +108,8 @@ class AdminUploadBakeryByUrl extends Component {
             },
             AdminActions: {
                 storeImagesAndRedirect,
-                clearCurrentStuff
+                clearCurrentStuff,
+                hideAllForms
             }
         } = this.props;
 
@@ -139,6 +140,8 @@ class AdminUploadBakeryByUrl extends Component {
         let ingredientsToBeSaved = currentIngredients.filter((ingredient) => ingredient._id === ingredient.type);
         let fillingToBeSaved = currentFilling.filter((filling) => filling._id === filling.composition);
         let basisToBeSaved = currentBasis.filter((basis) => basis._id === basis.type);
+
+        hideAllForms();
 
         if (ingredientsToBeSaved.length) {
             alert('save custom ingredients');
@@ -233,7 +236,7 @@ class AdminUploadBakeryByUrl extends Component {
         }
     };
 
-    getIngredients = (input, callback) => {
+    getIngredients = () => {
         const { AdminActions: { getIngredients } } = this.props;
         return getIngredients();
     };
@@ -264,13 +267,25 @@ class AdminUploadBakeryByUrl extends Component {
     };
 
     setCurrentIngredientForCreationForm = (ingredient) => {
-        const { AdminActions: { setCurrentIngredientForCreationForm } } = this.props;
-        return setCurrentIngredientForCreationForm(ingredient);
+        const { AdminActions: { createNewIngredient } } = this.props;
+        createNewIngredient({
+            ingredients: [{
+                type: ingredient.type,
+                taste: ingredient.taste,
+                substance: ingredient.substance,
+                price: ingredient.price
+            }]
+        }).then(() => this.submitAndGoToNextImage());
     };
 
     setCurrentFillingForCreationForm = (filling) => {
-        const { AdminActions: { setCurrentFillingForCreationForm } } = this.props;
-        return setCurrentFillingForCreationForm(filling);
+        const { AdminActions: { createNewFilling } } = this.props;
+        createNewFilling({
+            filling: [{
+                taste: filling.taste,
+                composition: filling.composition
+            }]
+        }).then(() => this.submitAndGoToNextImage());
     };
 
     setCurrentBasisForCreationForm = (basis) => {
@@ -408,14 +423,14 @@ class AdminUploadBakeryByUrl extends Component {
                     </section>
                 }
                 {filling_showCreateNewForm &&
-                <section id="admin-create-new-filling-form">
-                    <AdminCreateFillingForm onSubmit={this.setCurrentFillingForCreationForm}/>
-                </section>
+                    <section id="admin-create-new-filling-form">
+                        <AdminCreateFillingForm onSubmit={this.setCurrentFillingForCreationForm}/>
+                    </section>
                 }
                 {basis_showCreateNewForm &&
-                <section id="admin-create-new-basis-form">
-                    <AdminCreateBasisForm onSubmit={this.setCurrentBasisForCreationForm}/>
-                </section>
+                    <section id="admin-create-new-basis-form">
+                        <AdminCreateBasisForm onSubmit={this.setCurrentBasisForCreationForm}/>
+                    </section>
                 }
             </aside>
         )

@@ -1,48 +1,52 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
+import {connect} from 'react-redux'
+import * as InputWithValidation from '../elements/InputWithValidation'
+import * as UTIL from '../../util/util'
 
-const AdminCreateIngredientsForm = (props) => {
+let AdminCreateIngredientsForm = (props) => {
     const { handleSubmit } = props;
+
     return (
         <form onSubmit={handleSubmit}>
             <fieldset>
                 <label htmlFor="type">Create Ingredient Type</label>
                 <div>
                     <Field name="type"
-                           component="input"
+                           component={InputWithValidation.renderField}
                            type="text"
-                           placeholder="Type"
-                           validate={typeValidate}/>
+                           label="Type"
+                           placeholder="Type"/>
                 </div>
             </fieldset>
             <fieldset>
                 <label htmlFor="taste">Create Ingredient Taste</label>
                 <div>
                     <Field name="taste"
-                           component="input"
+                           component={InputWithValidation.renderField}
                            type="text"
-                           placeholder="Taste"
-                           validate={tasteValidate}/>
+                           label="Taste"
+                           placeholder="Taste"/>
                 </div>
             </fieldset>
             <fieldset>
                 <label htmlFor="substance">Create Ingredient Substance</label>
                 <div>
                     <Field name="substance"
-                           component="input"
+                           component={InputWithValidation.renderField}
                            type="text"
-                           placeholder="Substance"
-                           validate={substanceValidate}/>
+                           label="Substance"
+                           placeholder="Substance"/>
                 </div>
             </fieldset>
             <fieldset>
                 <label htmlFor="price">Create Ingredient Price</label>
                 <div>
                     <Field name="price"
-                           component="input"
+                           component={InputWithValidation.renderField}
                            type="number"
-                           placeholder="Price"
-                           validate={priceValidate}/>
+                           label="Price"
+                           placeholder="Price"/>
                 </div>
             </fieldset>
             <fieldset>
@@ -52,30 +56,17 @@ const AdminCreateIngredientsForm = (props) => {
     )
 };
 
-function stringValidator(value) {
-    return !(!value || value.length === 0);
-}
+AdminCreateIngredientsForm = reduxForm({
+    form: 'admin-create-ingredient',
+    enableReinitialize: true,
+    validate: InputWithValidation.validateIngredients,
+    warn: InputWithValidation.warn
+})(AdminCreateIngredientsForm);
 
-function numberValidator(value) {
-    return !(!value || value === 0);
-}
+AdminCreateIngredientsForm = connect(
+    state => ({
+        initialValues: UTIL.getFirstInitialValue(state.admin.ingredients.currentIngredients, 'type')
+    })
+)(AdminCreateIngredientsForm);
 
-function typeValidate(value, allValue, props) {
-    return stringValidator(value);
-}
-
-function tasteValidate(value, allValue, props) {
-    return stringValidator(value);
-}
-
-function substanceValidate(value, allValue, props) {
-    return stringValidator(value);
-}
-
-function priceValidate(value, allValue, props) {
-    return numberValidator(value);
-}
-
-export default reduxForm({
-    form: 'admin-create-ingredient'
-})(AdminCreateIngredientsForm)
+export default AdminCreateIngredientsForm

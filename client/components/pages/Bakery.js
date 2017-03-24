@@ -9,17 +9,12 @@ class Bakery extends Component {
         super(props)
     }
 
-    doStuff = () => {
-        const { BakeryActions: { doStuff } } = this.props;
-        doStuff()
-    };
-
     loginToVk = () => {
         window.location.href = '/auth/vk'
     };
 
     getBakery = () => {
-        const { AdminActions: { getBakery } } = this.props;
+        const { BakeryActions: { getBakery } } = this.props;
         return getBakery();
     };
 
@@ -28,12 +23,11 @@ class Bakery extends Component {
     }
 
     render() {
-        const { user } = this.props
+        const { user } = this.props;
 
         return (
             <article id="sou-bakery">
                 <div>Catalog {user.name}</div>
-                <button onClick={this.doStuff}>Do some stuff</button>
                 <Link to="bakery/0">Go to bakery item #0 page</Link>
                 <Link to="admin">Go to bakery ADMIN page</Link>
                 <button onClick={this.loginToVk}>azaza vk login</button>
@@ -46,7 +40,8 @@ class Bakery extends Component {
 // Все что хотим вытащить из стора указываем здесь, после чего они будут доступны в компоненте (App) через this.props
 function mapStateToProps(state) {
     return {
-        user: state.core.user
+        user: state.core.user,
+        bakery: state.bakery
     }
 }
 

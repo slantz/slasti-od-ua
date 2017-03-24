@@ -58,6 +58,20 @@ export const validateIngredients = values => {
     return errors;
 };
 
+export const validateCategoryWeightDecor = values => {
+    const errors = {};
+
+    if (stringValidator(values.category)) {
+        errors.category = 'Required category';
+    }
+
+    if (numberValidator(values.weight)) {
+        errors.weight = 'Required weight';
+    }
+
+    return errors;
+};
+
 export const warn = values => {
     const warnings = {};
 

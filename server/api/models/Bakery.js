@@ -53,8 +53,8 @@ const BakerySchema = new Schema({
     }],
     // glaze, cream, figures, sugar paste, icing
     decor: {
-        type: String,
-        default: ''
+        type: Array,
+        default: []
     }
 });
 

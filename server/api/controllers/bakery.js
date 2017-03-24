@@ -57,6 +57,9 @@ exports.updateBulk = async(function* (req, res) {
                     doc.ingredients = doc.ingredients.concat(bakeryWithStuff[doc._id].ingredients);
                     doc.filling = bakeryWithStuff[doc._id].filling;
                     doc.basis = bakeryWithStuff[doc._id].basis;
+                    doc.category = bakeryWithStuff[doc._id].category;
+                    doc.weight = bakeryWithStuff[doc._id].weight;
+                    doc.decor = bakeryWithStuff[doc._id].decor;
                     yield doc.save((err) => {
                         console.log(err);
                     });

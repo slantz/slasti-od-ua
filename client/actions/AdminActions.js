@@ -386,3 +386,12 @@ export function hideAllForms() {
         });
     }
 }
+
+export function setNewDecor(currentDecor) {
+    return (dispatch) => {
+        return dispatch({
+            type: ADMIN_CONSTANTS.ADMIN_CREATE_NEW_DECOR,
+            payload: currentDecor
+        });
+    }
+}

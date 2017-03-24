@@ -6,6 +6,7 @@ import Select from 'react-select';
 import AdminCreateIngredientsForm from './AdminCreateIngredientsForm';
 import AdminCreateFillingForm from './AdminCreateFillingForm';
 import AdminCreateBasisForm from './AdminCreateBasisForm';
+import AdminCreateCategoryWeightDecorForm from "./AdminCreateCategoryWeightDecorForm";
 import * as AdminActions from '../../actions/AdminActions'
 import * as ADMIN_CONSTANTS from '../../constants/Admin'
 
@@ -51,6 +52,19 @@ class AdminUploadBakeryByUrl extends Component {
             bake.ingredients = updateBake.currentIngredients.map((currentIngredient) => currentIngredient._id);
             bake.filling = updateBake.currentFilling.map((currentFilling) => currentFilling._id);
             bake.basis = updateBake.currentBasis.map((currentBasis) => currentBasis._id);
+            bake.category = updateBake.category;
+
+            if (updateBake.weight) {
+                bake.weight = updateBake.weight;
+            } else {
+                bake.weight = 0;
+            }
+
+            if (updateBake.decor) {
+                bake.decor = updateBake.decor;
+            } else {
+                bake.decor = [];
+            }
 
             return bake;
         });
@@ -60,6 +74,9 @@ class AdminUploadBakeryByUrl extends Component {
                 ["basis"] : updatedBake.basis,
                 ["filling"] : updatedBake.filling,
                 ["ingredients"] : updatedBake.ingredients,
+                ["category"] : updatedBake.category,
+                ["decor"] : updatedBake.decor,
+                ["weight"] : updatedBake.weight
             };
             return bakeryWithStuff;
         }, {"bakeryWithStuff": {}});
@@ -104,8 +121,10 @@ class AdminUploadBakeryByUrl extends Component {
                 basis: {
                     currentBasis
                 },
-                nextFileIndex
+                nextFileIndex,
+                currentDecor
             },
+            form,
             AdminActions: {
                 storeImagesAndRedirect,
                 clearCurrentStuff,
@@ -128,15 +147,6 @@ class AdminUploadBakeryByUrl extends Component {
             return alert('Set at least one basis');
         }
 
-        /**
-         * TODO:
-         * 1. there can be several ingredients or elements to be saved
-         * current algorithm is simple, after form is successfully submitted call this submitAndGoToNextImage
-         * method again, next form will be shown if needed, as this requires no arguments
-         * after all are passed then submit or redirect
-         * 2. form should be prefilled with new values.
-         */
-
         let ingredientsToBeSaved = currentIngredients.filter((ingredient) => ingredient._id === ingredient.type);
         let fillingToBeSaved = currentFilling.filter((filling) => filling._id === filling.composition);
         let basisToBeSaved = currentBasis.filter((basis) => basis._id === basis.type);
@@ -158,14 +168,33 @@ class AdminUploadBakeryByUrl extends Component {
             return this.showBasisNewForm();
         }
 
+        if (!form
+            || !form['admin-create-category-weight-decor']
+            || !form['admin-create-category-weight-decor'].values
+            || !form['admin-create-category-weight-decor'].values.category) {
+            alert('set category!!!');
+            return;
+        }
+
         let modifiedBakery = bakery.map(function(bakeryItem, index){
-            if (index == tempCroppedFile.index) {
-                return {
+            if (index === tempCroppedFile.index) {
+                let newItem = {
                     fileBlob: tempCroppedFile.file,
                     currentIngredients,
                     currentFilling,
-                    currentBasis
+                    currentBasis,
+                    category: form['admin-create-category-weight-decor'].values.category
                 };
+
+                if (currentDecor.length > 0) {
+                    newItem.decor = currentDecor.map((decor) => decor.value);
+                }
+
+                if (form['admin-create-category-weight-decor'].values.weight) {
+                    newItem.weight = form['admin-create-category-weight-decor'].values.weight;
+                }
+
+                return newItem;
             } else {
                 return bakeryItem;
             }
@@ -213,8 +242,6 @@ class AdminUploadBakeryByUrl extends Component {
             canvas.width = pixelCrop.width;
             canvas.height = pixelCrop.height;
             var ctx = canvas.getContext('2d');
-
-
 
             ctx.drawImage(loadedImg, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
 
@@ -266,6 +293,11 @@ class AdminUploadBakeryByUrl extends Component {
         return setCurrentBasis(value);
     };
 
+    setCurrentDecor = (decor) => {
+        const { AdminActions: { setNewDecor } } = this.props;
+        return setNewDecor(decor);
+    };
+
     setCurrentIngredientForCreationForm = (ingredient) => {
         const { AdminActions: { createNewIngredient } } = this.props;
         createNewIngredient({
@@ -307,7 +339,7 @@ class AdminUploadBakeryByUrl extends Component {
     componentDidMount() {
         let { admin: { bakery: { bakery } } } = this.props;
 
-        if (Array.isArray(bakery) && bakery.length == 0) {
+        if (Array.isArray(bakery) && bakery.length === 0) {
             this.getImagesFromLocalStorage();
         }
     }
@@ -355,6 +387,7 @@ class AdminUploadBakeryByUrl extends Component {
                     basis,
                     currentBasis
                 },
+                currentDecor,
                 currentFileToCrop,
                 nextFileIndex,
                 ingredients_showCreateNewForm,
@@ -416,6 +449,10 @@ class AdminUploadBakeryByUrl extends Component {
                             onChange={this.setCurrentBasis}
                         />
                     </article>
+                </section>
+                <section id="admin-add-category-weight-decor-form">
+                    <AdminCreateCategoryWeightDecorForm currentDecor={currentDecor}
+                                                        onSetCurrentDecor={this.setCurrentDecor}/>
                 </section>
                 {ingredients_showCreateNewForm &&
                     <section id="admin-create-new-ingredients-form">

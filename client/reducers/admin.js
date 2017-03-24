@@ -21,6 +21,7 @@ export default function admin(state = {
         currentBasis: [],
         isFetching: false
     },
+    currentDecor: [],
     currentFileToCrop: null,
     nextFileIndex: null,
     ingredients_showCreateNewForm: false,
@@ -40,6 +41,7 @@ export default function admin(state = {
                     bakery: payload.bakery
                 },
                 currentFileToCrop: null,
+                currentDecor: [],
                 nextFileIndex: null
             });
             break;
@@ -50,6 +52,7 @@ export default function admin(state = {
                     bakery: [],
                 },
                 currentFileToCrop: null,
+                currentDecor: [],
                 nextFileIndex: null
             });
             break;
@@ -60,6 +63,7 @@ export default function admin(state = {
                     bakery: []
                 },
                 currentFileToCrop: null,
+                currentDecor: [],
                 nextFileIndex: null
             });
             break;
@@ -70,6 +74,7 @@ export default function admin(state = {
                     bakery: payload.bakery
                 },
                 currentFileToCrop: null,
+                currentDecor: [],
                 nextFileIndex: null
             });
             break;
@@ -80,6 +85,7 @@ export default function admin(state = {
                     bakery: [],
                 },
                 currentFileToCrop: null,
+                currentDecor: [],
                 nextFileIndex: null
             });
             break;
@@ -90,6 +96,7 @@ export default function admin(state = {
                     bakery: []
                 },
                 currentFileToCrop: null,
+                currentDecor: [],
                 nextFileIndex: null
             });
             break;
@@ -279,6 +286,11 @@ export default function admin(state = {
                 }
             });
             break;
+        case ADMIN_CONSTANTS.ADMIN_CREATE_NEW_DECOR:
+            assignedState = Object.assign({}, state, {
+                currentDecor: payload
+            });
+            break;
         case ADMIN_CONSTANTS.IMAGES_FROM_LOCAL_STORAGE:
             assignedState = Object.assign({}, state, {
                 bakery: {
@@ -294,6 +306,7 @@ export default function admin(state = {
                     bakery: payload
                 },
                 currentFileToCrop: null,
+                currentDecor: [],
                 nextFileIndex: null
             });
             break;
@@ -310,6 +323,7 @@ export default function admin(state = {
                     bakery: []
                 },
                 currentFileToCrop: null,
+                currentDecor: [],
                 nextFileIndex: null
             });
             break;
@@ -384,7 +398,8 @@ export default function admin(state = {
                     ingredients: state.ingredients.ingredients,
                     currentIngredients: [],
                     showCreateNewForm: false
-                }
+                },
+                currentDecor: []
             });
             break;
         default: assignedState = state

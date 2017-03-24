@@ -60,6 +60,7 @@ exports.updateBulk = async(function* (req, res) {
                     doc.category = bakeryWithStuff[doc._id].category;
                     doc.weight = bakeryWithStuff[doc._id].weight;
                     doc.decor = bakeryWithStuff[doc._id].decor;
+                    doc.numberOfPieces = bakeryWithStuff[doc._id].numberOfPieces;
                     yield doc.save((err) => {
                         console.log(err);
                     });

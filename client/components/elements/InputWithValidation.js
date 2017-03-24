@@ -69,6 +69,10 @@ export const validateCategoryWeightDecor = values => {
         errors.weight = 'Required weight';
     }
 
+    if (numberValidator(values.numberOfPieces)) {
+        errors.numberOfPieces = 'Required Number Of Pieces';
+    }
+
     return errors;
 };
 

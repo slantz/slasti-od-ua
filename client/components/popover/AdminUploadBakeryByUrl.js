@@ -60,6 +60,12 @@ class AdminUploadBakeryByUrl extends Component {
                 bake.weight = 0;
             }
 
+            if (updateBake.numberOfPieces) {
+                bake.numberOfPieces = updateBake.numberOfPieces;
+            } else {
+                bake.numberOfPieces = 1;
+            }
+
             if (updateBake.decor) {
                 bake.decor = updateBake.decor;
             } else {
@@ -76,7 +82,8 @@ class AdminUploadBakeryByUrl extends Component {
                 ["ingredients"] : updatedBake.ingredients,
                 ["category"] : updatedBake.category,
                 ["decor"] : updatedBake.decor,
-                ["weight"] : updatedBake.weight
+                ["weight"] : updatedBake.weight,
+                ["numberOfPieces"] : updatedBake.numberOfPieces
             };
             return bakeryWithStuff;
         }, {"bakeryWithStuff": {}});
@@ -192,6 +199,10 @@ class AdminUploadBakeryByUrl extends Component {
 
                 if (form['admin-create-category-weight-decor'].values.weight) {
                     newItem.weight = form['admin-create-category-weight-decor'].values.weight;
+                }
+
+                if (form['admin-create-category-weight-decor'].values.numberOfPieces) {
+                    newItem.numberOfPieces = form['admin-create-category-weight-decor'].values.numberOfPieces;
                 }
 
                 return newItem;

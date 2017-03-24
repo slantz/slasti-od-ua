@@ -23,7 +23,7 @@ class Bakery extends Component {
     }
 
     render() {
-        const { user } = this.props;
+        const { user, bakery } = this.props;
 
         return (
             <article id="sou-bakery">
@@ -31,6 +31,11 @@ class Bakery extends Component {
                 <Link to="bakery/0">Go to bakery item #0 page</Link>
                 <Link to="admin">Go to bakery ADMIN page</Link>
                 <button onClick={this.loginToVk}>azaza vk login</button>
+                {bakery.map(function(bake){
+                    return  <div className="bake" key={bake._id}>
+                                <img width="100px" src={`http://slasti.od.ua:3001/client/static/images/${bake.imgUrl}`} alt={bake._id}/>
+                            </div>;
+                })}
                 {this.props.children}
             </article>
         )
@@ -40,8 +45,8 @@ class Bakery extends Component {
 // Все что хотим вытащить из стора указываем здесь, после чего они будут доступны в компоненте (App) через this.props
 function mapStateToProps(state) {
     return {
-        user: state.core.user,
-        bakery: state.bakery
+        user: state.core.user.payload,
+        bakery: state.bakery.data.items
     }
 }
 

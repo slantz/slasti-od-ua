@@ -12,10 +12,19 @@ class Bakery extends Component {
     doStuff = () => {
         const { BakeryActions: { doStuff } } = this.props;
         doStuff()
-    }
+    };
 
     loginToVk = () => {
         window.location.href = '/auth/vk'
+    };
+
+    getBakery = () => {
+        const { AdminActions: { getBakery } } = this.props;
+        return getBakery();
+    };
+
+    componentWillMount() {
+        this.getBakery();
     }
 
     render() {

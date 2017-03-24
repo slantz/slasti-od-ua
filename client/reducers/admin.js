@@ -1,5 +1,4 @@
 import * as ADMIN_CONSTANTS from '../constants/Admin'
-import localForage from '../storage/localforage.config'
 
 export default function admin(state = {
     bakery: {

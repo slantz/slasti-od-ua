@@ -30,14 +30,19 @@ function callApi(endpoint) {
         });
 }
 
-function postApi(endpoint, data) {
+function postPutApi(endpoint, method, data, headers, dontStringify) {
     const fullUrl = constructEndpoint(endpoint);
-
-    return fetch(fullUrl, {
+    let request = {
         credentials: 'include',
-        method : 'POST',
-        body : data
-    }).then(response => {
+        method : method,
+        body : dontStringify ? data : JSON.stringify(data),
+    };
+
+    if (headers) {
+        request.headers = headers;
+    }
+
+    return fetch(fullUrl, request).then(response => {
         return response
             .json()
             .then(
@@ -66,7 +71,7 @@ export default store => next => action => {
         return next(action)
     }
 
-    let {endpoint, types, method, body, redirect} = callAPI;
+    let {endpoint, types, method, body, redirect, headers, dontStringify, defaultHeaders} = callAPI;
 
     if (typeof endpoint === 'function') {
         endpoint = endpoint(store.getState())
@@ -81,6 +86,12 @@ export default store => next => action => {
     }
     if (!types.every(type => typeof type === 'string')) {
         throw new Error('Expected action types to be strings.')
+    }
+
+    if (!headers && !defaultHeaders) {
+        headers = {
+            'Content-Type': 'application/json'
+        };
     }
 
     function actionWith(data) {
@@ -108,8 +119,9 @@ export default store => next => action => {
                 }))
             );
         }
-        case CORE_CONSTANTS.METHOD.POST: {
-            return postApi(endpoint, body).then(
+        case CORE_CONSTANTS.METHOD.POST:
+        case CORE_CONSTANTS.METHOD.PUT: {
+            return postPutApi(endpoint, method, body, headers, dontStringify).then(
                 response => {
                     next(actionWith({
                         payload : response,

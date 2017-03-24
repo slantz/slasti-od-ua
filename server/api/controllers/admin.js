@@ -15,7 +15,8 @@ const Bakery = mongoose.model('Bakery');
 exports.upload = async(function* (req, res) {
     let bakeryFilenames = req.files.map((file) => {
         return {
-            imgUrl: file.filename
+            imgUrl: file.filename,
+            originalName: file.originalname
         }
     });
     let bakery = [];

@@ -23,6 +23,8 @@ const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 
+const validation = require('./server/config/middlewares/validation');
+
 var mongoose = require('mongoose');
 
 const pkg = require('./package.json');
@@ -37,6 +39,9 @@ fs.readdirSync(models)
 
 const admin = require('./server/api/controllers/admin');
 const bakery = require('./server/api/controllers/bakery');
+const ingredient = require('./server/api/controllers/ingredient');
+const basis = require('./server/api/controllers/basis');
+const filling = require('./server/api/controllers/filling');
 
 // Bootstrap routes
 require('./server/config/passport')(passport);
@@ -125,7 +130,7 @@ var userTypes = {
             }
         }
     }
-}
+};
 
 app.get('/auth/user/me', userTypes.any(AdminUserIdTypes), function(req, res, next) {
     res.json(req.user);
@@ -137,6 +142,8 @@ app.get('/api/bakery', bakery.all);
 app.post('/api/bakery', function(req, res, next) {
     res.json(req.user);
 });
+
+app.put('/api/bakery', validation.validateBakeryBulkUpdate, bakery.updateBulk);
 
 app.get('/api/bakery/:id', function(req, res, next) {
     res.json(req.user);
@@ -155,13 +162,9 @@ app.delete('/api/bakery/:id', function(req, res, next) {
 });
 
 //INGREDIENTS CRUD
-app.get('/api/ingredients', function(req, res, next) {
-    res.json(req.user);
-});
+app.get('/api/ingredients', ingredient.all);
 
-app.post('/api/ingredients', function(req, res, next) {
-    res.json(req.user);
-});
+app.post('/api/ingredients', validation.validateIngredient, ingredient.post);
 
 app.get('/api/ingredients/:id', function(req, res, next) {
     res.json(req.user);
@@ -176,13 +179,9 @@ app.delete('/api/ingredients/:id', function(req, res, next) {
 });
 
 //BASIS CRUD
-app.get('/api/basis', function(req, res, next) {
-    res.json(req.user);
-});
+app.get('/api/basis', basis.all);
 
-app.post('/api/basis', function(req, res, next) {
-    res.json(req.user);
-});
+app.post('/api/basis', validation.validateBasis, basis.post);
 
 app.get('/api/basis/:id', function(req, res, next) {
     res.json(req.user);
@@ -197,13 +196,9 @@ app.delete('/api/basis/:id', function(req, res, next) {
 });
 
 //FILLING CRUD
-app.get('/api/filling', function(req, res, next) {
-    res.json(req.user);
-});
+app.get('/api/filling', filling.all);
 
-app.post('/api/filling', function(req, res, next) {
-    res.json(req.user);
-});
+app.post('/api/filling', validation.validateFilling, filling.post);
 
 app.get('/api/filling/:id', function(req, res, next) {
     res.json(req.user);

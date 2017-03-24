@@ -15,29 +15,18 @@ class AdminUpload extends Component {
         storeImagesAndRedirect(images);
     };
 
-    componentWillReceiveProps(newProps) {
-        let images = [];
-        const { form, admin: { bakery }} = newProps;
-
-        if (!bakery.length &&
-            form['admin-upload-images'] &&
-            form['admin-upload-images'].values &&
-            form['admin-upload-images'].values.files &&
-            form['admin-upload-images'].values.files.length > 0) {
-
-            images = fileListToArrayConverter(form['admin-upload-images'].values.files);
-
-            if (!areImagesUploaded()) {
-                this.storeImagesAndRedirect(images);
-                areImagesUploaded(images);
-            }
+    handleFilesChange = (event, newValue) => {
+        if (newValue.length > 0) {
+            this.storeImagesAndRedirect(fileListToArrayConverter(newValue));
         }
-    }
+    };
 
     render() {
         return (
             <section>
                 <AdminUploadImagesForm
+                    onSubmit={dummyOnChangeHandlerForValidation}
+                    onChange={this.handleFilesChange}
                     pristine={true}
                     submitting={false}/>
                 {this.props.children}
@@ -46,19 +35,7 @@ class AdminUpload extends Component {
     }
 }
 
-let areImagesUploaded = areImagesAlreadyUploaded();
-
-function areImagesAlreadyUploaded() {
-    let images = [];
-    return function(newImages) {
-        if (!newImages) {
-            return images.length !== 0;
-        }
-
-        images = newImages;
-        return true;
-    }
-}
+function dummyOnChangeHandlerForValidation() {}
 
 function fileListToArrayConverter(fileList) {
     return Array.prototype.slice.call(fileList);

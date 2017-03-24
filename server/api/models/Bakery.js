@@ -26,9 +26,13 @@ const BakerySchema = new Schema({
         default: null
     },
     ingredients: [{
-        type: mongoose.Schema.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Ingredient'
     }],
+    originalName: {
+        type: String,
+        default: '',
+    },
     imgUrl: {
         type: String,
         default: ''
@@ -38,19 +42,19 @@ const BakerySchema = new Schema({
         default: 1
     },
     // shortcake
-    basis: {
-        type: mongoose.Schema.ObjectId,
+    basis: [{
+        type: Schema.Types.ObjectId,
         ref: 'Basis'
-    },
+    }],
     // cream
-    filling: {
-        type: mongoose.Schema.ObjectId,
+    filling: [{
+        type: Schema.Types.ObjectId,
         ref: 'Filling'
-    },
+    }],
     // glaze, cream, figures, sugar paste, icing
     decor: {
-        type: String,
-        default: ''
+        type: Array,
+        default: []
     }
 });
 

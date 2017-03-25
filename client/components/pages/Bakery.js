@@ -19,6 +19,10 @@ class Bakery extends Component {
         return getBakery();
     };
 
+    loadMoreBakeryOnScroll = debounce(function(){
+        console.log('scroll');
+    }, 250);
+
     elementInfiniteLoad = () => {
         return <div className="infinite-list-item">
             Loading...
@@ -30,7 +34,7 @@ class Bakery extends Component {
     }
 
     componentDidMount() {
-        window.addEventListener("scroll", a);
+        window.addEventListener("scroll", this.loadMoreBakeryOnScroll);
     }
 
     render() {
@@ -52,10 +56,6 @@ class Bakery extends Component {
         )
     }
 }
-
-var a = debounce(function(){
-    console.log('scroll');
-}, 250);
 
 // Все что хотим вытащить из стора указываем здесь, после чего они будут доступны в компоненте (App) через this.props
 function mapStateToProps(state) {

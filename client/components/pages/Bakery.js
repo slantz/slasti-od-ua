@@ -3,6 +3,7 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
 import * as BakeryActions from '../../actions/BakeryActions'
+import { debounce } from "../../util/util";
 
 class Bakery extends Component {
     constructor(props) {
@@ -29,9 +30,7 @@ class Bakery extends Component {
     }
 
     componentDidMount() {
-        window.addEventListener("scroll", function(e) {
-             console.log(e);
-        });
+        window.addEventListener("scroll", a);
     }
 
     render() {
@@ -53,6 +52,10 @@ class Bakery extends Component {
         )
     }
 }
+
+var a = debounce(function(){
+    console.log('scroll');
+}, 250);
 
 // Все что хотим вытащить из стора указываем здесь, после чего они будут доступны в компоненте (App) через this.props
 function mapStateToProps(state) {

@@ -15,9 +15,9 @@ class AdminUpload extends Component {
         storeImagesAndRedirect(images);
     };
 
-    handleFilesChange = (event, newValue) => {
-        if (newValue.length > 0) {
-            this.storeImagesAndRedirect(fileListToArrayConverter(newValue));
+    handleFilesChange = (newValue) => {
+        if (newValue.files && newValue.files.length > 0) {
+            this.storeImagesAndRedirect(fileListToArrayConverter(newValue.files));
         }
     };
 

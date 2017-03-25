@@ -18,8 +18,20 @@ class Bakery extends Component {
         return getBakery();
     };
 
+    elementInfiniteLoad = () => {
+        return <div className="infinite-list-item">
+            Loading...
+        </div>;
+    };
+
     componentWillMount() {
         this.getBakery();
+    }
+
+    componentDidMount() {
+        window.addEventListener("scroll", function(e) {
+             console.log(e);
+        });
     }
 
     render() {
@@ -31,9 +43,9 @@ class Bakery extends Component {
                 <Link to="bakery/0">Go to bakery item #0 page</Link>
                 <Link to="admin">Go to bakery ADMIN page</Link>
                 <button onClick={this.loginToVk}>azaza vk login</button>
-                {bakery.map(function(bake){
+                {bakery.items.map(function(bake){
                     return  <div className="bake" key={bake._id}>
-                                <img width="100px" src={`http://slasti.od.ua:3001/client/static/images/${bake.imgUrl}`} alt={bake._id}/>
+                                <div data-src={`http://slasti.od.ua:3001/client/static/images/${bake.imgUrl}`}>{bake._id}</div>
                             </div>;
                 })}
                 {this.props.children}
@@ -46,7 +58,7 @@ class Bakery extends Component {
 function mapStateToProps(state) {
     return {
         user: state.core.user.payload,
-        bakery: state.bakery.data.items
+        bakery: state.bakery.data
     }
 }
 

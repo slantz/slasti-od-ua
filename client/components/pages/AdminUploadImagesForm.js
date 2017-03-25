@@ -1,5 +1,6 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
+import * as InputWithValidation from '../elements/InputWithValidation'
 
 const AdminUploadImagesForm = (props) => {
     const { handleSubmit, onChange, pristine, submitting } = props;
@@ -9,12 +10,12 @@ const AdminUploadImagesForm = (props) => {
                 <label htmlFor="files">Upload files</label>
                 <div>
                     <Field name="files"
-                           component="input"
+                           component={InputWithValidation.renderFileField}
                            type="file"
                            placeholder="Upload files"
                            multiple="true"
-                           value="[object FileList]"
-                           accept="image/*" onChange={onChange}/>
+                           accept="image/*"
+                           onChange={onChange}/>
                 </div>
             </fieldset>
             <fieldset>

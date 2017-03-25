@@ -62,7 +62,7 @@ exports.updateBulk = async(function* (req, res) {
                     doc.decor = bakeryWithStuff[doc._id].decor;
                     doc.numberOfPieces = bakeryWithStuff[doc._id].numberOfPieces;
                     yield doc.save((err) => {
-                        console.log(err);
+                        console.log("doc [%s] wasn't saved due to the following error: [%s]", doc._id, err);
                     });
                 }));
 

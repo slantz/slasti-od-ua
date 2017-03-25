@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Route, IndexRedirect } from 'react-router'
-import { Router } from 'react-router'
+import { Route, IndexRedirect, Router } from 'react-router'
 
 import App from './containers/App'
 import Bakery from './components/pages/Bakery'

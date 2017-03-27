@@ -21,13 +21,81 @@ class Filters extends Component {
                 <h2>Wir sind die Filtern!</h2>
                 <div>
                     <Select
-                        name="select-admin-upload-bakery-ingredients"
+                        name="select-filter-bakery-ingredients"
                         multi={true}
                         valueKey="_id"
                         labelKey="type"
                         options={data.items.reduce((bakery, bake) => {
+                            if (!bake.ingredients) {
+                                return bakery;
+                            }
                             return bakery.concat(bake.ingredients);
-                        }, [])}
+                        }, []).filter(Boolean)}
+                        onChange={this.setCurrentIngredients}
+                    />
+                    <Select
+                        name="select-filter-bakery-filling"
+                        multi={true}
+                        valueKey="_id"
+                        labelKey="taste"
+                        options={data.items.reduce((bakery, bake) => {
+                            if (!bake.filling) {
+                                return bakery;
+                            }
+                            return bakery.concat(bake.filling);
+                        }, []).filter(Boolean)}
+                        onChange={this.setCurrentIngredients}
+                    />
+                    <Select
+                        name="select-filter-bakery-basis"
+                        multi={true}
+                        valueKey="_id"
+                        labelKey="type"
+                        options={data.items.reduce((bakery, bake) => {
+                            if (!bake.basis) {
+                                return bakery;
+                            }
+                            return bakery.concat(bake.basis);
+                        }, []).filter(Boolean)}
+                        onChange={this.setCurrentIngredients}
+                    />
+                    <Select
+                        name="select-filter-bakery-category"
+                        multi={true}
+                        valueKey="_id"
+                        labelKey="type"
+                        options={data.items.map((bake) => {
+                            return {
+                                _id: bake.category,
+                                type: bake.category
+                            };
+                        })}
+                        onChange={this.setCurrentIngredients}
+                    />
+                    <Select
+                        name="select-filter-bakery-decor"
+                        multi={true}
+                        valueKey="_id"
+                        labelKey="type"
+                        options={data.items.map((bake) => {
+                            return {
+                                _id: bake.decor[0],
+                                type: bake.decor[0]
+                            };
+                        })}
+                        onChange={this.setCurrentIngredients}
+                    />
+                    <Select
+                        name="select-filter-bakery-number-of-pieces"
+                        multi={true}
+                        valueKey="_id"
+                        labelKey="type"
+                        options={data.items.map((bake) => {
+                            return {
+                                _id: bake.numberOfPieces,
+                                type: bake.numberOfPieces
+                            };
+                        })}
                         onChange={this.setCurrentIngredients}
                     />
                 </div>

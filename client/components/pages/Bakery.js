@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import {Link} from 'react-router'
 import * as BakeryActions from '../../actions/BakeryActions'
 import { debounce } from "../../util/util";
 
@@ -12,10 +11,6 @@ class Bakery extends Component {
         this.previousScrollPosition = 0;
         this.scrollPercentThreshhold = 0.95;
     }
-
-    loginToVk = () => {
-        window.location.href = '/auth/vk'
-    };
 
     getBakery = () => {
         const {
@@ -64,6 +59,23 @@ class Bakery extends Component {
         }
     }, 100);
 
+    filterPrimaryBakeriesCollection = () => {
+        const { bakery: { data: { items } } } = this.props;
+
+        items.map(function(bake){
+            return  <div className="bake" key={bake._id} style={{
+                'width': '300px',
+                'display': 'inline-block'
+            }}>
+                <img
+                    src={`http://slasti.od.ua:3001/client/static/images/${bake.imgUrl}`}
+                    width="300px"
+                    height={300 * 3/4 + "px"}
+                    alt={bake._id} />
+            </div>;
+        })
+    };
+
     elementInfiniteLoad = () => {
         return <div className="infinite-list-item">
             Loading...
@@ -83,27 +95,12 @@ class Bakery extends Component {
 
         return (
             <article id="sou-bakery">
-                <div>Catalog {user.name}</div>
-                <Link to="bakery/0">Go to bakery item #0 page</Link>
-                <Link to="admin">Go to bakery ADMIN page</Link>
-                <button onClick={this.loginToVk}>azaza vk login</button>
                 {data.isFetching && data.items.length === 0 && this.elementInfiniteLoad()}
                 <div id="scroll-container" style={{
                     display: 'flex',
                     flexDirection: 'column'
                 }}>
-                    {data.items.map(function(bake){
-                        return  <div className="bake" key={bake._id} style={{
-                            'width': '300px',
-                            'display': 'inline-block'
-                        }}>
-                            <img
-                                src={`http://slasti.od.ua:3001/client/static/images/${bake.imgUrl}`}
-                                width="300px"
-                                height={300 * 3/4 + "px"}
-                                alt={bake._id} />
-                        </div>;
-                    })}
+                    {this.filterPrimaryBakeriesCollection()}
                 </div>
                 {this.props.children}
             </article>

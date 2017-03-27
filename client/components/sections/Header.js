@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {Link} from 'react-router'
 import * as CORE_CONSTANTS from '../../constants/Core'
 import Nav from './Nav'
 
@@ -7,17 +8,27 @@ export default class Header extends Component {
         super(props)
     }
 
-    render() {
+    compileLoginWithVkLink = () => {
+        return <button onClick={this.loginWithVk}>azaza vk login</button>
+    };
+
+    loginWithVk = () => {
+        window.location.href = '/auth/vk'
+    };
+
+    greet = () => {
         const { user } = this.props;
+        if (user.payload.name) {
+            return <h1>Greeting, {user.payload.name}!</h1>
+        }
+        return null;
+    };
 
-        let logos = Array
-            .apply(0, Array(typeof amountOfLogos === 'number' && amountOfLogos > 0
-                ? amountOfLogos
-                : CORE_CONSTANTS.NUMBER_LOGO_SHADOWED))
-            .map(function(){return 0;});
-
+    render() {
         return (
             <header role="banner">
+                {this.compileLoginWithVkLink()}
+                {this.greet()}
                 <div className="header__nav_holder">
                     <Nav user={this.props.user} />
                 </div>

@@ -18,10 +18,12 @@ export default class Header extends Component {
 
     greet = () => {
         const { user } = this.props;
-        if (user.payload.name) {
-            return <h1>Greeting, {user.payload.name}!</h1>
+
+        if (!user.payload.name) {
+            return null;
         }
-        return null;
+
+        return <h1>Greetings, {user.payload.name}!</h1>
     };
 
     render() {

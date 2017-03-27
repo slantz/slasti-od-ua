@@ -2,17 +2,36 @@ import React, { Component } from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as BakeryActions from '../../actions/BakeryActions'
+import Select from "react-select";
 
 class Filters extends Component {
     constructor(props) {
         super(props);
     }
 
+    setCurrentIngredients = () => {
+        return true;
+    };
+
     render() {
         const { bakery: { data } } = this.props;
 
         return (
-            <aside id="sou-bakery-filters">Wir sind die Filtern!</aside>
+            <aside id="sou-bakery-filters">
+                <h2>Wir sind die Filtern!</h2>
+                <div>
+                    <Select
+                        name="select-admin-upload-bakery-ingredients"
+                        multi={true}
+                        valueKey="_id"
+                        labelKey="type"
+                        options={data.items.reduce((bakery, bake) => {
+                            return bakery.concat(bake.ingredients);
+                        }, [])}
+                        onChange={this.setCurrentIngredients}
+                    />
+                </div>
+            </aside>
         )
     }
 }

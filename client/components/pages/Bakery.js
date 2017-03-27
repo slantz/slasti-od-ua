@@ -3,6 +3,7 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as BakeryActions from '../../actions/BakeryActions'
 import { debounce } from "../../util/util";
+import Filters from "../sections/Filters";
 
 class Bakery extends Component {
     constructor(props) {
@@ -62,7 +63,7 @@ class Bakery extends Component {
     filterPrimaryBakeriesCollection = () => {
         const { bakery: { data: { items } } } = this.props;
 
-        items.map(function(bake){
+        return items.map(function(bake){
             return  <div className="bake" key={bake._id} style={{
                 'width': '300px',
                 'display': 'inline-block'
@@ -95,6 +96,7 @@ class Bakery extends Component {
 
         return (
             <article id="sou-bakery">
+                <Filters/>
                 {data.isFetching && data.items.length === 0 && this.elementInfiniteLoad()}
                 <div id="scroll-container" style={{
                     display: 'flex',

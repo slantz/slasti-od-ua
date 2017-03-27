@@ -14,6 +14,10 @@ const Bakery = mongoose.model('Bakery');
 
 exports.all = async(function* (req, res) {
     let searchOption = {};
+    let queryOptions = {
+        skip: 0,
+        limit: 30,
+    };
 
     if (req.query.id) {
         if (Array.isArray(req.query.id)) {
@@ -29,13 +33,26 @@ exports.all = async(function* (req, res) {
         }
     }
 
-    let bakery = yield Bakery.find(searchOption, function(err, docs){
-        if (err) {
-            console.log('all | api/bakery | Bakery.find | ', err);
-        } else {
-            console.log('all of %d bakeries were successfully fetched.', docs.length);
-        }
-    }).populate("ingredients filling basis");
+    if (req.query.skip) {
+        queryOptions.skip = Number(req.query.skip);
+    }
+
+    if (req.query.noLimit) {
+        queryOptions.limit = null;
+    }
+
+    let bakery = yield Bakery
+        .find(searchOption, function(err, docs) {
+            if (err) {
+                console.log('all | api/bakery | Bakery.find | ', err);
+            }
+            else {
+                console.log('all of %d bakeries were successfully fetched.', docs.length);
+            }
+        })
+        .skip(queryOptions.skip)
+        .limit(queryOptions.limit)
+        .populate("ingredients filling basis");
 
     res.json({
         bakery

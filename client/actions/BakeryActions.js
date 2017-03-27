@@ -6,7 +6,7 @@ function shouldMakeAdminRequest(state) {
     return state.isFetching !== true;
 }
 
-function getAllBakery() {
+function getAllBakery(currentSkip) {
     return {
         [CALL_API]: {
             method: CORE_CONSTANTS.METHOD.GET,
@@ -15,15 +15,61 @@ function getAllBakery() {
                 BAKERY_CONSTANTS.BAKERY_GET_ALL_SUCCESS,
                 BAKERY_CONSTANTS.BAKERY_GET_ALL_FAILURE
             ],
-            endpoint: "/api/bakery"
+            endpoint: `/api/bakery?skip=${currentSkip}`
         }
     }
 }
 
-export function getBakery() {
+function getMore(currentSkip) {
+    return {
+        [CALL_API]: {
+            method: CORE_CONSTANTS.METHOD.GET,
+            types: [
+                BAKERY_CONSTANTS.BAKERY_ADD_MORE_REQUEST,
+                BAKERY_CONSTANTS.BAKERY_ADD_MORE_SUCCESS,
+                BAKERY_CONSTANTS.BAKERY_ADD_MORE_FAILURE
+            ],
+            endpoint: `/api/bakery?skip=${currentSkip}`
+        }
+    }
+}
+
+function getBakeryCount() {
+    return {
+        [CALL_API]: {
+            method: CORE_CONSTANTS.METHOD.GET,
+            types: [
+                BAKERY_CONSTANTS.BAKERY_COUNT_REQUEST,
+                BAKERY_CONSTANTS.BAKERY_COUNT_SUCCESS,
+                BAKERY_CONSTANTS.BAKERY_COUNT_FAILURE
+            ],
+            endpoint: `/api/bakery/count`
+        }
+    }
+}
+
+export function getBakery(currentSkip) {
     return (dispatch, getState) => {
         if (shouldMakeAdminRequest(getState().bakery.data)) {
-            return dispatch(getAllBakery())
+            return dispatch(getAllBakery(currentSkip))
+        }
+        return null;
+    }
+}
+
+export function getMoreBakery(currentSkip) {
+    return (dispatch, getState) => {
+        if (shouldMakeAdminRequest(getState().bakery.data)) {
+            return dispatch(getMore(currentSkip))
+        }
+        return null;
+    }
+}
+
+export function getCountAndLimit() {
+    return (dispatch, getState) => {
+        if (shouldMakeAdminRequest(getState().bakery.count)) {
+            return dispatch(getBakeryCount())
         }
         return null;
     }

@@ -139,6 +139,8 @@ app.get('/auth/user/me', userTypes.any(AdminUserIdTypes), function(req, res, nex
 // BAKERY CRUD
 app.get('/api/bakery', bakery.all);
 
+app.get('/api/bakery/count', bakery.count);
+
 app.post('/api/bakery', function(req, res, next) {
     res.json(req.user);
 });

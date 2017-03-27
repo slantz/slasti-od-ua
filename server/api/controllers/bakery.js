@@ -92,3 +92,23 @@ exports.updateBulk = async(function* (req, res) {
         bakery
     });
 });
+
+exports.count = async(function* (req, res){
+    let bakeryCount = yield Bakery
+        .find({}, function(err, docs) {
+            if (err) {
+                console.log('count | api/bakery/count | Bakery.find | ', err);
+            }
+            else {
+                console.log('all of %d bakeries were successfully fetched.', docs.length);
+            }
+        })
+        .count();
+
+    res.json({
+        bakeryCount: {
+            count: bakeryCount,
+            limit: 30
+        }
+    });
+});

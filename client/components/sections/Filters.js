@@ -9,6 +9,75 @@ class Filters extends Component {
         super(props);
     }
 
+    getProperFields = (fieldName) => {
+        const { bakery: { data } } = this.props;
+
+        if (data.items.length === 0) {
+            return [];
+        }
+
+        let lalka =  data.items.reduce((bakery, bake) => {
+            if (!bake[fieldName]) {
+                return bakery;
+            }
+            return bakery.concat(bake[fieldName]);
+        }, []);
+
+        let davalka = lalka.reduce((allLalki, lal) => {
+            if (allLalki.some((allLalk) => allLalk._id === lal._id)) {
+                return allLalki;
+            }
+            allLalki.push(lal);
+            return allLalki;
+        }, []);
+
+        return davalka;
+    };
+
+    getPlainProperFields = (fieldName) => {
+        const { bakery: { data } } = this.props;
+
+        if (data.items.length === 0) {
+            return [];
+        }
+
+        let lalka = data.items.reduce((bakery, bake) => {
+            if (!bake[fieldName] || bake[fieldName] === "") {
+                return bakery;
+            }
+
+            if ((Array.isArray(bake[fieldName]) && bake[fieldName].length === 0) || (bake[fieldName].length === 1 && bake[fieldName][0] === "")) {
+                return bakery;
+            }
+
+            if (Array.isArray(bake[fieldName])) {
+                bake[fieldName].forEach((field) => {
+                    bakery.push({
+                        _id: field,
+                        type: field
+                    })
+                })
+            } else {
+                bakery.push({
+                    _id: bake[fieldName],
+                    type: bake[fieldName]
+                })
+            }
+
+            return bakery;
+        }, []);
+
+        let davalka = lalka.reduce((allLalki, lal) => {
+            if (allLalki.some((allLalk) => allLalk._id === lal._id)) {
+                return allLalki;
+            }
+            allLalki.push(lal);
+            return allLalki;
+        }, []);
+
+        return davalka;
+    };
+
     setCurrentIngredients = () => {
         return true;
     };
@@ -25,12 +94,7 @@ class Filters extends Component {
                         multi={true}
                         valueKey="_id"
                         labelKey="type"
-                        options={data.items.reduce((bakery, bake) => {
-                            if (!bake.ingredients) {
-                                return bakery;
-                            }
-                            return bakery.concat(bake.ingredients);
-                        }, []).filter(Boolean)}
+                        options={this.getProperFields("ingredients")}
                         onChange={this.setCurrentIngredients}
                     />
                     <Select
@@ -38,12 +102,7 @@ class Filters extends Component {
                         multi={true}
                         valueKey="_id"
                         labelKey="taste"
-                        options={data.items.reduce((bakery, bake) => {
-                            if (!bake.filling) {
-                                return bakery;
-                            }
-                            return bakery.concat(bake.filling);
-                        }, []).filter(Boolean)}
+                        options={this.getProperFields("filling")}
                         onChange={this.setCurrentIngredients}
                     />
                     <Select
@@ -51,12 +110,7 @@ class Filters extends Component {
                         multi={true}
                         valueKey="_id"
                         labelKey="type"
-                        options={data.items.reduce((bakery, bake) => {
-                            if (!bake.basis) {
-                                return bakery;
-                            }
-                            return bakery.concat(bake.basis);
-                        }, []).filter(Boolean)}
+                        options={this.getProperFields("basis")}
                         onChange={this.setCurrentIngredients}
                     />
                     <Select
@@ -64,12 +118,7 @@ class Filters extends Component {
                         multi={true}
                         valueKey="_id"
                         labelKey="type"
-                        options={data.items.map((bake) => {
-                            return {
-                                _id: bake.category,
-                                type: bake.category
-                            };
-                        })}
+                        options={this.getPlainProperFields("category")}
                         onChange={this.setCurrentIngredients}
                     />
                     <Select
@@ -77,12 +126,7 @@ class Filters extends Component {
                         multi={true}
                         valueKey="_id"
                         labelKey="type"
-                        options={data.items.map((bake) => {
-                            return {
-                                _id: bake.decor[0],
-                                type: bake.decor[0]
-                            };
-                        })}
+                        options={this.getPlainProperFields("decor")}
                         onChange={this.setCurrentIngredients}
                     />
                     <Select
@@ -90,12 +134,7 @@ class Filters extends Component {
                         multi={true}
                         valueKey="_id"
                         labelKey="type"
-                        options={data.items.map((bake) => {
-                            return {
-                                _id: bake.numberOfPieces,
-                                type: bake.numberOfPieces
-                            };
-                        })}
+                        options={this.getPlainProperFields("numberOfPieces")}
                         onChange={this.setCurrentIngredients}
                     />
                 </div>

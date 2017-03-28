@@ -6,6 +6,7 @@ import bakery from './bakery'
 import cart from './cart'
 import admin from './admin'
 import about from './about'
+import filter from './filter'
 
 export default combineReducers({
     core,
@@ -13,6 +14,7 @@ export default combineReducers({
     cart,
     admin,
     about,
+    filter,
     routing,
     form
 });

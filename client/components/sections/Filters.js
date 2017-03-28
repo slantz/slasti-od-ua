@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import * as BakeryActions from '../../actions/BakeryActions'
+import * as FilterActions from '../../actions/FilterActions'
 import Select from "react-select";
 
 class Filters extends Component {
@@ -78,13 +78,17 @@ class Filters extends Component {
         return davalka;
     };
 
-    setCurrentIngredients = () => {
-        return true;
+    setCurrentFilters = (type, values) => {
+        const {
+            FilterActions: {
+                setCurrentFilters
+            }
+        } = this.props;
+        return setCurrentFilters(type, values);
     };
 
     render() {
-        const { bakery: { data } } = this.props;
-
+        const { filter: { filters }} = this.props;
         return (
             <aside id="sou-bakery-filters">
                 <h2>Wir sind die Filtern!</h2>
@@ -94,48 +98,54 @@ class Filters extends Component {
                         multi={true}
                         valueKey="_id"
                         labelKey="type"
+                        value={filters.ingredients}
                         options={this.getProperFields("ingredients")}
-                        onChange={this.setCurrentIngredients}
+                        onChange={(values) => this.setCurrentFilters("ingredients", values)}
                     />
                     <Select
                         name="select-filter-bakery-filling"
                         multi={true}
                         valueKey="_id"
                         labelKey="taste"
+                        value={filters.filling}
                         options={this.getProperFields("filling")}
-                        onChange={this.setCurrentIngredients}
+                        onChange={(values) => this.setCurrentFilters("filling", values)}
                     />
                     <Select
                         name="select-filter-bakery-basis"
                         multi={true}
                         valueKey="_id"
                         labelKey="type"
+                        value={filters.basis}
                         options={this.getProperFields("basis")}
-                        onChange={this.setCurrentIngredients}
+                        onChange={(values) => this.setCurrentFilters("basis", values)}
                     />
                     <Select
                         name="select-filter-bakery-category"
                         multi={true}
                         valueKey="_id"
                         labelKey="type"
+                        value={filters.category}
                         options={this.getPlainProperFields("category")}
-                        onChange={this.setCurrentIngredients}
+                        onChange={(values) => this.setCurrentFilters("category", values)}
                     />
                     <Select
                         name="select-filter-bakery-decor"
                         multi={true}
                         valueKey="_id"
                         labelKey="type"
+                        value={filters.decor}
                         options={this.getPlainProperFields("decor")}
-                        onChange={this.setCurrentIngredients}
+                        onChange={(values) => this.setCurrentFilters("decor", values)}
                     />
                     <Select
                         name="select-filter-bakery-number-of-pieces"
                         multi={true}
                         valueKey="_id"
                         labelKey="type"
+                        value={filters.numberOfPieces}
                         options={this.getPlainProperFields("numberOfPieces")}
-                        onChange={this.setCurrentIngredients}
+                        onChange={(values) => this.setCurrentFilters("numberOfPieces", values)}
                     />
                 </div>
             </aside>
@@ -146,7 +156,8 @@ class Filters extends Component {
 // Все что хотим вытащить из стора указываем здесь, после чего они будут доступны в компоненте (App) через this.props
 function mapStateToProps(state) {
     return {
-        bakery: state.bakery
+        bakery: state.bakery,
+        filter: state.filter
     }
 }
 
@@ -154,7 +165,7 @@ function mapStateToProps(state) {
 // Нахера связать экшны с диспатчером? Чтоб редакс увидел вызов этого экшна
 function mapDispatchToProps(dispatch) {
     return {
-        BakeryActions: bindActionCreators(BakeryActions, dispatch)
+        FilterActions: bindActionCreators(FilterActions, dispatch)
     }
 }
 

@@ -1,6 +1,6 @@
 import * as FILTER_CONSTANTS from '../constants/Filter';
 
-export default function bakery(state = {
+export default function filter(state = {
    filters: {
        category: [],
        ingredients: [],
@@ -13,28 +13,9 @@ export default function bakery(state = {
     let assignedState;
 
     switch (type) {
-        case BAKERY_CONSTANTS.BAKERY_GET_ALL_SUCCESS:
+        case FILTER_CONSTANTS.SET_CURRENT_FILTERS:
             assignedState = Object.assign({}, state, {
-                data : {
-                    isFetching : false,
-                    items : payload.bakery
-                }
-            });
-            break;
-        case BAKERY_CONSTANTS.BAKERY_GET_ALL_FAILURE:
-            assignedState = Object.assign({}, state, {
-                data : {
-                    isFetching : false,
-                    items : []
-                }
-            });
-            break;
-        case BAKERY_CONSTANTS.BAKERY_GET_ALL_REQUEST:
-            assignedState = Object.assign({}, state, {
-                data : {
-                    isFetching : true,
-                    items : []
-                }
+                filters: payload.filters
             });
             break;
         default:

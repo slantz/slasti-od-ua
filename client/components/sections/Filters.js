@@ -99,6 +99,7 @@ class Filters extends Component {
                         valueKey="_id"
                         labelKey="type"
                         value={filters.ingredients}
+                        placeholder="ingredients"
                         options={this.getProperFields("ingredients")}
                         onChange={(values) => this.setCurrentFilters("ingredients", values)}
                     />
@@ -108,6 +109,7 @@ class Filters extends Component {
                         valueKey="_id"
                         labelKey="taste"
                         value={filters.filling}
+                        placeholder="filling"
                         options={this.getProperFields("filling")}
                         onChange={(values) => this.setCurrentFilters("filling", values)}
                     />
@@ -117,6 +119,7 @@ class Filters extends Component {
                         valueKey="_id"
                         labelKey="type"
                         value={filters.basis}
+                        placeholder="basis"
                         options={this.getProperFields("basis")}
                         onChange={(values) => this.setCurrentFilters("basis", values)}
                     />
@@ -126,6 +129,7 @@ class Filters extends Component {
                         valueKey="_id"
                         labelKey="type"
                         value={filters.category}
+                        placeholder="category"
                         options={this.getPlainProperFields("category")}
                         onChange={(values) => this.setCurrentFilters("category", values)}
                     />
@@ -135,6 +139,7 @@ class Filters extends Component {
                         valueKey="_id"
                         labelKey="type"
                         value={filters.decor}
+                        placeholder="decor"
                         options={this.getPlainProperFields("decor")}
                         onChange={(values) => this.setCurrentFilters("decor", values)}
                     />
@@ -144,6 +149,7 @@ class Filters extends Component {
                         valueKey="_id"
                         labelKey="type"
                         value={filters.numberOfPieces}
+                        placeholder="numberOfPieces"
                         options={this.getPlainProperFields("numberOfPieces")}
                         onChange={(values) => this.setCurrentFilters("numberOfPieces", values)}
                     />

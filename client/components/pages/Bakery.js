@@ -67,21 +67,29 @@ class Bakery extends Component {
         }
     }, 100);
 
-    filterPrimaryBakeriesCollection = () => {
-        const { bakery: { currentSkip, data: { items } } } = this.props;
+    getBakeryCollectionElement = (bake) => {
+        return <div className="bake" key={bake._id} style={{
+            'width': '300px',
+            'display': 'inline-block'
+        }}>
+            <img
+                src={`http://slasti.od.ua:3001/client/static/images/${bake.imgUrl}`}
+                width="300px"
+                height={300 * 3/4 + "px"}
+                alt={bake._id} />
+        </div>;
+    };
 
-        return items.map(function(bake){
-            return  <div className="bake" key={bake._id} style={{
-                'width': '300px',
-                'display': 'inline-block'
-            }}>
-                <img
-                    src={`http://slasti.od.ua:3001/client/static/images/${bake.imgUrl}`}
-                    width="300px"
-                    height={300 * 3/4 + "px"}
-                    alt={bake._id} />
-            </div>;
-        }).slice(0, currentSkip);
+    filterPrimaryBakeriesCollection = () => {
+        const { bakery: { currentSkip, data: { items } }, filter: { filters } } = this.props;
+
+        let noFilters = Object.keys(filters).every((filterKey) => !filters[filterKey].length);
+
+        return items
+            .map((bake) => {
+                return this.getBakeryCollectionElement(bake);
+            })
+            .slice(0, noFilters ? currentSkip : items.length);
     };
 
     elementInfiniteLoad = () => {
@@ -121,7 +129,8 @@ class Bakery extends Component {
 function mapStateToProps(state) {
     return {
         user: state.core.user.payload,
-        bakery: state.bakery
+        bakery: state.bakery,
+        filter: state.filter
     }
 }
 

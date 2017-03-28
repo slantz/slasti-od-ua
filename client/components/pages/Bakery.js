@@ -8,7 +8,6 @@ import Filters from "../sections/Filters";
 class Bakery extends Component {
     constructor(props) {
         super(props);
-        this.currentSkip = 0;
         this.previousScrollPosition = 0;
         this.scrollPercentThreshhold = 0.95;
     }
@@ -19,27 +18,29 @@ class Bakery extends Component {
                 count
             },
             BakeryActions: {
-                getBakery
+                getBakery,
+                setCurrentSkip
             }
         } = this.props;
 
-        return getBakery(this.currentSkip).then(() => this.currentSkip += count.limit);
+        setCurrentSkip(count.limit);
+        return getBakery();
     };
 
-    getMoreBakery = (newScrollPosition) => {
+    showMoreBakery = (newScrollPosition) => {
         const {
             bakery: {
-                count
-            },
-            BakeryActions: {
-                getMoreBakery
+                count,
+                currentSkip
             }
         } = this.props;
+        let newCurrentSkip = currentSkip + count.limit;
 
-        return getMoreBakery(this.currentSkip).then(() => {
-            this.currentSkip += count.limit;
-            this.previousScrollPosition = newScrollPosition;
-        });
+        this.previousScrollPosition = newScrollPosition;
+        if (newCurrentSkip > count.count) {
+            newCurrentSkip = count.count;
+        }
+        this.setCurrentSkip(newCurrentSkip);
     };
 
     getCountAndLimit = () => {
@@ -47,21 +48,27 @@ class Bakery extends Component {
         return getCountAndLimit();
     };
 
+    setCurrentSkip = (currentSkip) => {
+        const { BakeryActions: { setCurrentSkip } } = this.props;
+        return setCurrentSkip(currentSkip);
+    };
+
     loadMoreBakeryOnScroll = debounce((e) => {
         const {
             bakery: {
-                count
+                count,
+                currentSkip
             }
         } = this.props;
         if (e.target.body.scrollTop > this.scrollPercentThreshhold * (e.target.body.scrollHeight - window.innerHeight)) {
-            if (this.currentSkip < count.count && this.previousScrollPosition < e.target.body.scrollTop) {
-                this.getMoreBakery(e.target.body.scrollTop);
+            if (currentSkip < count.count && this.previousScrollPosition < e.target.body.scrollTop) {
+                this.showMoreBakery(e.target.body.scrollTop);
             }
         }
     }, 100);
 
     filterPrimaryBakeriesCollection = () => {
-        const { bakery: { data: { items } } } = this.props;
+        const { bakery: { currentSkip, data: { items } } } = this.props;
 
         return items.map(function(bake){
             return  <div className="bake" key={bake._id} style={{
@@ -74,7 +81,7 @@ class Bakery extends Component {
                     height={300 * 3/4 + "px"}
                     alt={bake._id} />
             </div>;
-        })
+        }).slice(0, currentSkip);
     };
 
     elementInfiniteLoad = () => {

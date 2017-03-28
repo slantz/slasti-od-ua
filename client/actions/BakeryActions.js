@@ -6,7 +6,7 @@ function shouldMakeAdminRequest(state) {
     return state.isFetching !== true;
 }
 
-function getAllBakery(currentSkip) {
+function getAllBakery() {
     return {
         [CALL_API]: {
             method: CORE_CONSTANTS.METHOD.GET,
@@ -15,7 +15,7 @@ function getAllBakery(currentSkip) {
                 BAKERY_CONSTANTS.BAKERY_GET_ALL_SUCCESS,
                 BAKERY_CONSTANTS.BAKERY_GET_ALL_FAILURE
             ],
-            endpoint: `/api/bakery?skip=${currentSkip}`
+            endpoint: `/api/bakery?noLimit=true`
         }
     }
 }
@@ -48,10 +48,10 @@ function getBakeryCount() {
     }
 }
 
-export function getBakery(currentSkip) {
+export function getBakery() {
     return (dispatch, getState) => {
         if (shouldMakeAdminRequest(getState().bakery.data)) {
-            return dispatch(getAllBakery(currentSkip))
+            return dispatch(getAllBakery())
         }
         return null;
     }
@@ -72,5 +72,14 @@ export function getCountAndLimit() {
             return dispatch(getBakeryCount())
         }
         return null;
+    }
+}
+
+export function setCurrentSkip(currentSkip) {
+    return (dispatch) => {
+        dispatch({
+            type: BAKERY_CONSTANTS.SET_CURRENT_SKIP,
+            payload: currentSkip
+        });
     }
 }

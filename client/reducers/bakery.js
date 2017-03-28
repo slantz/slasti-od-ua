@@ -9,7 +9,8 @@ export default function bakery(state = {
         count: null,
         limit: null,
         isFetching : false
-    }
+    },
+    currentSkip: 0
 }, {type, payload}) {
     let assignedState;
 
@@ -87,6 +88,11 @@ export default function bakery(state = {
                     count : 0,
                     limit: 0
                 }
+            });
+            break;
+        case BAKERY_CONSTANTS.SET_CURRENT_SKIP:
+            assignedState = Object.assign({}, state, {
+                currentSkip: payload
             });
             break;
         default:

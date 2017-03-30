@@ -80,12 +80,60 @@ class Bakery extends Component {
         </div>;
     };
 
+    filterPrimaryBake = (bake) => {
+        const { filter: { filters } } = this.props;
+        let result = null;
+
+        let noFilters = Object.keys(filters).every((filterKey) => !filters[filterKey].length);
+
+        if (noFilters) {
+            return true;
+        }
+
+        Object.keys(filters).forEach((filterKey) => {
+            if (filters[filterKey].length > 0) {
+                filters[filterKey].forEach((filter) => {
+                    if (Array.isArray(bake[filterKey])) {
+                        if (bake[filterKey].length > 0) {
+                            if (bake[filterKey].some((bakeFilterKey) => typeof bakeFilterKey === "object")) {
+                                result = bake[filterKey].some((bakeFilterKey) => {
+                                    if (bakeFilterKey.type) {
+                                        return bakeFilterKey.type === filter._id;
+                                    }
+                                    if (bakeFilterKey.taste) {
+                                        return bakeFilterKey.taste === filter._id;
+                                    }
+                                });
+                                return result;
+                            }
+                            if (bake[filterKey].some((bakeFilterKey) => typeof bakeFilterKey === "string")) {
+                                result = bake[filterKey].some((bakeFilterKey) => bakeFilterKey === filter._id);
+                            }
+                        }
+                    } else {
+                        switch (typeof bake[filterKey]) {
+                            case "string":
+                                result = bake[filterKey] === filter._id;
+                                break;
+                            case "number":
+                                result = bake[filterKey] === filter._id;
+                                break;
+                        }
+                    }
+                });
+            }
+        });
+
+        return result;
+    };
+
     filterPrimaryBakeriesCollection = () => {
         const { bakery: { currentSkip, data: { items } }, filter: { filters } } = this.props;
 
         let noFilters = Object.keys(filters).every((filterKey) => !filters[filterKey].length);
 
         return items
+            .filter(this.filterPrimaryBake)
             .map((bake) => {
                 return this.getBakeryCollectionElement(bake);
             })

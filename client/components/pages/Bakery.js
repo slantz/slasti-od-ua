@@ -92,11 +92,12 @@ class Bakery extends Component {
 
         Object.keys(filters).forEach((filterKey) => {
             if (filters[filterKey].length > 0) {
-                filters[filterKey].forEach((filter) => {
+                result = filters[filterKey].some((filter) => {
+                    let innerResult = false;
                     if (Array.isArray(bake[filterKey])) {
                         if (bake[filterKey].length > 0) {
                             if (bake[filterKey].some((bakeFilterKey) => typeof bakeFilterKey === "object")) {
-                                result = bake[filterKey].some((bakeFilterKey) => {
+                                innerResult = bake[filterKey].some((bakeFilterKey) => {
                                     if (bakeFilterKey.type) {
                                         return bakeFilterKey.type === filter._id;
                                     }
@@ -104,22 +105,22 @@ class Bakery extends Component {
                                         return bakeFilterKey.taste === filter._id;
                                     }
                                 });
-                                return result;
                             }
                             if (bake[filterKey].some((bakeFilterKey) => typeof bakeFilterKey === "string")) {
-                                result = bake[filterKey].some((bakeFilterKey) => bakeFilterKey === filter._id);
+                                innerResult = bake[filterKey].some((bakeFilterKey) => bakeFilterKey === filter._id);
                             }
                         }
                     } else {
                         switch (typeof bake[filterKey]) {
                             case "string":
-                                result = bake[filterKey] === filter._id;
+                                innerResult = bake[filterKey] === filter._id;
                                 break;
                             case "number":
-                                result = bake[filterKey] === filter._id;
+                                innerResult = bake[filterKey] === filter._id;
                                 break;
                         }
                     }
+                    return innerResult;
                 });
             }
         });

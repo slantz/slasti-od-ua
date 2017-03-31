@@ -29,7 +29,12 @@ class Filters extends Component {
             }
             allLalki.push(lal);
             return allLalki;
-        }, []);
+        }, []).map((item) => {
+            return {
+                _id: item.type ? item.type : item.taste,
+                type: item.type ? item.type : item.taste
+            }
+        });
 
         return davalka;
     };
@@ -107,7 +112,7 @@ class Filters extends Component {
                         name="select-filter-bakery-filling"
                         multi={true}
                         valueKey="_id"
-                        labelKey="taste"
+                        labelKey="type"
                         value={filters.filling}
                         placeholder="filling"
                         options={this.getProperFields("filling")}

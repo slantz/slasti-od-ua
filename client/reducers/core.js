@@ -70,6 +70,7 @@ export default function core(state = {
                 user: {
                     status: CONSTANTS.USER.STATUS.UNAUTHORIZED,
                     isFetching: false,
+                    payload: {}
                 }
             });
         case CONSTANTS.REQUEST:
@@ -78,7 +79,8 @@ export default function core(state = {
                 user: {
                     status: null,
                     fetcher: userFetchingPromises.all,
-                    isFetching: true
+                    isFetching: true,
+                    payload: {}
                 }
             });
         default: return state

@@ -69,6 +69,10 @@ export const validateCategoryWeightDecor = values => {
         errors.weight = 'Required weight';
     }
 
+    if (numberValidator(values.numberOfPieces)) {
+        errors.numberOfPieces = 'Required Number Of Pieces';
+    }
+
     return errors;
 };
 
@@ -91,3 +95,16 @@ export const renderField = ({ input, label, placeholder, type, meta: { touched, 
         </div>
     </div>
 );
+
+export const renderFileField = ({ input, label, placeholder, type, accept, meta: { touched, error, warning } }) => {
+    if (input.value) {
+        delete input.value;
+    }
+    return <div>
+            <label htmlFor={input.name}>{label}</label>
+            <div>
+                <input {...input} placeholder={placeholder} type={type} accept={accept} multiple="true"/>
+                {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
+            </div>
+        </div>
+};

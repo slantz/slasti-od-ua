@@ -18,7 +18,7 @@ const store = configureStore(initialState)
 if (window && window.__INITIAL_STATE__) delete window.__INITIAL_STATE__;
 
 const rootEl = window.document.getElementById(CONSTANTS.ID_ROOT);
-const history = syncHistoryWithStore(browserHistory, store)
+const history = syncHistoryWithStore(browserHistory, store);
 
 import './styles/app.scss'
 

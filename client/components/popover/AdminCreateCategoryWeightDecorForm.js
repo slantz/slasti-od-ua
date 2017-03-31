@@ -30,6 +30,16 @@ let AdminCreateCategoryWeightDecorForm = (props) => {
                 </div>
             </fieldset>
             <fieldset>
+                <label htmlFor="numberOfPieces">Add Number Of Pieces</label>
+                <div>
+                    <Field name="numberOfPieces"
+                           component={InputWithValidation.renderField}
+                           type="number"
+                           label="Number Of Pieces"
+                           placeholder="Number Of Pieces"/>
+                </div>
+            </fieldset>
+            <fieldset>
                 <div>
                     <Select.Creatable
                         name="decor"

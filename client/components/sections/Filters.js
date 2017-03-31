@@ -92,11 +92,21 @@ class Filters extends Component {
         return setCurrentFilters(type, values);
     };
 
+    clearAllFilters = () => {
+        const {
+            FilterActions: {
+                clearAllFilters
+            }
+        } = this.props;
+        return clearAllFilters();
+    };
+
     render() {
         const { filter: { filters }} = this.props;
         return (
             <aside id="sou-bakery-filters">
                 <h2>Wir sind die Filtern!</h2>
+                <button onClick={this.clearAllFilters}>Clear all filters</button>
                 <div>
                     <Select
                         name="select-filter-bakery-ingredients"

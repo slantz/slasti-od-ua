@@ -18,6 +18,18 @@ export default function filter(state = {
                 filters: payload.filters
             });
             break;
+        case FILTER_CONSTANTS.CLEAR_ALL_FILTERS:
+            assignedState = Object.assign({}, state, {
+                filters: {
+                    category: [],
+                    ingredients: [],
+                    filling: [],
+                    basis: [],
+                    decor: [],
+                    numberOfPieces: []
+                }
+            });
+            break;
         default:
             assignedState = state;
     }

@@ -20,3 +20,11 @@ export function setCurrentFilters(type, values) {
         });
     }
 }
+
+export function clearAllFilters() {
+    return (dispatch) => {
+        return dispatch({
+            type: FILTER_CONSTANTS.CLEAR_ALL_FILTERS
+        });
+    }
+}

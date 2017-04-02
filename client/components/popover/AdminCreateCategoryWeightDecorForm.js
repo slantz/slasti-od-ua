@@ -1,4 +1,5 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import Select from 'react-select';
 import * as InputWithValidation from '../elements/InputWithValidation'
@@ -54,9 +55,17 @@ let AdminCreateCategoryWeightDecorForm = (props) => {
     )
 };
 
-export default AdminCreateCategoryWeightDecorForm = reduxForm({
+AdminCreateCategoryWeightDecorForm = reduxForm({
     form: 'admin-create-category-weight-decor',
     enableReinitialize: true,
     validate: InputWithValidation.validateCategoryWeightDecor,
     warn: InputWithValidation.warn
 })(AdminCreateCategoryWeightDecorForm);
+
+AdminCreateCategoryWeightDecorForm = connect(
+    state => ({
+        initialValues: state.admin.bakeryItem.item // pull initial values from account reducer
+    })
+)(AdminCreateCategoryWeightDecorForm);
+
+export default AdminCreateCategoryWeightDecorForm;

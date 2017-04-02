@@ -5,7 +5,7 @@ import * as BakeryActions from '../../actions/BakeryActions'
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Grid, Col, Row } from 'react-flexbox-grid/lib/index'
-import { Chip, FontIcon } from "material-ui";
+import { Chip } from "material-ui";
 
 class BakeryDetails extends Component {
     constructor(props) {
@@ -19,7 +19,6 @@ class BakeryDetails extends Component {
 
         if (bake.length > 0) {
             bake = bake[0];
-            console.log(bake);
             return (
                 <Grid tagName="article" fluid={true}>
                     <Row middle="xs">
@@ -84,13 +83,9 @@ class BakeryDetails extends Component {
         } else {
             return <div>No element found!</div>
         }
-
-
     };
 
     render() {
-        const { user } = this.props;
-
         return (
             <section id="sou-bakery-detail">
                 {this.getBakeryElement()}

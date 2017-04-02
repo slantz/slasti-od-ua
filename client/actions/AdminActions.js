@@ -143,6 +143,20 @@ function getAllBasis() {
     }
 }
 
+function bakeryById(id) {
+    return {
+        [CALL_API]: {
+            method: CORE_CONSTANTS.METHOD.GET,
+            types: [
+                ADMIN_CONSTANTS.ADMIN_GET_BAKERY_ITEM_REQUEST,
+                ADMIN_CONSTANTS.ADMIN_GET_BAKERY_ITEM_SUCCESS,
+                ADMIN_CONSTANTS.ADMIN_GET_BAKERY_ITEM_FAILURE
+            ],
+            endpoint: `/api/bakery?id=${id}`
+        }
+    }
+}
+
 function shouldMakeAdminRequest(state) {
     const isFetching = state.isFetching;
 
@@ -393,5 +407,14 @@ export function setNewDecor(currentDecor) {
             type: ADMIN_CONSTANTS.ADMIN_CREATE_NEW_DECOR,
             payload: currentDecor
         });
+    }
+}
+
+export function getBakeryById(id) {
+    return (dispatch, getState) => {
+        if (shouldMakeAdminRequest(getState().admin.bakeryItem)) {
+            return dispatch(bakeryById(id))
+        }
+        return null;
     }
 }

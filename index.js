@@ -123,8 +123,16 @@ app.get('/auth/vk/callback',
 var userTypes = {
     any: function(types) {
         return function(req, res, next) {
-            if (req.isAuthenticated() && types.indexOf(Number(req.user.typeId)) != -1) {
-                return next();
+            if (req.isAuthenticated()) {
+                let admin = types.indexOf(Number(req.user.typeId)) !== -1;
+                res.json({
+                    _id : req.user._id,
+                    typeId : req.user.typeId,
+                    provider : req.user.provider,
+                    username : req.user.username,
+                    name : req.user.name,
+                    admin
+                });
             } else {
                 res.status(401).json({ error: Error('unauthorized') });
             }
@@ -132,9 +140,7 @@ var userTypes = {
     }
 };
 
-app.get('/auth/user/me', userTypes.any(AdminUserIdTypes), function(req, res, next) {
-    res.json(req.user);
-});
+app.get('/auth/user/me', userTypes.any(AdminUserIdTypes));
 
 // BAKERY CRUD
 app.get('/api/bakery', bakery.all);

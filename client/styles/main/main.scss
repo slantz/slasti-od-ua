@@ -8,15 +8,15 @@ html {
 }
 
 body {
-    display: flex;
+    //display: flex;
     background: $color-white none scroll repeat 0 0;
     font-family: "Muli", Arial, sans-serif;
     color: $color-text-gray;
     overflow-x: hidden;
     main {
         position: relative;
-        flex: 1 0 auto;
-        display: flex;
+        //flex: 1 0 auto;
+        //display: flex;
     }
 }
 
@@ -373,9 +373,9 @@ body {
 #cv-transition-group {
     position: relative;
     z-index: 0;
-    display: flex;
-    flex: 1 0 auto;
-    flex-direction: column;
+    //display: flex;
+    //flex: 1 0 auto;
+    //flex-direction: column;
 }
 
 header {

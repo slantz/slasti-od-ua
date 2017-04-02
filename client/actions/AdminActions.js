@@ -16,6 +16,10 @@ function redirectToAllBakery() {
     return "/bakery";
 }
 
+function redirectToOneBakeryById(id) {
+    return `/bakery/${id}`;
+}
+
 // Fetches user information data from Express session, if request fails then user is not authenticated.
 // Relies on the custom API middleware defined in ../middleware/api.js.
 function bulkUploadImagesAction(data) {
@@ -51,6 +55,24 @@ function bulkUpdateBakeryAction(data) {
             endpoint: "/api/bakery",
             redirect: function() {
                 return redirectToAllBakery();
+            }
+        }
+    }
+}
+
+function updateBakeryAction(data, id) {
+    return {
+        [CALL_API]: {
+            method: CORE_CONSTANTS.METHOD.PUT,
+            body: data,
+            types: [
+                ADMIN_CONSTANTS.ADMIN_BULK_UDATE_BAKERY_REQUEST,
+                ADMIN_CONSTANTS.ADMIN_BULK_UDATE_BAKERY_SUCCESS,
+                ADMIN_CONSTANTS.ADMIN_BULK_UDATE_BAKERY_FAILURE
+            ],
+            endpoint: "/api/bakery",
+            redirect: function() {
+                return redirectToOneBakeryById(id);
             }
         }
     }
@@ -195,6 +217,15 @@ export function bulkUpdateBakery(data) {
     return (dispatch, getState) => {
         if (shouldMakeAdminRequest(getState().admin.bakery)) {
             return dispatch(bulkUpdateBakeryAction(data))
+        }
+        return null;
+    }
+}
+
+export function updateBakery(data, id) {
+    return (dispatch, getState) => {
+        if (shouldMakeAdminRequest(getState().admin.bakery)) {
+            return dispatch(updateBakeryAction(data, id))
         }
         return null;
     }

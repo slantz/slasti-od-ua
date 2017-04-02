@@ -61,7 +61,7 @@ class AdminUpdate extends Component {
                 substance: ingredient.substance,
                 price: ingredient.price
             }]
-        }).then(() => this.submitAndGoToNextImage());
+        }).then(() => this.update());
     };
 
     setCurrentFillingForCreationForm = (filling) => {
@@ -71,7 +71,7 @@ class AdminUpdate extends Component {
                 taste: filling.taste,
                 composition: filling.composition
             }]
-        }).then(() => this.submitAndGoToNextImage());
+        }).then(() => this.update());
     };
 
     setCurrentBasisForCreationForm = (basis) => {
@@ -81,7 +81,95 @@ class AdminUpdate extends Component {
                 type: basis.type,
                 composition: basis.composition
             }]
-        }).then(() => this.submitAndGoToNextImage());
+        }).then(() => this.update());
+    };
+
+    update = () => {
+        const {
+            admin: {
+                ingredients: {
+                    currentIngredients
+                },
+                filling: {
+                    currentFilling
+                },
+                basis: {
+                    currentBasis
+                },
+                currentDecor
+            },
+            form,
+            AdminActions: {
+                hideAllForms
+            }
+        } = this.props;
+
+        let ingredientsToBeSaved = currentIngredients.filter((ingredient) => ingredient._id === ingredient.type);
+        let fillingToBeSaved = currentFilling.filter((filling) => filling._id === filling.composition);
+        let basisToBeSaved = currentBasis.filter((basis) => basis._id === basis.type);
+
+        hideAllForms();
+
+        if (ingredientsToBeSaved.length) {
+            alert('save custom ingredients');
+            return this.showIngredientsNewForm();
+        }
+
+        if (fillingToBeSaved.length) {
+            alert('save custom filling');
+            return this.showFillingNewForm();
+        }
+
+        if (basisToBeSaved.length) {
+            alert('save custom basis');
+            return this.showBasisNewForm();
+        }
+
+        let newItem = {
+            currentIngredients,
+            currentFilling,
+            currentBasis,
+            category: form['admin-create-category-weight-decor'].values.category
+        };
+
+        if (currentDecor.length > 0) {
+            newItem.decor = currentDecor.map((decor) => decor.value);
+        }
+
+        if (form['admin-create-category-weight-decor'].values.weight) {
+            newItem.weight = form['admin-create-category-weight-decor'].values.weight;
+        }
+
+        if (form['admin-create-category-weight-decor'].values.numberOfPieces) {
+            newItem.numberOfPieces = form['admin-create-category-weight-decor'].values.numberOfPieces;
+        }
+
+        return this.updateBakeryWithStuff(newItem);
+    };
+
+    updateBakeryWithStuff = (newItem) => {
+        const {
+            params,
+            AdminActions: {
+                updateBakery,
+                clearCurrentStuff
+            }
+        } = this.props;
+
+        clearCurrentStuff();
+        updateBakery({
+            "bakeryWithStuff": {
+                [params.id]: {
+                    ["basis"] : newItem.currentBasis.map((currentBasis) => currentBasis._id),
+                    ["filling"] : newItem.currentFilling.map((currentFilling) => currentFilling._id),
+                    ["ingredients"] : newItem.currentIngredients.map((currentIngredient) => currentIngredient._id),
+                    ["category"] : newItem.category,
+                    ["decor"] : newItem.decor,
+                    ["weight"] : newItem.weight,
+                    ["numberOfPieces"] : newItem.numberOfPieces
+                }
+            }
+        }, params.id);
     };
 
     elementInfiniteLoad = () => {
@@ -248,7 +336,7 @@ class AdminUpdate extends Component {
                                     </Grid>
                                 </CardText>
                                 <CardActions>
-                                    <RaisedButton label="Update" primary={true} />
+                                    <RaisedButton label="Update" primary={true} onTouchTap={this.update}/>
                                 </CardActions>
                             </Card>
                         </Col>

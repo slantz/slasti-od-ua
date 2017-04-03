@@ -230,9 +230,7 @@ app.get('/api/inquiry/:id', function(req, res, next) {
     res.json(req.user);
 });
 
-app.put('/api/inquiry/:id', function(req, res, next) {
-    res.json(req.user);
-});
+app.put('/api/inquiry/:id/resolve', inquiry.resolve);
 
 app.delete('/api/inquiry/:id', function(req, res, next) {
     res.json(req.user);

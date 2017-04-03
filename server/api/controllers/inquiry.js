@@ -53,7 +53,7 @@ exports.post = async(function* (req, res) {
 
     yield Inquiry.insertMany(req.body.inquiry, function(err, docs){
         if (err) {
-            console.log('POST | api/inquiry | Filling.insertMany | ', err);
+            console.log('POST | api/inquiry | Inquiry.insertMany | ', err);
         } else {
             console.log('%d inquiries were successfully stored.', docs.length);
             inquiry = docs;
@@ -62,5 +62,26 @@ exports.post = async(function* (req, res) {
 
     res.json({
         inquiry
+    });
+});
+
+exports.resolve = async(function* (req, res) {
+    let { body : { inquiry }} = req;
+
+
+    let updatedInquiry = yield new Promise(function(resolve, reject){
+        Inquiry.findOneAndUpdate({ _id: inquiry._id }, { isResolved: true }, {new: true}, function(err, doc) {
+            if (err) {
+                console.log('PUT | api/inquiry | Inquiry.findOneAndUpdate | ', err);
+                reject();
+            } else {
+                console.log('[%s] inquiry was successfully updated.', doc._id);
+                resolve(doc);
+            }
+        });
+    });
+
+    res.json({
+        inquiry: updatedInquiry
     });
 });

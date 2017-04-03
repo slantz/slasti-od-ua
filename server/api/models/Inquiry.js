@@ -36,6 +36,10 @@ const InquirySchema = new Schema({
     comment: {
         type: String,
         default: ''
+    },
+    isResolved: {
+        type: Boolean,
+        default: false
     }
 });
 

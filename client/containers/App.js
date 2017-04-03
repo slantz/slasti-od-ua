@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import ReactCSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup'
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {deepOrange500} from 'material-ui/styles/colors';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as CoreActions from '../actions/CoreActions'
@@ -20,6 +23,12 @@ class App extends Component {
         getCurrentUser()
     };
 
+    muiTheme = getMuiTheme({
+        palette: {
+            accent1Color: deepOrange500,
+        },
+    });
+
     componentWillMount() {
         this.getCurrentUser();
     }
@@ -36,21 +45,23 @@ class App extends Component {
         segment = path.split('/')[1] || DOM_CONSTANTS.CLASS_BACK_IN_BLACK;
 
         return (
-            <ReactCSSTransitionGroup id={DOM_CONSTANTS.ID_CSS_TRANSITION_GROUP}
-                                     component="section"
-                                     transitionName={
-                                         {
-                                             enter : 'js-move-in',
-                                             enterActive : 'js-move-in-active',
-                                             leave : 'js-move-away',
-                                             leaveActive : 'js-move-away-active'
+            <MuiThemeProvider muiTheme={this.muiTheme}>
+                <ReactCSSTransitionGroup id={DOM_CONSTANTS.ID_CSS_TRANSITION_GROUP}
+                                         component="section"
+                                         transitionName={
+                                             {
+                                                 enter : 'js-move-in',
+                                                 enterActive : 'js-move-in-active',
+                                                 leave : 'js-move-away',
+                                                 leaveActive : 'js-move-away-active'
+                                             }
                                          }
-                                     }
-                                     transitionEnterTimeout={3000}
-                                     transitionLeaveTimeout={3000}>
-                <Header user={this.props.user}/>
-                {React.cloneElement(this.props.children, {key : segment})}
-            </ReactCSSTransitionGroup>
+                                         transitionEnterTimeout={3000}
+                                         transitionLeaveTimeout={3000}>
+                    <Header user={this.props.user}/>
+                    {React.cloneElement(this.props.children, {key : segment})}
+                </ReactCSSTransitionGroup>
+            </MuiThemeProvider>
         )
     }
 }

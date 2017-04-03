@@ -16,6 +16,10 @@ function redirectToAllBakery() {
     return "/bakery";
 }
 
+function redirectToOneBakeryById(id) {
+    return `/bakery/${id}`;
+}
+
 // Fetches user information data from Express session, if request fails then user is not authenticated.
 // Relies on the custom API middleware defined in ../middleware/api.js.
 function bulkUploadImagesAction(data) {
@@ -51,6 +55,24 @@ function bulkUpdateBakeryAction(data) {
             endpoint: "/api/bakery",
             redirect: function() {
                 return redirectToAllBakery();
+            }
+        }
+    }
+}
+
+function updateBakeryAction(data, id) {
+    return {
+        [CALL_API]: {
+            method: CORE_CONSTANTS.METHOD.PUT,
+            body: data,
+            types: [
+                ADMIN_CONSTANTS.ADMIN_BULK_UDATE_BAKERY_REQUEST,
+                ADMIN_CONSTANTS.ADMIN_BULK_UDATE_BAKERY_SUCCESS,
+                ADMIN_CONSTANTS.ADMIN_BULK_UDATE_BAKERY_FAILURE
+            ],
+            endpoint: "/api/bakery",
+            redirect: function() {
+                return redirectToOneBakeryById(id);
             }
         }
     }
@@ -143,6 +165,20 @@ function getAllBasis() {
     }
 }
 
+function bakeryById(id) {
+    return {
+        [CALL_API]: {
+            method: CORE_CONSTANTS.METHOD.GET,
+            types: [
+                ADMIN_CONSTANTS.ADMIN_GET_BAKERY_ITEM_REQUEST,
+                ADMIN_CONSTANTS.ADMIN_GET_BAKERY_ITEM_SUCCESS,
+                ADMIN_CONSTANTS.ADMIN_GET_BAKERY_ITEM_FAILURE
+            ],
+            endpoint: `/api/bakery?id=${id}`
+        }
+    }
+}
+
 function shouldMakeAdminRequest(state) {
     const isFetching = state.isFetching;
 
@@ -181,6 +217,15 @@ export function bulkUpdateBakery(data) {
     return (dispatch, getState) => {
         if (shouldMakeAdminRequest(getState().admin.bakery)) {
             return dispatch(bulkUpdateBakeryAction(data))
+        }
+        return null;
+    }
+}
+
+export function updateBakery(data, id) {
+    return (dispatch, getState) => {
+        if (shouldMakeAdminRequest(getState().admin.bakery)) {
+            return dispatch(updateBakeryAction(data, id))
         }
         return null;
     }
@@ -393,5 +438,14 @@ export function setNewDecor(currentDecor) {
             type: ADMIN_CONSTANTS.ADMIN_CREATE_NEW_DECOR,
             payload: currentDecor
         });
+    }
+}
+
+export function getBakeryById(id) {
+    return (dispatch, getState) => {
+        if (shouldMakeAdminRequest(getState().admin.bakeryItem)) {
+            return dispatch(bakeryById(id))
+        }
+        return null;
     }
 }

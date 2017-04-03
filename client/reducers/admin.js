@@ -5,6 +5,10 @@ export default function admin(state = {
         bakery: [],
         isFetching: false
     },
+    bakeryItem: {
+        item: null,
+        isFetching: false
+    },
     ingredients: {
         ingredients: [],
         currentIngredients: [],
@@ -399,6 +403,30 @@ export default function admin(state = {
                     showCreateNewForm: false
                 },
                 currentDecor: []
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_GET_BAKERY_ITEM_REQUEST:
+            assignedState = Object.assign({}, state, {
+                bakeryItem: {
+                    isFetching: true,
+                    item: null
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_GET_BAKERY_ITEM_SUCCESS:
+            assignedState = Object.assign({}, state, {
+                bakeryItem: {
+                    isFetching: false,
+                    item: payload.bakery[0]
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_GET_BAKERY_ITEM_FAILURE:
+            assignedState = Object.assign({}, state, {
+                bakeryItem: {
+                    isFetching: false,
+                    item: null,
+                }
             });
             break;
         default: assignedState = state

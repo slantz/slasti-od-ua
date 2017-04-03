@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import * as BakeryActions from '../../actions/BakeryActions'
 import { debounce } from "../../util/util";
 import Filters from "../sections/Filters";
+import { Link } from "react-router";
 
 class Bakery extends Component {
     constructor(props) {
@@ -68,16 +69,16 @@ class Bakery extends Component {
     }, 100);
 
     getBakeryCollectionElement = (bake) => {
-        return <div className="bake" key={bake._id} style={{
+        return <article className="bake" key={bake._id} style={{
             'width': '300px',
             'display': 'inline-block'
-        }}>
+        }}><Link to={"/bakery/" + bake._id}>
             <img
                 src={`http://slasti.od.ua:3001/client/static/images/${bake.imgUrl}`}
                 width="300px"
                 height={300 * 3/4 + "px"}
                 alt={bake._id} />
-        </div>;
+        </Link></article>;
     };
 
     filterPrimaryBake = (bake) => {
@@ -159,17 +160,19 @@ class Bakery extends Component {
         const { user, bakery: { data } } = this.props;
 
         return (
-            <article id="sou-bakery">
-                <Filters/>
+            <section id="sou-bakery">
                 {data.isFetching && data.items.length === 0 && this.elementInfiniteLoad()}
-                <div id="scroll-container" style={{
-                    display: 'flex',
-                    flexDirection: 'column'
-                }}>
-                    {this.filterPrimaryBakeriesCollection()}
-                </div>
-                {this.props.children}
-            </article>
+                {this.props.children === null && <div>
+                    <Filters/>
+                    <div id="scroll-container" style={{
+                        display: 'flex',
+                        flexDirection: 'column'
+                    }}>
+                        {this.filterPrimaryBakeriesCollection()}
+                    </div>
+                </div>}
+                {!(data.isFetching && data.items.length === 0) && this.props.children}
+            </section>
         )
     }
 }

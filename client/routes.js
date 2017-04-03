@@ -28,7 +28,7 @@ export default class RTRouter extends Component {
                 <Route path="about" component={About}/>
                 <Route path="cart" component={Cart}/>
                 <Route path="admin" component={Admin} onEnter={(nextState, replace, callback) => { this.requireLogin(nextState, replace, callback) }}>
-                    <Route path="update" component={AdminUpdate}/>
+                    <Route path="update/:id" component={AdminUpdate}/>
                     <Route path="upload" component={AdminUpload}>
                         <Route path="bakery/:url" component={AdminUploadBakeryByUrl}/>
                     </Route>

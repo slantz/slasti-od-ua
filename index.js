@@ -42,6 +42,7 @@ const bakery = require('./server/api/controllers/bakery');
 const ingredient = require('./server/api/controllers/ingredient');
 const basis = require('./server/api/controllers/basis');
 const filling = require('./server/api/controllers/filling');
+const inquiry = require('./server/api/controllers/inquiry');
 
 // Bootstrap routes
 require('./server/config/passport')(passport);
@@ -217,6 +218,23 @@ app.put('/api/filling/:id', function(req, res, next) {
 });
 
 app.delete('/api/filling/:id', function(req, res, next) {
+    res.json(req.user);
+});
+
+//INQUIRY CRUD
+app.get('/api/inquiry', inquiry.all);
+
+app.post('/api/inquiry', validation.validateInquiry, inquiry.post);
+
+app.get('/api/inquiry/:id', function(req, res, next) {
+    res.json(req.user);
+});
+
+app.put('/api/inquiry/:id', function(req, res, next) {
+    res.json(req.user);
+});
+
+app.delete('/api/inquiry/:id', function(req, res, next) {
     res.json(req.user);
 });
 

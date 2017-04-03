@@ -76,6 +76,12 @@ function validateBakeryBulkUpdate(req, res) {
     });
 }
 
+function validateInquiry(req, res) {
+    if (!req.body.inquiry || Object.keys(req.body.inquiry).length === 0) {
+        return badRequestError(res, "No or empty [inquiry] body");
+    }
+}
+
 exports.validateIngredient = function(req, res, next) {
     validateIngredient(req, res);
     return next();
@@ -93,5 +99,10 @@ exports.validateFilling = function(req, res, next) {
 
 exports.validateBakeryBulkUpdate = function(req, res, next) {
     validateBakeryBulkUpdate(req, res);
+    return next();
+};
+
+exports.validateInquiry = function(req, res, next) {
+    validateInquiry(req, res);
     return next();
 };

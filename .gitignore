@@ -44,4 +44,4 @@ client/dist
 
 client/static/images
 
-server/resources/mail/.config
+server/resources/mail/config

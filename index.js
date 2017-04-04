@@ -1,6 +1,7 @@
 'use strict';
 
 require('dotenv').config();
+require('dotenv').config({path: "server/resources/mail/config/.config"});
 
 var fs = require('fs');
 var path = require('path');
@@ -8,6 +9,7 @@ var join = require('path').join;
 
 var express = require('express');
 var session = require('express-session');
+var nodemailer = require('nodemailer');
 var app = express();
 
 var compress = require('compression');
@@ -276,21 +278,20 @@ function connect () {
 }
 
 
-var nodemailer = require('nodemailer');
 // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: '',
-        pass: ''
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_PASS
     }
 });
 
 // setup email data with unicode symbols
 let mailOptions = {
     from: '"Fred Foo 👻" <foo@blurdybloop.com>', // sender address
-    cc: '', // list of receivers
-    to: '',
+    cc: process.env.GMAIL_CC, // list of receivers
+    to: process.env.GMAIL_TO,
     subject: 'Hello ✔', // Subject line
     text: 'Hello world ?', // plain text body
     html: '<b>Hello world ?</b>' // html body

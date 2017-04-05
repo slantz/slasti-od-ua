@@ -1,12 +1,12 @@
-'use strict';
-
 /**
  * Module dependencies.
  */
+'use strict';
 
 const mongoose = require('mongoose');
 const { wrap: async } = require('co');
 const Inquiry = mongoose.model('Inquiry');
+const sendInquiryNotification = require("../../mail/nodemailer").sendInquiryNotification;
 
 /**
  * Get all
@@ -56,7 +56,10 @@ exports.post = async(function* (req, res) {
             console.log('POST | api/inquiry | Inquiry.insertMany | ', err);
         } else {
             console.log('%d inquiries were successfully stored.', docs.length);
+
             inquiry = docs;
+
+            sendInquiryNotification(docs[0]);
         }
     });
 

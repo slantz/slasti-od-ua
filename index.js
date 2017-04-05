@@ -9,8 +9,6 @@ var join = require('path').join;
 
 var express = require('express');
 var session = require('express-session');
-var nodemailer = require('nodemailer');
-var mjml2html = require('mjml').mjml2html;
 var app = express();
 
 var compress = require('compression');
@@ -278,80 +276,6 @@ function connect () {
     return mongoose.connect(process.env.DB, options).connection;
 }
 
-
-// create reusable transporter object using the default SMTP transport
-let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_PASS
-    }
-});
-
-let email = {
-    name: 'Lalka Davalkina',
-    email: 'touch_me_tender@ololo.com',
-    phone: '+99-999-999-999',
-    timeToCall: Date.now(),
-    comment: 'I adore your service and wanna by like everything!!!'
-};
-
-const htmlOutput = mjml2html(`
-<mjml>
-  <mj-body>
-    <mj-container>
-      <mj-section>
-        <mj-column>
-          <mj-text font-size="20px" color="#F45E43" font-family="helvetica">Hello owner of the sweet-sweet slasti.od.ua</mj-text>
-          <mj-divider border-color="#F45E43"></mj-divider>
-        </mj-column>
-        </mj-section><mj-section>
-        <mj-column>
-          <mj-table font-size="14px">
-            <tr style="border-bottom:1px solid #ecedee;text-align:left;padding:15px 0;">
-              <th style="padding: 0 15px 0 0;">Applicant</th>
-              <th style="padding: 0 15px;">Email</th>
-              <th style="padding: 0 0 0 15px;">Phone</th>
-              <th style="padding: 0 0 0 15px;">Time to Call</th>
-            </tr>
-            <tr>
-              <td style="padding: 0 15px 0 0;">${email.name}</td>
-              <td style="padding: 0 15px;">${email.email}</td>
-              <td style="padding: 0 0 0 15px;">${email.phone}</td>
-              <td style="padding: 0 0 0 15px;">${email.timeToCall}</td>
-            </tr>
-          </mj-table>
-          <mj-divider border-color="#F45E43"></mj-divider>
-        </mj-column> 
-      </mj-section>
-      <mj-section>
-        <mj-column>
-          <mj-text font-size="18px" font-weight="bold">Comment:</mj-text>
-          <mj-text>${email.comment}</mj-text>
-        </mj-column> 
-      </mj-section>
-    </mj-container>
-  </mj-body>
-</mjml>
-`);
-
-// setup email data with unicode symbols
-let mailOptions = {
-    from: '"Fred Foo 👻  " <foo@blurdybloop.com>', // sender address
-    cc: process.env.GMAIL_CC, // list of receivers
-    to: process.env.GMAIL_TO,
-    subject: 'Hello ✔', // Subject line
-    text: 'Hello world ?', // plain text body
-    html: htmlOutput.html // html body
-};
-
-// send mail with defined transport object
-// transporter.sendMail(mailOptions, (error, info) => {
-//     if (error) {
-//         return console.log(error);
-//     }
-//     console.log('Message %s sent: %s', info.messageId, info.response);
-// });
 
 if (env.production === false) {
   var webpack = require('webpack');

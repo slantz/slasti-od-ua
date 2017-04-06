@@ -50,6 +50,7 @@ exports.all = async(function* (req, res) {
 
 exports.post = async(function* (req, res) {
     let inquiry = [];
+    let letterFormattedInquiry = {};
 
     yield Inquiry.insertMany(req.body.inquiry, function(err, docs){
         if (err) {
@@ -57,9 +58,13 @@ exports.post = async(function* (req, res) {
         } else {
             console.log('%d inquiries were successfully stored.', docs.length);
 
-            inquiry = docs;
+            inquiry = [].concat(docs);
 
-            sendInquiryNotification(docs[0]);
+            letterFormattedInquiry = docs[0];
+
+            letterFormattedInquiry.timeToCall = letterFormattedInquiry.timeToCall.toDateString();
+
+            sendInquiryNotification(letterFormattedInquiry);
         }
     });
 

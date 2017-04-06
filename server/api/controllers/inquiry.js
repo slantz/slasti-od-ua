@@ -63,7 +63,8 @@ exports.post = async(function* (req, res) {
                 name: docs[0].name,
                 email: docs[0].email,
                 phone: docs[0].phone,
-                timeToCall: docs[0].timeToCall.toDateString(),
+                date: docs[0].timeToCall.toDateString(),
+                time: docs[0].timeToCall.getHours() > 0 ? `${docs[0].timeToCall.getHours()}:${docs[0].timeToCall.getMinutes()}`: "",
                 comment: docs[0].comment,
             });
         }

@@ -27,7 +27,8 @@ exports.sendInquiryNotification = function(inquiry) {
         name: inquiry.name,
         email: inquiry.email || SORRY_NO_EMAIL_SPECIFIED,
         phone: inquiry.phone || SORRY_NO_PHONE_SPECIFIED,
-        timeToCall: inquiry.timeToCall,
+        date: inquiry.date,
+        time: inquiry.time,
         comment: inquiry.comment
     }));
 

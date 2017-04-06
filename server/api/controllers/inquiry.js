@@ -50,7 +50,6 @@ exports.all = async(function* (req, res) {
 
 exports.post = async(function* (req, res) {
     let inquiry = [];
-    let letterFormattedInquiry = {};
 
     yield Inquiry.insertMany(req.body.inquiry, function(err, docs){
         if (err) {
@@ -60,11 +59,13 @@ exports.post = async(function* (req, res) {
 
             inquiry = [].concat(docs);
 
-            letterFormattedInquiry = docs[0];
-
-            letterFormattedInquiry.timeToCall = letterFormattedInquiry.timeToCall.toDateString();
-
-            sendInquiryNotification(letterFormattedInquiry);
+            sendInquiryNotification({
+                name: docs[0].name,
+                email: docs[0].email,
+                phone: docs[0].phone,
+                timeToCall: docs[0].timeToCall.toDateString(),
+                comment: docs[0].comment,
+            });
         }
     });
 

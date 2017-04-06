@@ -31,8 +31,6 @@ class About extends Component {
         let formValues = form['admin-inquiry-post'].values;
 
 
-        // a.setFullYear(b.getFullYear(), b.getMonth(), b.getDate()); a.setTime(c.getTime())
-
         let inquiry = {
             name: formValues.name
         };

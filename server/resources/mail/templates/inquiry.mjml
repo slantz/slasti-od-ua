@@ -1,0 +1,38 @@
+<mjml>
+  <mj-body>
+    <mj-container>
+      <mj-section>
+        <mj-column>
+          <mj-text font-size="20px" color="#F45E43" font-family="helvetica">Hello owner of the sweet-sweet slasti.od.ua</mj-text>
+          <mj-divider border-color="#F45E43"></mj-divider>
+        </mj-column>
+        </mj-section><mj-section>
+        <mj-column>
+          <mj-table font-size="14px">
+            <tr style="border-bottom:1px solid #ecedee;text-align:left;padding:15px 0;">
+              <th style="padding: 0 15px 0 0;">Applicant</th>
+              <th style="padding: 0 15px;">Email</th>
+              <th style="padding: 0 0 0 15px;">Phone</th>
+              <th style="padding: 0 0 0 15px;">Date to call</th>
+              <th style="padding: 0 0 0 15px;">Time to call</th>
+            </tr>
+            <tr>
+              <td style="padding: 0 15px 0 0;">${this.name}</td>
+              <td style="padding: 0 15px;">${this.email}</td>
+              <td style="padding: 0 0 0 15px;">${this.phone}</td>
+              <td style="padding: 0 0 0 15px;">${this.date}</td>
+              <td style="padding: 0 0 0 15px;">${this.time}</td>
+            </tr>
+          </mj-table>
+          <mj-divider border-color="#F45E43"></mj-divider>
+        </mj-column>
+      </mj-section>
+      <mj-section>
+        <mj-column>
+          <mj-text font-size="18px" font-weight="bold">Comment:</mj-text>
+          <mj-text>${this.comment}</mj-text>
+        </mj-column>
+      </mj-section>
+    </mj-container>
+  </mj-body>
+</mjml>

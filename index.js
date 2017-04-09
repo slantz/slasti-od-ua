@@ -1,6 +1,7 @@
 'use strict';
 
 require('dotenv').config();
+require('dotenv').config({path: "server/resources/mail/config/.config"});
 
 var fs = require('fs');
 var path = require('path');
@@ -42,6 +43,7 @@ const bakery = require('./server/api/controllers/bakery');
 const ingredient = require('./server/api/controllers/ingredient');
 const basis = require('./server/api/controllers/basis');
 const filling = require('./server/api/controllers/filling');
+const inquiry = require('./server/api/controllers/inquiry');
 
 // Bootstrap routes
 require('./server/config/passport')(passport);
@@ -220,6 +222,21 @@ app.delete('/api/filling/:id', function(req, res, next) {
     res.json(req.user);
 });
 
+//INQUIRY CRUD
+app.get('/api/inquiry', inquiry.all);
+
+app.post('/api/inquiry', validation.validateInquiry, inquiry.post);
+
+app.get('/api/inquiry/:id', function(req, res, next) {
+    res.json(req.user);
+});
+
+app.put('/api/inquiry/:id/resolve', inquiry.resolve);
+
+app.delete('/api/inquiry/:id', function(req, res, next) {
+    res.json(req.user);
+});
+
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, './client/static/images')
@@ -258,6 +275,7 @@ function connect () {
     var options = { server: { socketOptions: { keepAlive: 1 } } };
     return mongoose.connect(process.env.DB, options).connection;
 }
+
 
 if (env.production === false) {
   var webpack = require('webpack');

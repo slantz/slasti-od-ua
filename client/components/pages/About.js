@@ -2,24 +2,95 @@ import React, { Component } from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as AboutActions from '../../actions/AboutActions'
+import AboutInquiryPostForm from "../popover/AboutInquiryPostForm";
+import { Link } from "react-router";
 
 class About extends Component {
     constructor(props) {
         super(props)
     }
 
-    doStuff = () => {
-        const { AboutActions: { doStuff } } = this.props;
-        doStuff()
-    }
+    setCurrentDate = (nullValue, date) => {
+        const { AboutActions: { setCurrentDate } } = this.props;
+        setCurrentDate(date)
+    };
+
+    setCurrentTime = (nullValue, time) => {
+        const { AboutActions: { setCurrentTime } } = this.props;
+        setCurrentTime(time)
+    };
+
+    postInquiry = () => {
+        const {
+            about,
+            form,
+            AboutActions: {
+                postInquiry
+            }
+        } = this.props;
+        let formValues = form['admin-inquiry-post'].values;
+
+
+        let inquiry = {
+            name: formValues.name
+        };
+
+        if (formValues.email) {
+            inquiry.email = formValues.email;
+        }
+
+        if (formValues.phone) {
+            inquiry.phone = formValues.phone;
+        }
+
+        if (formValues.comment) {
+            inquiry.comment = formValues.comment;
+        }
+
+        if (about.currentDate) {
+            let timeToCall = new Date();
+
+            timeToCall.setFullYear(about.currentDate.getFullYear(), about.currentDate.getMonth(), about.currentDate.getDate());
+            timeToCall.setHours(0);
+            timeToCall.setMinutes(0);
+            timeToCall.setSeconds(0);
+
+            if (about.currentTime) {
+                 timeToCall.setTime(about.currentTime.getTime());
+            }
+
+            inquiry.timeToCall = timeToCall;
+        } else if (about.currentTime) {
+            let timeToCall = new Date();
+            timeToCall.setTime(about.currentTime.getTime());
+
+            inquiry.timeToCall = timeToCall;
+        }
+
+        postInquiry({inquiry});
+    };
+
+    getInquiryFormOrThxMessage = () => {
+        const {
+            about
+        } = this.props;
+
+        if (about.data.inquiry) {
+            return <article>
+                <h3>Thank you for your request!</h3>
+                <Link to="/bakery">Continue browsing</Link>
+            </article>;
+        } else {
+            return <AboutInquiryPostForm onSubmit={this.postInquiry}
+                                         setCurrentDate={this.setCurrentDate}
+                                         setCurrentTime={this.setCurrentTime} />;
+        }
+    };
 
     render() {
-        const { user } = this.props
-
         return (
-            <article id="sou-catalog">
-                <div>About {user.name}</div>
-                <button onClick={this.doStuff}>Do some stuff</button>
+            <article id="sou-about">
+                {this.getInquiryFormOrThxMessage()}
             </article>
         )
     }
@@ -28,7 +99,8 @@ class About extends Component {
 // Все что хотим вытащить из стора указываем здесь, после чего они будут доступны в компоненте (App) через this.props
 function mapStateToProps(state) {
     return {
-        user: state.core.user
+        about: state.about,
+        form: state.form
     }
 }
 

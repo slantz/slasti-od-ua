@@ -24,6 +24,10 @@ export default function admin(state = {
         currentBasis: [],
         isFetching: false
     },
+    inquiry: {
+        items: [],
+        isFetching: false
+    },
     currentDecor: [],
     currentFileToCrop: null,
     nextFileIndex: null,
@@ -426,6 +430,59 @@ export default function admin(state = {
                 bakeryItem: {
                     isFetching: false,
                     item: null,
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_GET_INQUIRY_REQUEST:
+            assignedState = Object.assign({}, state, {
+                inquiry: {
+                    isFetching: true,
+                    items: []
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_GET_INQUIRY_SUCCESS:
+            assignedState = Object.assign({}, state, {
+                inquiry: {
+                    isFetching: false,
+                    items: payload.inquiry
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_GET_INQUIRY_FAILURE:
+            assignedState = Object.assign({}, state, {
+                inquiry: {
+                    isFetching: false,
+                    items: []
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_RESOLVE_INQUIRY_REQUEST:
+            assignedState = Object.assign({}, state, {
+                inquiry: {
+                    isFetching: true,
+                    items: state.inquiry.items
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_RESOLVE_INQUIRY_SUCCESS:
+            assignedState = Object.assign({}, state, {
+                inquiry: {
+                    isFetching: false,
+                    items: state.inquiry.items.map(function(item){
+                        if (item._id === payload.inquiry._id) {
+                            return payload.inquiry;
+                        }
+                        return item;
+                    })
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_RESOLVE_INQUIRY_FAILURE:
+            assignedState = Object.assign({}, state, {
+                inquiry: {
+                    isFetching: false,
+                    items: state.inquiry.items
                 }
             });
             break;

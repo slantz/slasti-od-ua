@@ -43,3 +43,5 @@ assets.json
 client/dist
 
 client/static/images
+
+server/resources/mail/config

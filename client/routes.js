@@ -9,6 +9,7 @@ import Cart from './components/pages/Cart'
 import Admin from './components/pages/Admin'
 import AdminUpdate from './components/pages/AdminUpdate'
 import AdminUpload from './components/pages/AdminUpload'
+import AdminInquiry from './components/pages/AdminInquiry'
 import AdminUploadBakeryByUrl from './components/popover/AdminUploadBakeryByUrl'
 
 import { REQUIRE_LOGIN } from './middleware/auth'
@@ -32,6 +33,7 @@ export default class RTRouter extends Component {
                     <Route path="upload" component={AdminUpload}>
                         <Route path="bakery/:url" component={AdminUploadBakeryByUrl}/>
                     </Route>
+                    <Route path="inquiry" component={AdminInquiry}/>
                 </Route>
             </Route>
         );

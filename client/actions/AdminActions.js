@@ -165,6 +165,20 @@ function getAllBasis() {
     }
 }
 
+function getAllInquiry() {
+    return {
+        [CALL_API]: {
+            method: CORE_CONSTANTS.METHOD.GET,
+            types: [
+                ADMIN_CONSTANTS.ADMIN_GET_INQUIRY_REQUEST,
+                ADMIN_CONSTANTS.ADMIN_GET_INQUIRY_SUCCESS,
+                ADMIN_CONSTANTS.ADMIN_GET_INQUIRY_FAILURE
+            ],
+            endpoint: "/api/inquiry"
+        }
+    }
+}
+
 function bakeryById(id) {
     return {
         [CALL_API]: {
@@ -175,6 +189,25 @@ function bakeryById(id) {
                 ADMIN_CONSTANTS.ADMIN_GET_BAKERY_ITEM_FAILURE
             ],
             endpoint: `/api/bakery?id=${id}`
+        }
+    }
+}
+
+function resolveAnInquiry(id) {
+    return {
+        [CALL_API]: {
+            method: CORE_CONSTANTS.METHOD.PUT,
+            body: {
+                inquiry: {
+                    _id: id
+                }
+            },
+            types: [
+                ADMIN_CONSTANTS.ADMIN_RESOLVE_INQUIRY_REQUEST,
+                ADMIN_CONSTANTS.ADMIN_RESOLVE_INQUIRY_SUCCESS,
+                ADMIN_CONSTANTS.ADMIN_RESOLVE_INQUIRY_FAILURE
+            ],
+            endpoint: `/api/inquiry/${id}/resolve`
         }
     }
 }
@@ -445,6 +478,24 @@ export function getBakeryById(id) {
     return (dispatch, getState) => {
         if (shouldMakeAdminRequest(getState().admin.bakeryItem)) {
             return dispatch(bakeryById(id))
+        }
+        return null;
+    }
+}
+
+export function getInquiry() {
+    return (dispatch, getState) => {
+        if (shouldMakeAdminRequest(getState().admin.inquiry)) {
+            return dispatch(getAllInquiry());
+        }
+        return null;
+    }
+}
+
+export function resolveInquiry(id) {
+    return (dispatch, getState) => {
+        if (shouldMakeAdminRequest(getState().admin.inquiry)) {
+            return dispatch(resolveAnInquiry(id));
         }
         return null;
     }

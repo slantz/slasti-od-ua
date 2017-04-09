@@ -64,6 +64,10 @@ class BakeryDetails extends Component {
                                                     return <Chip key={index}>{decor}</Chip>;
                                                 })}
                                             </Col>
+                                            <Col xs={12}>
+                                                <h4>Event</h4>
+                                                <Chip>{bake.event.type}</Chip>
+                                            </Col>
                                         </Row>
                                     </Grid>
                                 </CardText>

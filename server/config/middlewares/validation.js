@@ -54,6 +54,16 @@ function validateFilling(req, res) {
     }
 }
 
+function validateEvent(req, res) {
+    if (!req.body.event || Object.keys(req.body.event).length === 0) {
+        return badRequestError(res, "No or empty event object");
+    }
+
+    if (!req.body.event.type) {
+        return badRequestError(res, "Event should have [type] property set");
+    }
+}
+
 function validateBakeryBulkUpdate(req, res) {
     if (!req.body.bakeryWithStuff || Object.keys(req.body.bakeryWithStuff).length === 0) {
         return badRequestError(res, "No or empty [bakeryWithStuff] body");
@@ -94,6 +104,11 @@ exports.validateBasis = function(req, res, next) {
 
 exports.validateFilling = function(req, res, next) {
     validateFilling(req, res);
+    return next();
+};
+
+exports.validateEvent = function(req, res, next) {
+    validateEvent(req, res);
     return next();
 };
 

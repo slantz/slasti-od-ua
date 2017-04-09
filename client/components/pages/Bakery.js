@@ -111,6 +111,8 @@ class Bakery extends Component {
                                 innerResult = bake[filterKey].some((bakeFilterKey) => bakeFilterKey === filter._id);
                             }
                         }
+                    } else if (typeof bake[filterKey] === "object") {
+                        innerResult = bake[filterKey].type === filter._id;
                     } else {
                         switch (typeof bake[filterKey]) {
                             case "string":

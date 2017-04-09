@@ -93,6 +93,21 @@ function createNewBasisAction(data) {
     }
 }
 
+function createNewEventAction(data) {
+    return {
+        [CALL_API]: {
+            method: CORE_CONSTANTS.METHOD.POST,
+            body: data,
+            types: [
+                ADMIN_CONSTANTS.ADMIN_CREATE_NEW_EVENT_REQUEST,
+                ADMIN_CONSTANTS.ADMIN_CREATE_NEW_EVENT_SUCCESS,
+                ADMIN_CONSTANTS.ADMIN_CREATE_NEW_EVENT_FAILURE
+            ],
+            endpoint: "/api/event"
+        }
+    }
+}
+
 function createNewFillingAction(data) {
     return {
         [CALL_API]: {
@@ -161,6 +176,20 @@ function getAllBasis() {
                 ADMIN_CONSTANTS.ADMIN_GET_BASIS_FAILURE
             ],
             endpoint: "/api/basis"
+        }
+    }
+}
+
+function getAllEvents() {
+    return {
+        [CALL_API]: {
+            method: CORE_CONSTANTS.METHOD.GET,
+            types: [
+                ADMIN_CONSTANTS.ADMIN_GET_EVENTS_REQUEST,
+                ADMIN_CONSTANTS.ADMIN_GET_EVENTS_SUCCESS,
+                ADMIN_CONSTANTS.ADMIN_GET_EVENTS_FAILURE
+            ],
+            endpoint: "/api/event"
         }
     }
 }
@@ -291,6 +320,15 @@ export function createNewIngredient(data) {
     }
 }
 
+export function createNewEvent(data) {
+    return (dispatch, getState) => {
+        if (shouldMakeAdminRequest(getState().admin.event)) {
+            return dispatch(createNewEventAction(data))
+        }
+        return null;
+    }
+}
+
 export function getIngredients() {
     return (dispatch, getState) => {
         if (shouldMakeAdminRequest(getState().admin.ingredients)) {
@@ -318,6 +356,15 @@ export function getBasis() {
     }
 }
 
+export function getEvents() {
+    return (dispatch, getState) => {
+        if (shouldMakeAdminRequest(getState().admin.event)) {
+            return dispatch(getAllEvents())
+        }
+        return null;
+    }
+}
+
 export function setCurrentIngredients(value) {
     return (dispatch) => {
         dispatch({
@@ -340,6 +387,15 @@ export function setCurrentBasis(value) {
     return (dispatch) => {
         dispatch({
             type: ADMIN_CONSTANTS.SET_CURRENT_BASIS,
+            payload: value
+        });
+    }
+}
+
+export function setCurrentEvent(value) {
+    return (dispatch) => {
+        dispatch({
+            type: ADMIN_CONSTANTS.SET_CURRENT_EVENT,
             payload: value
         });
     }
@@ -453,6 +509,14 @@ export function showBasisNewForm() {
     return (dispatch) => {
         return dispatch({
             type: ADMIN_CONSTANTS.SHOW_BASIS_NEW_FORM
+        });
+    }
+}
+
+export function showEventNewForm() {
+    return (dispatch) => {
+        return dispatch({
+            type: ADMIN_CONSTANTS.SHOW_EVENT_NEW_FORM
         });
     }
 }

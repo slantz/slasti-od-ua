@@ -43,6 +43,7 @@ const bakery = require('./server/api/controllers/bakery');
 const ingredient = require('./server/api/controllers/ingredient');
 const basis = require('./server/api/controllers/basis');
 const filling = require('./server/api/controllers/filling');
+const event = require('./server/api/controllers/event');
 const inquiry = require('./server/api/controllers/inquiry');
 
 // Bootstrap routes
@@ -219,6 +220,23 @@ app.put('/api/filling/:id', function(req, res, next) {
 });
 
 app.delete('/api/filling/:id', function(req, res, next) {
+    res.json(req.user);
+});
+
+//EVENT CRUD
+app.get('/api/event', event.all);
+
+app.post('/api/event', validation.validateEvent, event.post);
+
+app.get('/api/event/:id', function(req, res, next) {
+    res.json(req.user);
+});
+
+app.put('/api/event/:id', function(req, res, next) {
+    res.json(req.user);
+});
+
+app.delete('/api/event/:id', function(req, res, next) {
     res.json(req.user);
 });
 

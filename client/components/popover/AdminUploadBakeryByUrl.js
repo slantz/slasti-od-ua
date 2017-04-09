@@ -9,6 +9,7 @@ import AdminCreateBasisForm from './AdminCreateBasisForm';
 import AdminCreateCategoryWeightDecorForm from "./AdminCreateCategoryWeightDecorForm";
 import * as AdminActions from '../../actions/AdminActions'
 import * as ADMIN_CONSTANTS from '../../constants/Admin'
+import AdminCreateEventForm from "./AdminCreateEventForm";
 
 class AdminUploadBakeryByUrl extends Component {
     constructor(props) {
@@ -28,6 +29,11 @@ class AdminUploadBakeryByUrl extends Component {
     showBasisNewForm = () => {
         const { AdminActions: { showBasisNewForm } } = this.props;
         showBasisNewForm();
+    };
+
+    showEventNewForm = () => {
+        const { AdminActions: { showEventNewForm } } = this.props;
+        showEventNewForm();
     };
 
     updateBakeryWithStuff = (images) => {
@@ -52,6 +58,7 @@ class AdminUploadBakeryByUrl extends Component {
             bake.ingredients = updateBake.currentIngredients.map((currentIngredient) => currentIngredient._id);
             bake.filling = updateBake.currentFilling.map((currentFilling) => currentFilling._id);
             bake.basis = updateBake.currentBasis.map((currentBasis) => currentBasis._id);
+            bake.event = updateBake.currentEvent._id;
             bake.category = updateBake.category;
 
             if (updateBake.weight) {
@@ -78,6 +85,7 @@ class AdminUploadBakeryByUrl extends Component {
         let request = updatedBakery.reduce((bakeryWithStuff, updatedBake) => {
             bakeryWithStuff.bakeryWithStuff[updatedBake._id] = {
                 ["basis"] : updatedBake.basis,
+                ["event"] : updatedBake.event,
                 ["filling"] : updatedBake.filling,
                 ["ingredients"] : updatedBake.ingredients,
                 ["category"] : updatedBake.category,
@@ -128,6 +136,9 @@ class AdminUploadBakeryByUrl extends Component {
                 basis: {
                     currentBasis
                 },
+                event: {
+                    currentEvent
+                },
                 nextFileIndex,
                 currentDecor
             },
@@ -153,10 +164,14 @@ class AdminUploadBakeryByUrl extends Component {
         if (currentBasis.length === 0) {
             return alert('Set at least one basis');
         }
+        if (!currentEvent) {
+            return alert('Set at least one event');
+        }
 
         let ingredientsToBeSaved = currentIngredients.filter((ingredient) => ingredient._id === ingredient.type);
         let fillingToBeSaved = currentFilling.filter((filling) => filling._id === filling.composition);
         let basisToBeSaved = currentBasis.filter((basis) => basis._id === basis.type);
+        let eventToBeSaved = currentEvent;
 
         hideAllForms();
 
@@ -175,6 +190,11 @@ class AdminUploadBakeryByUrl extends Component {
             return this.showBasisNewForm();
         }
 
+        if (eventToBeSaved._id === eventToBeSaved.type) {
+            alert('save custom event');
+            return this.showEventNewForm();
+        }
+
         if (!form
             || !form['admin-create-category-weight-decor']
             || !form['admin-create-category-weight-decor'].values
@@ -190,6 +210,7 @@ class AdminUploadBakeryByUrl extends Component {
                     currentIngredients,
                     currentFilling,
                     currentBasis,
+                    currentEvent,
                     category: form['admin-create-category-weight-decor'].values.category
                 };
 
@@ -289,6 +310,11 @@ class AdminUploadBakeryByUrl extends Component {
         return getBasis();
     };
 
+    getEvents = () => {
+        const { AdminActions: { getEvents } } = this.props;
+        return getEvents();
+    };
+
     setCurrentIngredients = (value) => {
         const { AdminActions: { setCurrentIngredients } } = this.props;
         return setCurrentIngredients(value);
@@ -302,6 +328,11 @@ class AdminUploadBakeryByUrl extends Component {
     setCurrentBasis = (value) => {
         const { AdminActions: { setCurrentBasis } } = this.props;
         return setCurrentBasis(value);
+    };
+
+    setCurrentEvent = (value) => {
+        const { AdminActions: { setCurrentEvent } } = this.props;
+        return setCurrentEvent(value);
     };
 
     setCurrentDecor = (decor) => {
@@ -341,10 +372,20 @@ class AdminUploadBakeryByUrl extends Component {
         }).then(() => this.submitAndGoToNextImage());
     };
 
+    setCurrentEventForCreationForm = (event) => {
+        const { AdminActions: { createNewEvent } } = this.props;
+        createNewEvent({
+            event: {
+                type: event.type
+            }
+        }).then(() => this.submitAndGoToNextImage());
+    };
+
     componentWillMount() {
         this.getIngredients();
         this.getFilling();
         this.getBasis();
+        this.getEvents();
     }
 
     componentDidMount() {
@@ -398,12 +439,17 @@ class AdminUploadBakeryByUrl extends Component {
                     basis,
                     currentBasis
                 },
+                event: {
+                    events,
+                    currentEvent
+                },
                 currentDecor,
                 currentFileToCrop,
                 nextFileIndex,
                 ingredients_showCreateNewForm,
                 filling_showCreateNewForm,
-                basis_showCreateNewForm
+                basis_showCreateNewForm,
+                event_showCreateNewForm
             },
         } = this.props,
             isNextItem = false;
@@ -460,6 +506,16 @@ class AdminUploadBakeryByUrl extends Component {
                             onChange={this.setCurrentBasis}
                         />
                     </article>
+                    <article>
+                        <Select.Creatable
+                            name="select-admin-upload-bakery-event"
+                            value={currentEvent}
+                            valueKey="_id"
+                            labelKey="type"
+                            options={events}
+                            onChange={this.setCurrentEvent}
+                        />
+                    </article>
                 </section>
                 <section id="admin-add-category-weight-decor-form">
                     <AdminCreateCategoryWeightDecorForm currentDecor={currentDecor}
@@ -479,6 +535,11 @@ class AdminUploadBakeryByUrl extends Component {
                     <section id="admin-create-new-basis-form">
                         <AdminCreateBasisForm onSubmit={this.setCurrentBasisForCreationForm}/>
                     </section>
+                }
+                {event_showCreateNewForm &&
+                <section id="admin-create-new-events-form">
+                    <AdminCreateEventForm onSubmit={this.setCurrentEventForCreationForm}/>
+                </section>
                 }
             </aside>
         )

@@ -6,6 +6,7 @@ export default function filter(state = {
        ingredients: [],
        filling: [],
        basis: [],
+       event: [],
        decor: [],
        numberOfPieces: []
    }
@@ -25,6 +26,7 @@ export default function filter(state = {
                     ingredients: [],
                     filling: [],
                     basis: [],
+                    events: [],
                     decor: [],
                     numberOfPieces: []
                 }

@@ -58,15 +58,20 @@ class Filters extends Component {
             if (Array.isArray(bake[fieldName])) {
                 bake[fieldName].forEach((field) => {
                     bakery.push({
-                        _id: field,
-                        type: field
+                        _id : field,
+                        type : field
                     })
                 })
+            } else if (typeof bake[fieldName] === "object") {
+                bakery.push({
+                    _id: bake[fieldName].type,
+                    type: bake[fieldName].type
+                });
             } else {
                 bakery.push({
                     _id: bake[fieldName],
                     type: bake[fieldName]
-                })
+                });
             }
 
             return bakery;
@@ -137,6 +142,16 @@ class Filters extends Component {
                         placeholder="basis"
                         options={this.getProperFields("basis")}
                         onChange={(values) => this.setCurrentFilters("basis", values)}
+                    />
+                    <Select
+                        name="select-filter-bakery-event"
+                        multi={true}
+                        valueKey="_id"
+                        labelKey="type"
+                        value={filters.event}
+                        placeholder="event"
+                        options={this.getPlainProperFields("event")}
+                        onChange={(values) => this.setCurrentFilters("event", values)}
                     />
                     <Select
                         name="select-filter-bakery-category"

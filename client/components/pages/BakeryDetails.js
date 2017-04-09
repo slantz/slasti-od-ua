@@ -33,7 +33,7 @@ class BakeryDetails extends Component {
                                         </span>
                                     </span>}
                                 />
-                                <CardMedia overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}>
+                                <CardMedia overlay={<CardTitle title={bake.name} subtitle={bake.description} />}>
                                     <img src={`http://slasti.od.ua:3001/client/static/images/${bake.imgUrl}`} />
                                 </CardMedia>
                                 <CardTitle title="Card title" subtitle="Card subtitle" />
@@ -66,7 +66,7 @@ class BakeryDetails extends Component {
                                             </Col>
                                             <Col xs={12}>
                                                 <h4>Event</h4>
-                                                <Chip>{bake.event.type}</Chip>
+                                                <Chip>{bake.event && bake.event.type}</Chip>
                                             </Col>
                                         </Row>
                                     </Grid>

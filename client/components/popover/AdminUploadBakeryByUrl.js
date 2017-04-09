@@ -60,6 +60,8 @@ class AdminUploadBakeryByUrl extends Component {
             bake.basis = updateBake.currentBasis.map((currentBasis) => currentBasis._id);
             bake.event = updateBake.currentEvent._id;
             bake.category = updateBake.category;
+            bake.name = updateBake.name;
+            bake.description = updateBake.description;
 
             if (updateBake.weight) {
                 bake.weight = updateBake.weight;
@@ -79,6 +81,12 @@ class AdminUploadBakeryByUrl extends Component {
                 bake.decor = [];
             }
 
+            if (updateBake.description.length) {
+                bake.description = updateBake.description;
+            } else {
+                bake.description = "";
+            }
+
             return bake;
         });
 
@@ -89,6 +97,8 @@ class AdminUploadBakeryByUrl extends Component {
                 ["filling"] : updatedBake.filling,
                 ["ingredients"] : updatedBake.ingredients,
                 ["category"] : updatedBake.category,
+                ["name"] : updatedBake.name,
+                ["description"] : updatedBake.description,
                 ["decor"] : updatedBake.decor,
                 ["weight"] : updatedBake.weight,
                 ["numberOfPieces"] : updatedBake.numberOfPieces
@@ -203,6 +213,14 @@ class AdminUploadBakeryByUrl extends Component {
             return;
         }
 
+        if (!form
+            || !form['admin-create-category-weight-decor']
+            || !form['admin-create-category-weight-decor'].values
+            || !form['admin-create-category-weight-decor'].values.name) {
+            alert('set name!!!');
+            return;
+        }
+
         let modifiedBakery = bakery.map(function(bakeryItem, index){
             if (index === tempCroppedFile.index) {
                 let newItem = {
@@ -211,7 +229,8 @@ class AdminUploadBakeryByUrl extends Component {
                     currentFilling,
                     currentBasis,
                     currentEvent,
-                    category: form['admin-create-category-weight-decor'].values.category
+                    category: form['admin-create-category-weight-decor'].values.category,
+                    name: form['admin-create-category-weight-decor'].values.name
                 };
 
                 if (currentDecor.length > 0) {
@@ -224,6 +243,10 @@ class AdminUploadBakeryByUrl extends Component {
 
                 if (form['admin-create-category-weight-decor'].values.numberOfPieces) {
                     newItem.numberOfPieces = form['admin-create-category-weight-decor'].values.numberOfPieces;
+                }
+
+                if (form['admin-create-category-weight-decor'].values.description) {
+                    newItem.description = form['admin-create-category-weight-decor'].values.description;
                 }
 
                 return newItem;

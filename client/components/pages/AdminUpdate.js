@@ -10,6 +10,7 @@ import AdminCreateIngredientsForm from '../popover/AdminCreateIngredientsForm';
 import AdminCreateFillingForm from '../popover/AdminCreateFillingForm';
 import AdminCreateBasisForm from '../popover/AdminCreateBasisForm';
 import AdminCreateCategoryWeightDecorForm from "../popover/AdminCreateCategoryWeightDecorForm";
+import AdminCreateEventForm from "../popover/AdminCreateEventForm";
 
 class AdminUpdate extends Component {
     constructor(props) {
@@ -32,6 +33,11 @@ class AdminUpdate extends Component {
         showBasisNewForm();
     };
 
+    showEventNewForm = () => {
+        const { AdminActions: { showEventNewForm } } = this.props;
+        showEventNewForm();
+    };
+
     setCurrentIngredients = (value) => {
         const { AdminActions: { setCurrentIngredients } } = this.props;
         return setCurrentIngredients(value);
@@ -50,6 +56,11 @@ class AdminUpdate extends Component {
     setCurrentDecor = (decor) => {
         const { AdminActions: { setNewDecor } } = this.props;
         return setNewDecor(decor);
+    };
+
+    setCurrentEvent = (value) => {
+        const { AdminActions: { setCurrentEvent } } = this.props;
+        return setCurrentEvent(value);
     };
 
     setCurrentIngredientForCreationForm = (ingredient) => {
@@ -84,6 +95,15 @@ class AdminUpdate extends Component {
         }).then(() => this.update());
     };
 
+    setCurrentEventForCreationForm = (event) => {
+        const { AdminActions: { createNewEvent } } = this.props;
+        createNewEvent({
+            event: {
+                type: event.type
+            }
+        }).then(() => this.update());
+    };
+
     update = () => {
         const {
             admin: {
@@ -96,6 +116,9 @@ class AdminUpdate extends Component {
                 basis: {
                     currentBasis
                 },
+                event: {
+                    currentEvent
+                },
                 currentDecor
             },
             form,
@@ -107,6 +130,7 @@ class AdminUpdate extends Component {
         let ingredientsToBeSaved = currentIngredients.filter((ingredient) => ingredient._id === ingredient.type);
         let fillingToBeSaved = currentFilling.filter((filling) => filling._id === filling.composition);
         let basisToBeSaved = currentBasis.filter((basis) => basis._id === basis.type);
+        let eventToBeSaved = currentEvent;
 
         hideAllForms();
 
@@ -125,11 +149,18 @@ class AdminUpdate extends Component {
             return this.showBasisNewForm();
         }
 
+        if (eventToBeSaved._id === eventToBeSaved.type) {
+            alert('save custom event');
+            return this.showEventNewForm();
+        }
+
         let newItem = {
             currentIngredients,
             currentFilling,
             currentBasis,
-            category: form['admin-create-category-weight-decor'].values.category
+            currentEvent,
+            category: form['admin-create-category-weight-decor'].values.category,
+            name: form['admin-create-category-weight-decor'].values.name
         };
 
         if (currentDecor.length > 0) {
@@ -142,6 +173,10 @@ class AdminUpdate extends Component {
 
         if (form['admin-create-category-weight-decor'].values.numberOfPieces) {
             newItem.numberOfPieces = form['admin-create-category-weight-decor'].values.numberOfPieces;
+        }
+
+        if (form['admin-create-category-weight-decor'].values.description) {
+            newItem.description = form['admin-create-category-weight-decor'].values.description;
         }
 
         return this.updateBakeryWithStuff(newItem);
@@ -163,6 +198,9 @@ class AdminUpdate extends Component {
                     ["basis"] : newItem.currentBasis.map((currentBasis) => currentBasis._id),
                     ["filling"] : newItem.currentFilling.map((currentFilling) => currentFilling._id),
                     ["ingredients"] : newItem.currentIngredients.map((currentIngredient) => currentIngredient._id),
+                    ["event"] : newItem.currentEvent._id,
+                    ["name"] : newItem.name,
+                    ["description"] : newItem.description,
                     ["category"] : newItem.category,
                     ["decor"] : newItem.decor,
                     ["weight"] : newItem.weight,
@@ -204,6 +242,11 @@ class AdminUpdate extends Component {
         return getBasis();
     };
 
+    getEvents = () => {
+        const { AdminActions: { getEvents } } = this.props;
+        return getEvents();
+    };
+
     getBakeryElement = () => {
         const {
             admin: {
@@ -219,17 +262,22 @@ class AdminUpdate extends Component {
                     basis,
                     currentBasis
                 },
+                event: {
+                    events,
+                    currentEvent
+                },
                 currentDecor,
                 bakeryItem,
                 ingredients_showCreateNewForm,
                 filling_showCreateNewForm,
-                basis_showCreateNewForm
+                basis_showCreateNewForm,
+                event_showCreateNewForm
             }
         } = this.props;
 
         if (bakeryItem.item) {
             if (!this.isPrepopulatedOnInitialLoad) {
-                if (currentBasis && currentFilling && currentIngredients && currentDecor) {
+                if (currentBasis && currentFilling && currentIngredients && currentDecor && currentEvent) {
                     if (currentBasis.length === 0) {
                         this.setCurrentBasis(bakeryItem.item.basis);
                         return this.elementInfiniteLoad();
@@ -242,6 +290,11 @@ class AdminUpdate extends Component {
 
                     if (currentIngredients.length === 0) {
                         this.setCurrentIngredients(bakeryItem.item.ingredients);
+                        return this.elementInfiniteLoad();
+                    }
+
+                    if (!currentEvent || Object.keys(currentEvent).length === 0) {
+                        this.setCurrentEvent(bakeryItem.item.event);
                         return this.elementInfiniteLoad();
                     }
 
@@ -273,7 +326,7 @@ class AdminUpdate extends Component {
                                         </span>
                                     </span>}
                                 />
-                                <CardMedia overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}>
+                                <CardMedia overlay={<CardTitle title={bakeryItem.name} subtitle={bakeryItem.description} />}>
                                     <img src={`http://slasti.od.ua:3001/client/static/images/${bakeryItem.item.imgUrl}`} />
                                 </CardMedia>
                                 <CardTitle title="Card title" subtitle="Card subtitle" />
@@ -314,6 +367,16 @@ class AdminUpdate extends Component {
                                                 />
                                             </Col>
                                             <Col xs={12}>
+                                                <Select.Creatable
+                                                    name="select-admin-upload-bakery-event"
+                                                    value={currentEvent}
+                                                    valueKey="_id"
+                                                    labelKey="type"
+                                                    options={events}
+                                                    onChange={this.setCurrentEvent}
+                                                />
+                                            </Col>
+                                            <Col xs={12}>
                                                 <AdminCreateCategoryWeightDecorForm currentDecor={currentDecor}
                                                                                     onSetCurrentDecor={this.setCurrentDecor}/>
                                             </Col>
@@ -330,6 +393,11 @@ class AdminUpdate extends Component {
                                             {basis_showCreateNewForm &&
                                                 <Col xs={12}>
                                                     <AdminCreateBasisForm onSubmit={this.setCurrentBasisForCreationForm}/>
+                                                </Col>
+                                            }
+                                            {event_showCreateNewForm &&
+                                                <Col xs={12}>
+                                                    <AdminCreateEventForm onSubmit={this.setCurrentEventForCreationForm}/>
                                                 </Col>
                                             }
                                         </Row>
@@ -353,6 +421,7 @@ class AdminUpdate extends Component {
         this.getIngredients();
         this.getFilling();
         this.getBasis();
+        this.getEvents();
     }
 
     render() {

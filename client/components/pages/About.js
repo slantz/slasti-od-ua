@@ -78,6 +78,7 @@ class About extends Component {
         if (about.data.inquiry) {
             return <article>
                 <h3>Thank you for your request!</h3>
+                <Link to={`/cart/${about.data.inquiry.id}`}>Go to your order!</Link>
                 <Link to="/bakery">Continue browsing</Link>
             </article>;
         } else {

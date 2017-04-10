@@ -245,11 +245,11 @@ app.get('/api/inquiry', inquiry.all);
 
 app.post('/api/inquiry', validation.validateInquiry, inquiry.post);
 
-app.get('/api/inquiry/:id', function(req, res, next) {
-    res.json(req.user);
-});
+app.get('/api/inquiry/:id', inquiry.byId);
 
 app.put('/api/inquiry/:id/resolve', inquiry.resolve);
+
+app.put('/api/inquiry/:id/price', validation.validateInquiryPrice, inquiry.updatePrice);
 
 app.delete('/api/inquiry/:id', function(req, res, next) {
     res.json(req.user);

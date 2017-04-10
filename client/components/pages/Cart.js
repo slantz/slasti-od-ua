@@ -8,6 +8,12 @@ class Cart extends Component {
         super(props)
     }
 
+    /*
+        TODO:
+        2. add page for entering id number
+        3. show inquiry details on the cart page
+     */
+
     doStuff = () => {
         const { CartActions: { doStuff } } = this.props;
         doStuff()
@@ -28,7 +34,8 @@ class Cart extends Component {
 // Все что хотим вытащить из стора указываем здесь, после чего они будут доступны в компоненте (App) через this.props
 function mapStateToProps(state) {
     return {
-        user: state.core.user
+        user: state.core.user,
+        about: state.about,
     }
 }
 

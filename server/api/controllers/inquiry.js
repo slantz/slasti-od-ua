@@ -5,6 +5,7 @@
 
 const mongoose = require('mongoose');
 const { wrap: async } = require('co');
+const shortid = require('shortid');
 const Inquiry = mongoose.model('Inquiry');
 const sendInquiryNotification = require("../../mail/nodemailer").sendInquiryNotification;
 
@@ -32,7 +33,7 @@ exports.all = async(function* (req, res) {
     let inquiry = yield Inquiry
         .find(searchOption, function(err, docs) {
             if (err) {
-                console.log('all | api/inquiry | Bakery.find | ', err);
+                console.log('all | api/inquiry | Inquiry.find | ', err);
             }
             else {
                 console.log('all of %d inquiries were successfully fetched.', docs.length);
@@ -50,6 +51,8 @@ exports.all = async(function* (req, res) {
 
 exports.post = async(function* (req, res) {
     let inquiry = [];
+
+    req.body.inquiry.id = shortid.generate();
 
     yield Inquiry.insertMany(req.body.inquiry, function(err, docs){
         if (err) {
@@ -86,6 +89,43 @@ exports.resolve = async(function* (req, res) {
                 reject();
             } else {
                 console.log('[%s] inquiry was successfully updated.', doc._id);
+                resolve(doc);
+            }
+        });
+    });
+
+    res.json({
+        inquiry: updatedInquiry
+    });
+});
+
+exports.byId = async(function* (req, res) {
+    let inquiry = yield Inquiry
+        .findOne({ 'id': req.params.id }, function(err, doc) {
+            if (err) {
+                console.log('all | api/inquiry | Inquiry.find | ', err);
+            }
+            else {
+                console.log('[%s] inquiry was successfully fetched.', doc.id);
+            }
+        });
+
+    res.json({
+        inquiry
+    });
+});
+
+exports.updatePrice = async(function* (req, res) {
+    let { body : { inquiry }} = req;
+
+
+    let updatedInquiry = yield new Promise(function(resolve, reject){
+        Inquiry.findOneAndUpdate({ id: req.params.id }, { price: inquiry.price }, { new: true }, function(err, doc) {
+            if (err) {
+                console.log('PUT | api/inquiry/:id/price | Inquiry.findOneAndUpdate | ', err);
+                reject();
+            } else {
+                console.log('[%s] inquiry was successfully updated.', doc.id);
                 resolve(doc);
             }
         });

@@ -37,6 +37,14 @@ const InquirySchema = new Schema({
         type: String,
         default: ''
     },
+    price: {
+        type: Number,
+        default: 0
+    },
+    id: {
+        type: String,
+        default: ''
+    },
     isResolved: {
         type: Boolean,
         default: false

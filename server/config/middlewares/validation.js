@@ -92,6 +92,12 @@ function validateInquiry(req, res) {
     }
 }
 
+function validateInquiryPrice(req, res) {
+    if (!req.body.inquiry || !req.body.inquiry.price) {
+        return badRequestError(res, "No or empty [inquiry] [price] field");
+    }
+}
+
 exports.validateIngredient = function(req, res, next) {
     validateIngredient(req, res);
     return next();
@@ -119,5 +125,10 @@ exports.validateBakeryBulkUpdate = function(req, res, next) {
 
 exports.validateInquiry = function(req, res, next) {
     validateInquiry(req, res);
+    return next();
+};
+
+exports.validateInquiryPrice = function(req, res, next) {
+    validateInquiryPrice(req, res);
     return next();
 };

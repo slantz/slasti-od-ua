@@ -38,7 +38,7 @@ export function getInquiryIdFromLocalStorage() {
 
 export function removeInquiryIdFromLocalStorage() {
     return (dispatch) => {
-        return localForage.removeItem(CART_CONSTANTS.CURRENT_INQUIRY_ID).then(value => {
+        return localForage.removeItem(CART_CONSTANTS.CURRENT_INQUIRY_ID).then(() => {
             dispatch({
                 type: CART_CONSTANTS.CART_REMOVE_CART_REDIRECT_ID
             });

@@ -237,6 +237,25 @@ function resolveAnInquiry(id) {
     }
 }
 
+function updateInquiryPrice(id, price) {
+    return {
+        [CALL_API]: {
+            method: CORE_CONSTANTS.METHOD.PUT,
+            body: {
+                inquiry: {
+                    price
+                }
+            },
+            types: [
+                ADMIN_CONSTANTS.ADMIN_UPDATE_PRICE_INQUIRY_REQUEST,
+                ADMIN_CONSTANTS.ADMIN_UPDATE_PRICE_INQUIRY_SUCCESS,
+                ADMIN_CONSTANTS.ADMIN_UPDATE_PRICE_INQUIRY_FAILURE
+            ],
+            endpoint: `/api/inquiry/${id}/price`
+        }
+    }
+}
+
 function shouldMakeAdminRequest(state) {
     const isFetching = state.isFetching;
 
@@ -556,6 +575,15 @@ export function resolveInquiry(id) {
     return (dispatch, getState) => {
         if (shouldMakeAdminRequest(getState().admin.inquiry)) {
             return dispatch(resolveAnInquiry(id));
+        }
+        return null;
+    }
+}
+
+export function updatePriceForInquiry(id, price) {
+    return (dispatch, getState) => {
+        if (shouldMakeAdminRequest(getState().admin.inquiry)) {
+            return dispatch(updateInquiryPrice(id, price));
         }
         return null;
     }

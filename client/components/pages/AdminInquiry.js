@@ -10,12 +10,17 @@ import RaisedButton from "material-ui/RaisedButton";
 
 class AdminInquiry extends Component {
     constructor(props) {
-        super(props)
+        super(props);
+        this.tempPriceToUpdate = null;
     }
 
     getInquiry = () => {
         const { AdminActions: { getInquiry } } = this.props;
         return getInquiry();
+    };
+
+    setTempPriceToUpdate = (event, price) => {
+        this.tempPriceToUpdate = price;
     };
 
     getInquiryElements = () => {
@@ -44,11 +49,13 @@ class AdminInquiry extends Component {
                                 showExpandableButton={true}
                             />
                             <CardActions>
-                                <RaisedButton label="Reply or something" primary={true} />
+                                <RaisedButton label="Update Price" primary={true} onTouchTap={() => this.updatePriceForInquiry(item)}/>
                                 <RaisedButton label="Resolve" secondary={true} onTouchTap={() => this.resolve(item)} />
                             </CardActions>
                             <CardText expandable={true}>
                                 <Paper zDepth={2}>
+                                    <TextField hintText="Price" style={style} underlineShow={false} defaultValue={item.price} onChange={this.setTempPriceToUpdate}/>
+                                    <Divider />
                                     <TextField hintText="First name" style={style} underlineShow={false} defaultValue={item.name} />
                                     <Divider />
                                     <TextField hintText="Email" style={style} underlineShow={false} defaultValue={item.email} />
@@ -68,7 +75,22 @@ class AdminInquiry extends Component {
 
     resolve = (item) => {
         const { AdminActions: { resolveInquiry } } = this.props;
+
+        if (item.isResolved) {
+            return;
+        }
+
         return resolveInquiry(item._id);
+    };
+
+    updatePriceForInquiry = (item) => {
+        const { AdminActions: { updatePriceForInquiry } } = this.props;
+
+        if (this.tempPriceToUpdate === null) {
+            alert('please make some price changes first and the press "update price"');
+        } else {
+            return updatePriceForInquiry(item.id, this.tempPriceToUpdate).then(() => this.tempPriceToUpdate = null);
+        }
     };
 
     componentWillMount() {

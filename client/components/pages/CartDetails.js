@@ -9,7 +9,7 @@ import { Chip } from "material-ui";
 
 class CartDetails extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.resolvedCardStyles = {
             backgroundColor: 'green'
         };

@@ -568,6 +568,35 @@ export default function admin(state = {
                 }
             });
             break;
+        case ADMIN_CONSTANTS.ADMIN_UPDATE_PRICE_INQUIRY_REQUEST:
+            assignedState = Object.assign({}, state, {
+                inquiry: {
+                    isFetching: true,
+                    items: state.inquiry.items
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_UPDATE_PRICE_INQUIRY_SUCCESS:
+            assignedState = Object.assign({}, state, {
+                inquiry: {
+                    isFetching: false,
+                    items: state.inquiry.items.map(function(item){
+                        if (item._id === payload.inquiry._id) {
+                            return payload.inquiry;
+                        }
+                        return item;
+                    })
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_UPDATE_PRICE_INQUIRY_FAILURE:
+            assignedState = Object.assign({}, state, {
+                inquiry: {
+                    isFetching: false,
+                    items: state.inquiry.items
+                }
+            });
+            break;
         default: assignedState = state
     }
 

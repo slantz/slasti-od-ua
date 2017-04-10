@@ -36,6 +36,16 @@ export function getInquiryIdFromLocalStorage() {
     }
 }
 
+export function removeInquiryIdFromLocalStorage() {
+    return (dispatch) => {
+        return localForage.removeItem(CART_CONSTANTS.CURRENT_INQUIRY_ID).then(value => {
+            dispatch({
+                type: CART_CONSTANTS.CART_REMOVE_CART_REDIRECT_ID
+            });
+        });
+    }
+}
+
 export function getInquiry(id) {
     return (dispatch, getState) => {
         if (shouldMakeAdminRequest(getState().admin.inquiry)) {

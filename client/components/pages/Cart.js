@@ -36,25 +36,34 @@ class Cart extends Component {
     }
 
     render() {
-        const { cart } = this.props;
+        const { cart, children } = this.props;
 
-        return (
-            <article id="sou-cart">
-                <TextField
-                    floatingLabelText="Please enter Inquiry Id"
-                    floatingLabelStyle={styles.floatingLabelStyle}
-                    floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-                    defaultValue={cart.cartRedirectId}
-                    onChange={this.setCartRedirectId}
-                />
-                <RaisedButton
-                    href={`/cart/${cart.cartRedirectId}`}
-                    label="Go to Your inquiry"
-                    secondary={true}
-                    disabled={!cart.cartRedirectId}
-                    style={styles.button}/>
-            </article>
-        )
+        if (children === null) {
+            return (
+                <article id="sou-cart">
+                    <TextField
+                        floatingLabelText="Please enter Inquiry Id"
+                        floatingLabelStyle={styles.floatingLabelStyle}
+                        floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                        defaultValue={cart.cartRedirectId}
+                        onChange={this.setCartRedirectId}
+                    />
+                    <RaisedButton
+                        href={`/cart/${cart.cartRedirectId}`}
+                        label="Go to Your inquiry"
+                        secondary={true}
+                        disabled={!cart.cartRedirectId}
+                        style={styles.button}/>
+                </article>
+            )
+        } else {
+            return (
+                <article id="sou-cart">
+                    {children}
+                </article>
+            )
+        }
+
     }
 }
 

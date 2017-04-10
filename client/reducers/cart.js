@@ -10,17 +10,15 @@ export default function cart(state = {
     let assignedState;
 
     switch (type) {
-        case CART_CONSTANTS.ABOUT_INQUIRY_POST_SUCCESS:
+        case CART_CONSTANTS.CART_INQUIRY_GET_SUCCESS:
             assignedState = Object.assign({}, state, {
                 data : {
                     isFetching : false,
-                    inquiry : payload.inquiry[0]
-                },
-                currentDate: null,
-                currentTime: null
+                    inquiry : payload.inquiry
+                }
             });
             break;
-        case CART_CONSTANTS.ABOUT_INQUIRY_POST_FAILURE:
+        case CART_CONSTANTS.CART_INQUIRY_GET_FAILURE:
             assignedState = Object.assign({}, state, {
                 data : {
                     isFetching : false,
@@ -28,7 +26,7 @@ export default function cart(state = {
                 }
             });
             break;
-        case CART_CONSTANTS.ABOUT_INQUIRY_POST_REQUEST:
+        case CART_CONSTANTS.CART_INQUIRY_GET_REQUEST:
             assignedState = Object.assign({}, state, {
                 data : {
                     isFetching : true,
@@ -39,6 +37,11 @@ export default function cart(state = {
         case CART_CONSTANTS.CART_SET_CART_REDIRECT_ID:
             assignedState = Object.assign({}, state, {
                 cartRedirectId: payload
+            });
+            break;
+        case CART_CONSTANTS.CART_REMOVE_CART_REDIRECT_ID:
+            assignedState = Object.assign({}, state, {
+                cartRedirectId: ''
             });
             break;
         default:

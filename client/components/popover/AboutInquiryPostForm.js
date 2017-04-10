@@ -48,6 +48,7 @@ let AboutInquiryPostForm = (props) => {
                 <Field name="comment"
                        component={InputWithValidation.renderField}
                        type="text"
+                       multiLine={true}
                        label="Comment"
                        placeholder="Comment"/>
             </fieldset>

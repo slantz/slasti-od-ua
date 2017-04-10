@@ -3,29 +3,56 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as CartActions from '../../actions/CartActions'
 
+import TextField from 'material-ui/TextField';
+import {orange500, blue500} from 'material-ui/styles/colors';
+import { RaisedButton } from "material-ui";
+
+const styles = {
+    floatingLabelStyle: {
+        color: orange500,
+    },
+    floatingLabelFocusStyle: {
+        color: blue500,
+    },
+};
+
 class Cart extends Component {
     constructor(props) {
         super(props)
     }
 
-    /*
-        TODO:
-        2. add page for entering id number
-        3. show inquiry details on the cart page
-     */
+    setCartRedirectId = (event, value) => {
+        const { CartActions: { setCartRedirectId } } = this.props;
+        return setCartRedirectId(value);
+    };
 
-    doStuff = () => {
-        const { CartActions: { doStuff } } = this.props;
-        doStuff()
+    getInquiryIdFromLocalStorage = () => {
+        const { CartActions: { getInquiryIdFromLocalStorage } } = this.props;
+        return getInquiryIdFromLocalStorage();
+    };
+
+    componentWillMount() {
+        this.getInquiryIdFromLocalStorage();
     }
 
     render() {
-        const { user } = this.props
+        const { cart } = this.props;
 
         return (
-            <article id="sou-catalog">
-                <div>Cart {user.name}</div>
-                <button onClick={this.doStuff}>Do some stuff</button>
+            <article id="sou-cart">
+                <TextField
+                    floatingLabelText="Please enter Inquiry Id"
+                    floatingLabelStyle={styles.floatingLabelStyle}
+                    floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                    defaultValue={cart.cartRedirectId}
+                    onChange={this.setCartRedirectId}
+                />
+                <RaisedButton
+                    href={`/cart/${cart.cartRedirectId}`}
+                    label="Go to Your inquiry"
+                    secondary={true}
+                    disabled={!cart.cartRedirectId}
+                    style={styles.button}/>
             </article>
         )
     }
@@ -34,8 +61,7 @@ class Cart extends Component {
 // Все что хотим вытащить из стора указываем здесь, после чего они будут доступны в компоненте (App) через this.props
 function mapStateToProps(state) {
     return {
-        user: state.core.user,
-        about: state.about,
+        cart: state.cart
     }
 }
 

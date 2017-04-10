@@ -20,6 +20,11 @@ class About extends Component {
         setCurrentTime(time)
     };
 
+    setInquiryIdToLocalStorage = (id) => {
+        const { AboutActions: { setInquiryIdToLocalStorage } } = this.props;
+        setInquiryIdToLocalStorage(id)
+    };
+
     postInquiry = () => {
         const {
             about,
@@ -76,6 +81,7 @@ class About extends Component {
         } = this.props;
 
         if (about.data.inquiry) {
+            this.setInquiryIdToLocalStorage(about.data.inquiry.id);
             return <article>
                 <h3>Thank you for your request!</h3>
                 <Link to={`/cart/${about.data.inquiry.id}`}>Go to your order!</Link>

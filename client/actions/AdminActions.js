@@ -4,10 +4,6 @@ import { CALL_API } from '../middleware/api'
 import localForage from '../storage/localforage.config'
 import { push } from 'react-router-redux';
 
-export const doStuff = () => ({
-    type: CONSTANTS.STUFF
-});
-
 function redirectToImageUploadUrl(redirectId) {
     return `/admin/upload/bakery/${redirectId}`;
 }

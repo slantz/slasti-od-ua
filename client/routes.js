@@ -6,6 +6,7 @@ import Bakery from './components/pages/Bakery'
 import BakeryDetails from './components/pages/BakeryDetails'
 import About from './components/pages/About'
 import Cart from './components/pages/Cart'
+import CartDetails from './components/pages/CartDetails'
 import Admin from './components/pages/Admin'
 import AdminUpdate from './components/pages/AdminUpdate'
 import AdminUpload from './components/pages/AdminUpload'
@@ -27,7 +28,9 @@ export default class RTRouter extends Component {
                     <Route path=":id" component={BakeryDetails}/>
                 </Route>
                 <Route path="about" component={About}/>
-                <Route path="cart" component={Cart}/>
+                <Route path="cart" component={Cart}>
+                    <Route path=":id" component={CartDetails}/>
+                </Route>
                 <Route path="admin" component={Admin} onEnter={(nextState, replace, callback) => { this.requireLogin(nextState, replace, callback) }}>
                     <Route path="update/:id" component={AdminUpdate}/>
                     <Route path="upload" component={AdminUpload}>

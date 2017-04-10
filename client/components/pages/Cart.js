@@ -3,32 +3,74 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as CartActions from '../../actions/CartActions'
 
+import TextField from 'material-ui/TextField';
+import {orange500, blue500} from 'material-ui/styles/colors';
+import { RaisedButton } from "material-ui";
+
+const styles = {
+    floatingLabelStyle: {
+        color: orange500,
+    },
+    floatingLabelFocusStyle: {
+        color: blue500,
+    },
+};
+
 class Cart extends Component {
     constructor(props) {
         super(props)
     }
 
-    doStuff = () => {
-        const { CartActions: { doStuff } } = this.props;
-        doStuff()
+    setCartRedirectId = (event, value) => {
+        const { CartActions: { setCartRedirectId } } = this.props;
+        return setCartRedirectId(value);
+    };
+
+    getInquiryIdFromLocalStorage = () => {
+        const { CartActions: { getInquiryIdFromLocalStorage } } = this.props;
+        return getInquiryIdFromLocalStorage();
+    };
+
+    componentWillMount() {
+        this.getInquiryIdFromLocalStorage();
     }
 
     render() {
-        const { user } = this.props
+        const { cart, children } = this.props;
 
-        return (
-            <article id="sou-catalog">
-                <div>Cart {user.name}</div>
-                <button onClick={this.doStuff}>Do some stuff</button>
-            </article>
-        )
+        if (children === null) {
+            return (
+                <article id="sou-cart">
+                    <TextField
+                        floatingLabelText="Please enter Inquiry Id"
+                        floatingLabelStyle={styles.floatingLabelStyle}
+                        floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                        defaultValue={cart.cartRedirectId}
+                        onChange={this.setCartRedirectId}
+                    />
+                    <RaisedButton
+                        href={`/cart/${cart.cartRedirectId}`}
+                        label="Go to Your inquiry"
+                        secondary={true}
+                        disabled={!cart.cartRedirectId}
+                        style={styles.button}/>
+                </article>
+            )
+        } else {
+            return (
+                <article id="sou-cart">
+                    {children}
+                </article>
+            )
+        }
+
     }
 }
 
 // Все что хотим вытащить из стора указываем здесь, после чего они будут доступны в компоненте (App) через this.props
 function mapStateToProps(state) {
     return {
-        user: state.core.user
+        cart: state.cart
     }
 }
 

@@ -21,6 +21,28 @@ let AdminCreateCategoryWeightDecorForm = (props) => {
                 </div>
             </fieldset>
             <fieldset>
+                <label htmlFor="name">Add Name</label>
+                <div>
+                    <Field name="name"
+                           component={InputWithValidation.renderField}
+                           type="text"
+                           label="Name"
+                           placeholder="Name"
+                           required/>
+                </div>
+            </fieldset>
+            <fieldset>
+                <label htmlFor="description">Add Description</label>
+                <div>
+                    <Field name="description"
+                           component={InputWithValidation.renderField}
+                           type="text"
+                           label="Description"
+                           placeholder="Description"
+                           required/>
+                </div>
+            </fieldset>
+            <fieldset>
                 <label htmlFor="weight">Add Weight</label>
                 <div>
                     <Field name="weight"

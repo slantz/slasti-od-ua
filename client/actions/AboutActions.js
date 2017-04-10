@@ -1,6 +1,8 @@
 import * as CORE_CONSTANTS from '../constants/Core'
 import * as ABOUT_CONSTANTS from '../constants/About'
+import * as CART_CONSTANTS from '../constants/Cart'
 import { CALL_API } from '../middleware/api'
+import localForage from '../storage/localforage.config'
 
 function postAInquiry(inquiry) {
     return {
@@ -45,5 +47,16 @@ export function postInquiry(inquiry) {
             return dispatch(postAInquiry(inquiry));
         }
         return null;
+    }
+}
+
+export function setInquiryIdToLocalStorage(id) {
+    return (dispatch) => {
+        return localForage.setItem(CART_CONSTANTS.CURRENT_INQUIRY_ID, id).then(() => {
+            dispatch({
+                type: CART_CONSTANTS.CART_SET_CART_REDIRECT_ID,
+                payload: id
+            });
+        });
     }
 }

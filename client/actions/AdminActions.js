@@ -4,10 +4,6 @@ import { CALL_API } from '../middleware/api'
 import localForage from '../storage/localforage.config'
 import { push } from 'react-router-redux';
 
-export const doStuff = () => ({
-    type: CONSTANTS.STUFF
-});
-
 function redirectToImageUploadUrl(redirectId) {
     return `/admin/upload/bakery/${redirectId}`;
 }
@@ -93,6 +89,21 @@ function createNewBasisAction(data) {
     }
 }
 
+function createNewEventAction(data) {
+    return {
+        [CALL_API]: {
+            method: CORE_CONSTANTS.METHOD.POST,
+            body: data,
+            types: [
+                ADMIN_CONSTANTS.ADMIN_CREATE_NEW_EVENT_REQUEST,
+                ADMIN_CONSTANTS.ADMIN_CREATE_NEW_EVENT_SUCCESS,
+                ADMIN_CONSTANTS.ADMIN_CREATE_NEW_EVENT_FAILURE
+            ],
+            endpoint: "/api/event"
+        }
+    }
+}
+
 function createNewFillingAction(data) {
     return {
         [CALL_API]: {
@@ -165,6 +176,20 @@ function getAllBasis() {
     }
 }
 
+function getAllEvents() {
+    return {
+        [CALL_API]: {
+            method: CORE_CONSTANTS.METHOD.GET,
+            types: [
+                ADMIN_CONSTANTS.ADMIN_GET_EVENTS_REQUEST,
+                ADMIN_CONSTANTS.ADMIN_GET_EVENTS_SUCCESS,
+                ADMIN_CONSTANTS.ADMIN_GET_EVENTS_FAILURE
+            ],
+            endpoint: "/api/event"
+        }
+    }
+}
+
 function getAllInquiry() {
     return {
         [CALL_API]: {
@@ -208,6 +233,25 @@ function resolveAnInquiry(id) {
                 ADMIN_CONSTANTS.ADMIN_RESOLVE_INQUIRY_FAILURE
             ],
             endpoint: `/api/inquiry/${id}/resolve`
+        }
+    }
+}
+
+function updateInquiryPrice(id, price) {
+    return {
+        [CALL_API]: {
+            method: CORE_CONSTANTS.METHOD.PUT,
+            body: {
+                inquiry: {
+                    price
+                }
+            },
+            types: [
+                ADMIN_CONSTANTS.ADMIN_UPDATE_PRICE_INQUIRY_REQUEST,
+                ADMIN_CONSTANTS.ADMIN_UPDATE_PRICE_INQUIRY_SUCCESS,
+                ADMIN_CONSTANTS.ADMIN_UPDATE_PRICE_INQUIRY_FAILURE
+            ],
+            endpoint: `/api/inquiry/${id}/price`
         }
     }
 }
@@ -291,6 +335,15 @@ export function createNewIngredient(data) {
     }
 }
 
+export function createNewEvent(data) {
+    return (dispatch, getState) => {
+        if (shouldMakeAdminRequest(getState().admin.event)) {
+            return dispatch(createNewEventAction(data))
+        }
+        return null;
+    }
+}
+
 export function getIngredients() {
     return (dispatch, getState) => {
         if (shouldMakeAdminRequest(getState().admin.ingredients)) {
@@ -318,6 +371,15 @@ export function getBasis() {
     }
 }
 
+export function getEvents() {
+    return (dispatch, getState) => {
+        if (shouldMakeAdminRequest(getState().admin.event)) {
+            return dispatch(getAllEvents())
+        }
+        return null;
+    }
+}
+
 export function setCurrentIngredients(value) {
     return (dispatch) => {
         dispatch({
@@ -340,6 +402,15 @@ export function setCurrentBasis(value) {
     return (dispatch) => {
         dispatch({
             type: ADMIN_CONSTANTS.SET_CURRENT_BASIS,
+            payload: value
+        });
+    }
+}
+
+export function setCurrentEvent(value) {
+    return (dispatch) => {
+        dispatch({
+            type: ADMIN_CONSTANTS.SET_CURRENT_EVENT,
             payload: value
         });
     }
@@ -457,6 +528,14 @@ export function showBasisNewForm() {
     }
 }
 
+export function showEventNewForm() {
+    return (dispatch) => {
+        return dispatch({
+            type: ADMIN_CONSTANTS.SHOW_EVENT_NEW_FORM
+        });
+    }
+}
+
 export function hideAllForms() {
     return (dispatch) => {
         return dispatch({
@@ -496,6 +575,15 @@ export function resolveInquiry(id) {
     return (dispatch, getState) => {
         if (shouldMakeAdminRequest(getState().admin.inquiry)) {
             return dispatch(resolveAnInquiry(id));
+        }
+        return null;
+    }
+}
+
+export function updatePriceForInquiry(id, price) {
+    return (dispatch, getState) => {
+        if (shouldMakeAdminRequest(getState().admin.inquiry)) {
+            return dispatch(updateInquiryPrice(id, price));
         }
         return null;
     }

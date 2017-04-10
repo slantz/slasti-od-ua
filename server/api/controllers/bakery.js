@@ -52,7 +52,7 @@ exports.all = async(function* (req, res) {
         })
         .skip(queryOptions.skip)
         .limit(queryOptions.limit)
-        .populate("ingredients filling basis");
+        .populate("ingredients filling basis event");
 
     res.json({
         bakery
@@ -75,6 +75,9 @@ exports.updateBulk = async(function* (req, res) {
                     doc.filling = bakeryWithStuff[doc._id].filling;
                     doc.basis = bakeryWithStuff[doc._id].basis;
                     doc.category = bakeryWithStuff[doc._id].category;
+                    doc.name = bakeryWithStuff[doc._id].name;
+                    doc.description = bakeryWithStuff[doc._id].description;
+                    doc.event = bakeryWithStuff[doc._id].event;
                     doc.weight = bakeryWithStuff[doc._id].weight;
                     doc.decor = bakeryWithStuff[doc._id].decor;
                     doc.numberOfPieces = bakeryWithStuff[doc._id].numberOfPieces;

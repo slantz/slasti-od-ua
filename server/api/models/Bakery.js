@@ -21,6 +21,18 @@ const BakerySchema = new Schema({
         type: String,
         default: ''
     },
+    name: {
+        type: String,
+        default: ''
+    },
+    description: {
+        type: String,
+        default: ''
+    },
+    event: {
+        type: Schema.Types.ObjectId,
+        ref: 'Event'
+    },
     weight: {
         type: Number,
         default: null

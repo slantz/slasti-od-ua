@@ -15,13 +15,14 @@ class Admin extends Component {
     };
 
     render() {
-        const { user } = this.props
+        const { user } = this.props;
 
         return (
             <article id="sou-catalog">
                 {user.isFetching === false && user.status !== null && <div>Hey, {user.payload.name}!</div>}
                 <Link to="admin/update">Go to admin update page</Link>
                 <Link to="admin/upload">Go to admin upload page</Link>
+                <Link to="admin/inquiry">Go to admin inquiry page</Link>
                 {this.props.children}
             </article>
         )

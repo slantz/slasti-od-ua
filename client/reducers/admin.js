@@ -28,15 +28,18 @@ export default function admin(state = {
         items: [],
         isFetching: false
     },
+    event: {
+      events: [],
+      currentEvent: {},
+      isFetching: false
+    },
     currentDecor: [],
     currentFileToCrop: null,
     nextFileIndex: null,
     ingredients_showCreateNewForm: false,
     filling_showCreateNewForm: false,
     basis_showCreateNewForm: false,
-    ingredients_currentIngredientForCreationForm: null,
-    ingredients_currentFillingForCreationForm: null,
-    ingredients_currentBasisForCreationForm: null
+    event_showCreateNewForm: false
 }, { type, payload }) {
     let assignedState;
 
@@ -182,6 +185,31 @@ export default function admin(state = {
                 }
             });
             break;
+        case ADMIN_CONSTANTS.ADMIN_GET_EVENTS_SUCCESS:
+            assignedState = Object.assign({}, state, {
+                event: {
+                    events: payload.events,
+                    currentEvent: {},
+                    isFetching: false
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_GET_EVENTS_FAILURE:
+            assignedState = Object.assign({}, state, {
+                event: {
+                    events: [],
+                    currentEvent: {},
+                    isFetching: false
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_GET_EVENTS_REQUEST:
+            assignedState = Object.assign({}, state, {
+                event: {
+                    isFetching: true,
+                }
+            });
+            break;
         case ADMIN_CONSTANTS.ADMIN_CREATE_NEW_BASIS_SUCCESS:
             assignedState = Object.assign({}, state, {
                 basis: {
@@ -293,6 +321,38 @@ export default function admin(state = {
                 }
             });
             break;
+        case ADMIN_CONSTANTS.ADMIN_CREATE_NEW_EVENT_SUCCESS:
+            assignedState = Object.assign({}, state, {
+                event: {
+                    events: state.event.events.map((event) => {
+                        if (event.type === payload.event.type) {
+                            return payload.event;
+                        }
+                        return event;
+                    }),
+                    currentEvent: payload.event,
+                    isFetching: false
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_CREATE_NEW_EVENT_FAILURE:
+            assignedState = Object.assign({}, state, {
+                event: {
+                    events: state.event.events,
+                    currentEvent: state.event.currentEvent,
+                    isFetching: false
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_CREATE_NEW_EVENT_REQUEST:
+            assignedState = Object.assign({}, state, {
+                event: {
+                    events: state.event.events,
+                    currentEvent: state.event.currentEvent,
+                    isFetching: true
+                }
+            });
+            break;
         case ADMIN_CONSTANTS.ADMIN_CREATE_NEW_DECOR:
             assignedState = Object.assign({}, state, {
                 currentDecor: payload
@@ -364,6 +424,16 @@ export default function admin(state = {
                 }
             });
             break;
+        case ADMIN_CONSTANTS.SET_CURRENT_EVENT:
+            assignedState = Object.assign({}, state, {
+                event: {
+                    isFetching: false,
+                    events: state.event.events,
+                    currentEvent: payload,
+                    showCreateNewForm: false
+                }
+            });
+            break;
         case ADMIN_CONSTANTS.SHOW_INGREDIENTS_NEW_FORM:
             assignedState = Object.assign({}, state, {
                 ingredients_showCreateNewForm: !state.ingredients_showCreateNewForm
@@ -376,7 +446,12 @@ export default function admin(state = {
             break;
         case ADMIN_CONSTANTS.SHOW_BASIS_NEW_FORM:
             assignedState = Object.assign({}, state, {
-                basis_showCreateNewForm: !state.basis_showCreateNewForm
+                event_showCreateNewForm: !state.event_showCreateNewForm
+            });
+            break;
+        case ADMIN_CONSTANTS.SHOW_EVENT_NEW_FORM:
+            assignedState = Object.assign({}, state, {
+                event_showCreateNewForm: !state.event_showCreateNewForm
             });
             break;
         case ADMIN_CONSTANTS.HIDE_ALL_FORMS:
@@ -384,6 +459,7 @@ export default function admin(state = {
                 basis_showCreateNewForm: false,
                 ingredients_showCreateNewForm: false,
                 filling_showCreateNewForm: false,
+                event_showCreateNewForm: false
             });
             break;
         case ADMIN_CONSTANTS.CLEAR_CURRENT_STUFF:
@@ -404,6 +480,12 @@ export default function admin(state = {
                     isFetching: false,
                     ingredients: state.ingredients.ingredients,
                     currentIngredients: [],
+                    showCreateNewForm: false
+                },
+                event: {
+                    isFetching: false,
+                    events: state.event.events,
+                    currentEvent: {},
                     showCreateNewForm: false
                 },
                 currentDecor: []
@@ -479,6 +561,35 @@ export default function admin(state = {
             });
             break;
         case ADMIN_CONSTANTS.ADMIN_RESOLVE_INQUIRY_FAILURE:
+            assignedState = Object.assign({}, state, {
+                inquiry: {
+                    isFetching: false,
+                    items: state.inquiry.items
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_UPDATE_PRICE_INQUIRY_REQUEST:
+            assignedState = Object.assign({}, state, {
+                inquiry: {
+                    isFetching: true,
+                    items: state.inquiry.items
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_UPDATE_PRICE_INQUIRY_SUCCESS:
+            assignedState = Object.assign({}, state, {
+                inquiry: {
+                    isFetching: false,
+                    items: state.inquiry.items.map(function(item){
+                        if (item._id === payload.inquiry._id) {
+                            return payload.inquiry;
+                        }
+                        return item;
+                    })
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_UPDATE_PRICE_INQUIRY_FAILURE:
             assignedState = Object.assign({}, state, {
                 inquiry: {
                     isFetching: false,

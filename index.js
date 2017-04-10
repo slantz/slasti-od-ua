@@ -43,6 +43,7 @@ const bakery = require('./server/api/controllers/bakery');
 const ingredient = require('./server/api/controllers/ingredient');
 const basis = require('./server/api/controllers/basis');
 const filling = require('./server/api/controllers/filling');
+const event = require('./server/api/controllers/event');
 const inquiry = require('./server/api/controllers/inquiry');
 
 // Bootstrap routes
@@ -222,16 +223,33 @@ app.delete('/api/filling/:id', function(req, res, next) {
     res.json(req.user);
 });
 
+//EVENT CRUD
+app.get('/api/event', event.all);
+
+app.post('/api/event', validation.validateEvent, event.post);
+
+app.get('/api/event/:id', function(req, res, next) {
+    res.json(req.user);
+});
+
+app.put('/api/event/:id', function(req, res, next) {
+    res.json(req.user);
+});
+
+app.delete('/api/event/:id', function(req, res, next) {
+    res.json(req.user);
+});
+
 //INQUIRY CRUD
 app.get('/api/inquiry', inquiry.all);
 
 app.post('/api/inquiry', validation.validateInquiry, inquiry.post);
 
-app.get('/api/inquiry/:id', function(req, res, next) {
-    res.json(req.user);
-});
+app.get('/api/inquiry/:id', inquiry.byId);
 
 app.put('/api/inquiry/:id/resolve', inquiry.resolve);
+
+app.put('/api/inquiry/:id/price', validation.validateInquiryPrice, inquiry.updatePrice);
 
 app.delete('/api/inquiry/:id', function(req, res, next) {
     res.json(req.user);

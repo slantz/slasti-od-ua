@@ -54,6 +54,16 @@ function validateFilling(req, res) {
     }
 }
 
+function validateEvent(req, res) {
+    if (!req.body.event || Object.keys(req.body.event).length === 0) {
+        return badRequestError(res, "No or empty event object");
+    }
+
+    if (!req.body.event.type) {
+        return badRequestError(res, "Event should have [type] property set");
+    }
+}
+
 function validateBakeryBulkUpdate(req, res) {
     if (!req.body.bakeryWithStuff || Object.keys(req.body.bakeryWithStuff).length === 0) {
         return badRequestError(res, "No or empty [bakeryWithStuff] body");
@@ -82,6 +92,12 @@ function validateInquiry(req, res) {
     }
 }
 
+function validateInquiryPrice(req, res) {
+    if (!req.body.inquiry || !req.body.inquiry.price) {
+        return badRequestError(res, "No or empty [inquiry] [price] field");
+    }
+}
+
 exports.validateIngredient = function(req, res, next) {
     validateIngredient(req, res);
     return next();
@@ -97,6 +113,11 @@ exports.validateFilling = function(req, res, next) {
     return next();
 };
 
+exports.validateEvent = function(req, res, next) {
+    validateEvent(req, res);
+    return next();
+};
+
 exports.validateBakeryBulkUpdate = function(req, res, next) {
     validateBakeryBulkUpdate(req, res);
     return next();
@@ -104,5 +125,10 @@ exports.validateBakeryBulkUpdate = function(req, res, next) {
 
 exports.validateInquiry = function(req, res, next) {
     validateInquiry(req, res);
+    return next();
+};
+
+exports.validateInquiryPrice = function(req, res, next) {
+    validateInquiryPrice(req, res);
     return next();
 };

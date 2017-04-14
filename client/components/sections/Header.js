@@ -32,7 +32,11 @@ class Header extends Component {
         }
 
         return <ToolbarGroup lastChild={true} >
-            <RaisedButton label="VK login" primary={true} overlayStyle={{'backgroundColor': '#45668e', 'color': '#fff'}} onTouchTap={this.loginWithVk} />
+            <RaisedButton
+                label="VK login"
+                primary={true}
+                overlayStyle={{'backgroundColor': '#45668e'}}
+                onTouchTap={this.loginWithVk} />
         </ToolbarGroup>;
     };
 

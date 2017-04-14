@@ -3,6 +3,7 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as FilterActions from '../../actions/FilterActions'
 import Select from "react-select";
+import { RaisedButton } from "material-ui";
 
 class Filters extends Component {
     constructor(props) {
@@ -111,7 +112,7 @@ class Filters extends Component {
         return (
             <aside id="sou-bakery-filters">
                 <h2>Wir sind die Filtern!</h2>
-                <button onClick={this.clearAllFilters}>Clear all filters</button>
+                <RaisedButton label="Clear all filters" secondary={true} onTouchTap={this.clearAllFilters} />
                 <div>
                     <Select
                         name="select-filter-bakery-ingredients"

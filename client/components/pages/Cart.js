@@ -6,6 +6,7 @@ import * as CartActions from '../../actions/CartActions'
 import TextField from 'material-ui/TextField';
 import {orange500, blue500} from 'material-ui/styles/colors';
 import { RaisedButton } from "material-ui";
+import { Link } from "react-router";
 
 const styles = {
     floatingLabelStyle: {
@@ -48,12 +49,13 @@ class Cart extends Component {
                         defaultValue={cart.cartRedirectId}
                         onChange={this.setCartRedirectId}
                     />
-                    <RaisedButton
-                        href={`/cart/${cart.cartRedirectId}`}
-                        label="Go to Your inquiry"
-                        secondary={true}
-                        disabled={!cart.cartRedirectId}
-                        style={styles.button}/>
+                    <Link to={`/cart/${cart.cartRedirectId}`}>
+                        <RaisedButton
+                            label="Go to Your inquiry"
+                            secondary={true}
+                            disabled={!cart.cartRedirectId}
+                            style={styles.button}/>
+                    </Link>
                 </article>
             )
         } else {

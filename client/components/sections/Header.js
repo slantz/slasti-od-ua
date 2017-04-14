@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as CoreActions from '../../actions/CoreActions'
+import * as DOM_CONSTANTS from '../../constants/Dom'
 import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import NavigationMenuIcon from 'material-ui/svg-icons/navigation/menu';
@@ -25,7 +26,7 @@ class Header extends Component {
     };
 
     compileLoginWithVkLink = () => {
-        const { user } = this.props;
+        const { core: { user } } = this.props;
 
         if (user.payload.name) {
             return null;
@@ -41,7 +42,7 @@ class Header extends Component {
     };
 
     greet = () => {
-        const { user, cart } = this.props;
+        const { core: { user }, cart } = this.props;
 
         if (!user.payload.name) {
             return null;
@@ -64,11 +65,24 @@ class Header extends Component {
         );
     };
 
+    toggleHeaderSticky = (e) => {
+        const { core: { isHeaderSticky }, CoreActions: { toggleHeaderSticky } } = this.props;
+        let isStickyScrollTopPosition = e.target.body.scrollTop > 0;
+
+        if (isStickyScrollTopPosition !== isHeaderSticky) {
+            toggleHeaderSticky(isStickyScrollTopPosition);
+        }
+    };
+
+    componentDidMount() {
+        window.addEventListener("scroll", this.toggleHeaderSticky);
+    }
+
     render() {
-        const { user, segment } = this.props;
+        const { core: { user, isHeaderSticky }, segment } = this.props;
 
         return (
-            <header role="banner">
+            <header role="banner" className={isHeaderSticky ? DOM_CONSTANTS.JS_STICKY_HEADER : ""}>
                 <Toolbar style={{'height': '48px'}}>
                     <ToolbarGroup firstChild={true}  style={{'flex': '1 auto'}}>
                         <Nav user={user} segment={segment} />
@@ -83,7 +97,7 @@ class Header extends Component {
 
 function mapStateToProps(state) {
     return {
-        user : state.core.user,
+        core : state.core,
         cart: state.cart
     }
 }

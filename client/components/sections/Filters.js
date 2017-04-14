@@ -4,8 +4,6 @@ import {connect} from 'react-redux'
 import * as FilterActions from '../../actions/FilterActions'
 import Select from "react-select";
 import { RaisedButton } from "material-ui";
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ImageTuneIcon from 'material-ui/svg-icons/image/tune';
 
 class Filters extends Component {
     constructor(props) {
@@ -110,13 +108,21 @@ class Filters extends Component {
     };
 
     render() {
-        const { filter: { filters }} = this.props;
+        const { bakery, filter: { filters }} = this.props;
+
+        let styles = {};
+
+        if (bakery.isFiltersVisible) {
+            styles = {'position': 'fixed', 'top': '48px', 'left': '0', 'bottom': '0', 'width': '275px', 'zIndex': '1', 'backgroundColor': '#fff', 'borderRight': '1px solid grey'};
+        } else {
+            styles = {'position': 'fixed', 'top': '48px', 'left': '-275px', 'bottom': '0', 'width': '275px', 'zIndex': '1', 'backgroundColor': '#fff', 'borderRight': '1px solid grey'};
+        }
+
         return (
-            <aside id="sou-bakery-filters">
+            <aside id="sou-bakery-filters"
+                   className="i-transit-all"
+                   style={styles}>
                 <h2>Wir sind die Filtern!</h2>
-                <FloatingActionButton secondary={true} mini={true}>
-                    <ImageTuneIcon />
-                </FloatingActionButton>
                 <RaisedButton label="Clear all filters" secondary={true} onTouchTap={this.clearAllFilters} />
                 <div>
                     <Select

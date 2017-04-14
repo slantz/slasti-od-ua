@@ -5,3 +5,4 @@ export const INNER_TEXT_BACK_IN_BLACK_DEFAULT = 'Back in black';
 export const INNER_TEXT_BACK_IN_BLACK_PURPLE = 'Deep purple';
 export const CLASS_BUTTON_BLACK = 'black';
 export const CLASS_BUTTON_PURPLE = 'purple';
+export const JS_STICKY_HEADER = 'js-sticky-header';

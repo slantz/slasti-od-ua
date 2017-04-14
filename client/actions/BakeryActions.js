@@ -83,3 +83,11 @@ export function setCurrentSkip(currentSkip) {
         });
     }
 }
+
+export function toggleFilterVisibility() {
+    return (dispatch) => {
+        dispatch({
+            type: BAKERY_CONSTANTS.TOGGLE_FILTER_VISIBILITY
+        });
+    }
+}

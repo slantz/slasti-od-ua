@@ -52,7 +52,8 @@ export default function core(state = {
         isFetching: false,
         fetcher: userFetchingPromises.all,
         status: null
-    }
+    },
+    isHeaderSticky: false
 }, { type, payload }) {
     switch(type) {
         case CONSTANTS.SUCCESS:
@@ -110,6 +111,10 @@ export default function core(state = {
                     isFetching: true,
                     payload: state.user.payload
                 }
+            });
+        case CONSTANTS.TOGGLE_HEADER_STICKY:
+            return Object.assign({}, state, {
+                isHeaderSticky: payload
             });
         default: return state
     }

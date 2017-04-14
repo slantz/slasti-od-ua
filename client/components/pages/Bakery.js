@@ -9,6 +9,8 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import RaisedButton from 'material-ui/RaisedButton';
 import { Grid, Col, Row } from 'react-flexbox-grid/lib/index'
 import { Chip } from "material-ui";
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ImageTuneIcon from 'material-ui/svg-icons/image/tune';
 
 class Bakery extends Component {
     constructor(props) {
@@ -58,6 +60,11 @@ class Bakery extends Component {
         return setCurrentSkip(currentSkip);
     };
 
+    toggleFilterVisibility = () => {
+        const { BakeryActions: { toggleFilterVisibility } } = this.props;
+        return toggleFilterVisibility();
+    };
+
     loadMoreBakeryOnScroll = debounce((e) => {
         const {
             bakery: {
@@ -74,7 +81,7 @@ class Bakery extends Component {
 
     getBakeryCollectionElement = (bake) => {
         return (
-            <Col xs={12} sm={6} md={3} className="i-text-uppercase" key={bake._id}>
+            <Col xs={12} sm={6} md={4} className="i-text-uppercase" key={bake._id}>
                 <Card>
                     <CardMedia
                         overlay={
@@ -94,11 +101,12 @@ class Bakery extends Component {
                         </Grid>
                     </CardText>
                     <CardActions>
-                        <RaisedButton
-                            label="More Details"
-                            secondary={true}
-                            alt={`More Details about ${bake.name}`}
-                            href={"/bakery/" + bake._id}/>
+                        <Link to={"/bakery/" + bake._id}>
+                            <RaisedButton
+                                label="More Details"
+                                secondary={true}
+                                alt={`More Details about ${bake.name}`}/>
+                        </Link>
                     </CardActions>
                 </Card>
             </Col>
@@ -183,14 +191,22 @@ class Bakery extends Component {
     }
 
     render() {
-        const { user, bakery: { data, count } } = this.props;
+        const { user, bakery: { data, count, isFiltersVisible } } = this.props;
+
+        let styles = {};
+
+        if (isFiltersVisible) {
+            styles = {'position': 'relative', 'marginTop': '0', 'marginLeft': '275px', 'zIndex': '0'};
+        } else {
+            styles = {'position': 'relative', 'marginTop': '0', 'marginLeft': '0', 'zIndex': '0'};
+        }
 
         return (
             <section id="sou-bakery">
                 {data.isFetching && data.items.length === 0 && this.elementInfiniteLoad()}
                 {this.props.children === null && <div>
-                    <Filters/>
-                    <div>
+                    <Filters />
+                    <div className="i-transit-all" style={styles}>
                         <div>Total amount of bakery {count.count}</div>
                         <Grid tagName="article" fluid={true}>
                             <Row middle="xs">
@@ -198,7 +214,12 @@ class Bakery extends Component {
                             </Row>
                         </Grid>
                     </div>
-
+                    <FloatingActionButton
+                        secondary={true}
+                        onTouchTap={this.toggleFilterVisibility}
+                        style={{'position': 'fixed', 'bottom': '24px', 'right': '24px', 'zIndex': '1'}}>
+                        <ImageTuneIcon />
+                    </FloatingActionButton>
                     </div>
                 }
                 {!(data.isFetching && data.items.length === 0) && this.props.children}

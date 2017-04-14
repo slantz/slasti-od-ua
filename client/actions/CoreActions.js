@@ -61,3 +61,12 @@ export function logoutCurrentUser() {
         return null;
     }
 }
+
+export function toggleHeaderSticky(isSticky) {
+    return (dispatch) => {
+        dispatch({
+            type: CORE_CONSTANTS.TOGGLE_HEADER_STICKY,
+            payload: isSticky
+        });
+    }
+}

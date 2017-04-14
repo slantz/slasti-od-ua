@@ -21,7 +21,7 @@ class BakeryDetails extends Component {
             bake = bake[0];
             return (
                 <Grid tagName="article" fluid={true}>
-                    <Row middle="xs">
+                    <Row middle="xs" center="xs">
                         <Col xs={12} sm={8} className="i-text-uppercase">
                             <Card>
                                 <CardHeader

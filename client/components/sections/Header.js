@@ -41,7 +41,7 @@ class Header extends Component {
     };
 
     greet = () => {
-        const { user } = this.props;
+        const { user, cart } = this.props;
 
         if (!user.payload.name) {
             return null;
@@ -57,7 +57,7 @@ class Header extends Component {
                             <NavigationMenuIcon />
                         </IconButton>
                     }>
-                    <MenuItem primaryText="My order" />
+                    {cart.data.inquiry && <MenuItem primaryText={cart.data.inquiry.isResolved ? "My order is READY!" : "My order is in progress"} />}
                     <MenuItem primaryText="Logout" onTouchTap={this.logoutCurrentUser}/>
                 </IconMenu>
             </ToolbarGroup>
@@ -83,7 +83,8 @@ class Header extends Component {
 
 function mapStateToProps(state) {
     return {
-        user : state.core.user
+        user : state.core.user,
+        cart: state.cart
     }
 }
 

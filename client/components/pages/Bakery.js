@@ -74,17 +74,21 @@ class Bakery extends Component {
 
     getBakeryCollectionElement = (bake) => {
         return (
-            <Col xs={12} sm={3} className="i-text-uppercase" key={bake._id}>
+            <Col xs={12} sm={6} md={3} className="i-text-uppercase" key={bake._id}>
                 <Card>
-                    <CardMedia overlay={<CardTitle title={bake.name} subtitle={bake.description} />}>
+                    <CardMedia
+                        overlay={
+                            <CardTitle
+                                title={bake.category}
+                                subtitle={`${bake.numberOfPieces} ${bake.category}${bake.numberOfPieces > 1 ? "s" : null}`} />}>
                         <img src={`http://slasti.od.ua:3001/client/static/images/${bake.imgUrl}`} />
                     </CardMedia>
-                    <CardTitle title="Card title" subtitle="Card subtitle" />
+                    <CardTitle title={bake.name} subtitle={bake.description} />
                     <CardText>
                         <Grid tagName="article">
                             <Row middle="xs">
                                 <Col xs={12}>
-                                    {bake.numberOfPieces} {bake.category}{bake.numberOfPieces > 1 ? "s" : null}
+                                    <p>{bake.event && bake.event.type}</p>
                                 </Col>
                             </Row>
                         </Grid>
@@ -93,6 +97,7 @@ class Bakery extends Component {
                         <RaisedButton
                             label="More Details"
                             secondary={true}
+                            alt={`More Details about ${bake.name}`}
                             href={"/bakery/" + bake._id}/>
                     </CardActions>
                 </Card>
@@ -185,12 +190,15 @@ class Bakery extends Component {
                 {data.isFetching && data.items.length === 0 && this.elementInfiniteLoad()}
                 {this.props.children === null && <div>
                     <Filters/>
-                    <div>Total amount of bakery {count.count}</div>
-                    <Grid tagName="article" fluid={true}>
-                        <Row middle="xs">
-                            {this.filterPrimaryBakeriesCollection()}
-                        </Row>
-                    </Grid>
+                    <div>
+                        <div>Total amount of bakery {count.count}</div>
+                        <Grid tagName="article" fluid={true}>
+                            <Row middle="xs">
+                                {this.filterPrimaryBakeriesCollection()}
+                            </Row>
+                        </Grid>
+                    </div>
+
                     </div>
                 }
                 {!(data.isFetching && data.items.length === 0) && this.props.children}

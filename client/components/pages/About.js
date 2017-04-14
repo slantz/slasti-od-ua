@@ -56,12 +56,15 @@ class About extends Component {
             let timeToCall = new Date();
 
             timeToCall.setFullYear(about.currentDate.getFullYear(), about.currentDate.getMonth(), about.currentDate.getDate());
+
             timeToCall.setHours(0);
             timeToCall.setMinutes(0);
             timeToCall.setSeconds(0);
 
             if (about.currentTime) {
-                 timeToCall.setTime(about.currentTime.getTime());
+                 timeToCall.setHours(about.currentTime.getHours());
+                 timeToCall.setMinutes(about.currentTime.getMinutes());
+                 timeToCall.setSeconds(about.currentTime.getSeconds());
             }
 
             inquiry.timeToCall = timeToCall;

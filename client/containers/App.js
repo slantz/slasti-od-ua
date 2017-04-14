@@ -2,7 +2,14 @@ import React, { Component } from 'react'
 import ReactCSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup'
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {deepOrange500} from 'material-ui/styles/colors';
+import {teal700} from 'material-ui/styles/colors';
+import {teal500} from 'material-ui/styles/colors';
+import {teal100} from 'material-ui/styles/colors';
+import {white} from 'material-ui/styles/colors';
+import {amber500} from 'material-ui/styles/colors';
+import {grey900} from 'material-ui/styles/colors';
+import {grey600} from 'material-ui/styles/colors';
+import {grey400} from 'material-ui/styles/colors';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as CoreActions from '../actions/CoreActions'
@@ -24,9 +31,18 @@ class App extends Component {
     };
 
     muiTheme = getMuiTheme({
+        fontFamily: 'Muli, Arial, sans-serif',
         palette: {
-            accent1Color: deepOrange500,
-        },
+            primary1Color: teal500,
+            primary2Color: teal700,
+            primary3Color: grey600,
+            accent1Color: amber500,
+            accent2Color: teal100,
+            accent3Color: grey400,
+            textColor: grey900,
+            alternateTextColor: white,
+            borderColor: grey400,
+        }
     });
 
     componentWillMount() {
@@ -58,7 +74,7 @@ class App extends Component {
                                          }
                                          transitionEnterTimeout={3000}
                                          transitionLeaveTimeout={3000}>
-                    <Header user={this.props.user}/>
+                    <Header segment={segment} />
                     {React.cloneElement(this.props.children, {key : segment})}
                 </ReactCSSTransitionGroup>
             </MuiThemeProvider>

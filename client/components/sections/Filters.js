@@ -4,6 +4,8 @@ import {connect} from 'react-redux'
 import * as FilterActions from '../../actions/FilterActions'
 import Select from "react-select";
 import { RaisedButton } from "material-ui";
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ImageTuneIcon from 'material-ui/svg-icons/image/tune';
 
 class Filters extends Component {
     constructor(props) {
@@ -112,6 +114,9 @@ class Filters extends Component {
         return (
             <aside id="sou-bakery-filters">
                 <h2>Wir sind die Filtern!</h2>
+                <FloatingActionButton secondary={true} mini={true}>
+                    <ImageTuneIcon />
+                </FloatingActionButton>
                 <RaisedButton label="Clear all filters" secondary={true} onTouchTap={this.clearAllFilters} />
                 <div>
                     <Select

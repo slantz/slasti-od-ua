@@ -5,6 +5,10 @@ import * as BakeryActions from '../../actions/BakeryActions'
 import { debounce } from "../../util/util";
 import Filters from "../sections/Filters";
 import { Link } from "react-router";
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import RaisedButton from 'material-ui/RaisedButton';
+import { Grid, Col, Row } from 'react-flexbox-grid/lib/index'
+import { Chip } from "material-ui";
 
 class Bakery extends Component {
     constructor(props) {
@@ -69,16 +73,31 @@ class Bakery extends Component {
     }, 100);
 
     getBakeryCollectionElement = (bake) => {
-        return <article className="bake" key={bake._id} style={{
-            'width': '300px',
-            'display': 'inline-block'
-        }}><Link to={"/bakery/" + bake._id}>
-            <img
-                src={`http://slasti.od.ua:3001/client/static/images/${bake.imgUrl}`}
-                width="300px"
-                height={300 * 3/4 + "px"}
-                alt={bake._id} />
-        </Link></article>;
+        return (
+            <Col xs={12} sm={3} className="i-text-uppercase" key={bake._id}>
+                <Card>
+                    <CardMedia overlay={<CardTitle title={bake.name} subtitle={bake.description} />}>
+                        <img src={`http://slasti.od.ua:3001/client/static/images/${bake.imgUrl}`} />
+                    </CardMedia>
+                    <CardTitle title="Card title" subtitle="Card subtitle" />
+                    <CardText>
+                        <Grid tagName="article">
+                            <Row middle="xs">
+                                <Col xs={12}>
+                                    {bake.numberOfPieces} {bake.category}{bake.numberOfPieces > 1 ? "s" : null}
+                                </Col>
+                            </Row>
+                        </Grid>
+                    </CardText>
+                    <CardActions>
+                        <RaisedButton
+                            label="More Details"
+                            secondary={true}
+                            href={"/bakery/" + bake._id}/>
+                    </CardActions>
+                </Card>
+            </Col>
+        );
     };
 
     filterPrimaryBake = (bake) => {
@@ -159,20 +178,21 @@ class Bakery extends Component {
     }
 
     render() {
-        const { user, bakery: { data } } = this.props;
+        const { user, bakery: { data, count } } = this.props;
 
         return (
             <section id="sou-bakery">
                 {data.isFetching && data.items.length === 0 && this.elementInfiniteLoad()}
                 {this.props.children === null && <div>
                     <Filters/>
-                    <div id="scroll-container" style={{
-                        display: 'flex',
-                        flexDirection: 'column'
-                    }}>
-                        {this.filterPrimaryBakeriesCollection()}
+                    <div>Total amount of bakery {count.count}</div>
+                    <Grid tagName="article" fluid={true}>
+                        <Row middle="xs">
+                            {this.filterPrimaryBakeriesCollection()}
+                        </Row>
+                    </Grid>
                     </div>
-                </div>}
+                }
                 {!(data.isFetching && data.items.length === 0) && this.props.children}
             </section>
         )

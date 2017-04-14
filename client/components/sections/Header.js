@@ -19,6 +19,11 @@ class Header extends Component {
         window.location.href = '/auth/vk'
     };
 
+    logoutCurrentUser = () => {
+        const { CoreActions: { logoutCurrentUser } } = this.props;
+        logoutCurrentUser();
+    };
+
     compileLoginWithVkLink = () => {
         const { user } = this.props;
 
@@ -48,8 +53,8 @@ class Header extends Component {
                             <NavigationMenuIcon />
                         </IconButton>
                     }>
-                    <MenuItem primaryText="Download" />
-                    <MenuItem primaryText="More Info" />
+                    <MenuItem primaryText="My order" />
+                    <MenuItem primaryText="Logout" onTouchTap={this.logoutCurrentUser}/>
                 </IconMenu>
             </ToolbarGroup>
         );

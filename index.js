@@ -122,6 +122,15 @@ app.get('/auth/vk/callback',
     })
 );
 
+app.get('/auth/logout', function(req, res){
+    req.logout();
+    res.json({
+        'user': {
+            admin: false
+        }
+    });
+});
+
 // TODO move this to some authorization middleware module
 var userTypes = {
     any: function(types) {

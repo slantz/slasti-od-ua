@@ -14,6 +14,16 @@ function getCurrentUserAction() {
     }
 }
 
+function logout() {
+    return {
+        [CALL_API]: {
+            method: CORE_CONSTANTS.METHOD.GET,
+            types: [ CORE_CONSTANTS.CORE_LOGOUT_REQUEST, CORE_CONSTANTS.CORE_LOGOUT_SUCCESS, CORE_CONSTANTS.CORE_LOGOUT_FAILURE ],
+            endpoint: "/auth/logout"
+        }
+    }
+}
+
 function shouldGetCurrentUser(state) {
     const isFetching = state.core.user.isFetching;
     const userStatus = state.core.user.status;
@@ -28,12 +38,25 @@ function shouldGetCurrentUser(state) {
 
 }
 
+function shouldMakeRequest(state) {
+    return state.isFetching !== true;
+}
+
 // Fetches user user from express api, unless is cached.
 // Relies on Redux Thunk middleware.
 export function getCurrentUser() {
     return (dispatch, getState) => {
         if (shouldGetCurrentUser(getState())) {
             return dispatch(getCurrentUserAction())
+        }
+        return null;
+    }
+}
+
+export function logoutCurrentUser() {
+    return (dispatch, getState) => {
+        if (shouldMakeRequest(getState().core.user)) {
+            return dispatch(logout())
         }
         return null;
     }

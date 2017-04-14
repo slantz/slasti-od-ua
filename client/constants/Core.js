@@ -6,6 +6,10 @@ export const REQUEST = 'CORE_REQUEST';
 export const SUCCESS = 'CORE_SUCCESS';
 export const FAILURE = 'CORE_FAILURE';
 
+export const CORE_LOGOUT_REQUEST = 'CORE_LOGOUT_REQUEST';
+export const CORE_LOGOUT_SUCCESS = 'CORE_LOGOUT_SUCCESS';
+export const CORE_LOGOUT_FAILURE = 'CORE_LOGOUT_FAILURE';
+
 export const METHOD = {
     GET: 'GET',
     POST: 'POST',

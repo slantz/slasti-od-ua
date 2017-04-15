@@ -10,6 +10,7 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 import Nav from './Nav'
+import { Divider } from "material-ui";
 
 class Header extends Component {
     constructor(props) {
@@ -58,6 +59,7 @@ class Header extends Component {
                         </IconButton>
                     }>
                     {cart.data.inquiry && <MenuItem primaryText={cart.data.inquiry.isResolved ? "My order is READY!" : "My order is in progress"} />}
+                    {cart.data.inquiry && <Divider />}
                     <MenuItem primaryText="Logout" onTouchTap={this.logoutCurrentUser}/>
                 </IconMenu>
             </ToolbarGroup>

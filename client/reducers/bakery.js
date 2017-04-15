@@ -11,7 +11,7 @@ export default function bakery(state = {
         isFetching : false
     },
     currentSkip: 0,
-    isFiltersVisible: false
+    isFiltersVisible: true
 }, {type, payload}) {
     let assignedState;
 

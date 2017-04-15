@@ -72,8 +72,8 @@ class App extends Component {
                                                  leaveActive : 'js-move-away-active'
                                              }
                                          }
-                                         transitionEnterTimeout={3000}
-                                         transitionLeaveTimeout={3000}>
+                                         transitionEnterTimeout={300}
+                                         transitionLeaveTimeout={300}>
                     <Header segment={segment} />
                     {React.cloneElement(this.props.children, {key : segment})}
                 </ReactCSSTransitionGroup>

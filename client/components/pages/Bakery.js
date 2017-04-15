@@ -11,6 +11,7 @@ import { Grid, Col, Row } from 'react-flexbox-grid/lib/index'
 import { Chip } from "material-ui";
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ImageTuneIcon from 'material-ui/svg-icons/image/tune';
+import Loader from "../elements/Loader";
 
 class Bakery extends Component {
     constructor(props) {
@@ -123,7 +124,7 @@ class Bakery extends Component {
             return true;
         }
 
-        Object.keys(filters).forEach((filterKey) => {
+        return Object.keys(filters).some((filterKey) => {
             if (filters[filterKey].length > 0) {
                 result = filters[filterKey].some((filter) => {
                     let innerResult = false;
@@ -138,13 +139,16 @@ class Bakery extends Component {
                                         return bakeFilterKey.taste === filter._id;
                                     }
                                 });
-                            }
-                            if (bake[filterKey].some((bakeFilterKey) => typeof bakeFilterKey === "string")) {
+                            } else if (bake[filterKey].some((bakeFilterKey) => typeof bakeFilterKey === "string")) {
                                 innerResult = bake[filterKey].some((bakeFilterKey) => bakeFilterKey === filter._id);
                             }
                         }
-                    } else if (bake[filterKey] !== null && typeof bake[filterKey] === "object") {
-                        innerResult = bake[filterKey].type === filter._id;
+                    } else if (bake[filterKey] && typeof bake[filterKey] === "object") {
+                        if (bake[filterKey].type === 'ANY') {
+                            innerResult = true;
+                        } else {
+                            innerResult = bake[filterKey].type === filter._id;
+                        }
                     } else {
                         switch (typeof bake[filterKey]) {
                             case "string":
@@ -157,10 +161,14 @@ class Bakery extends Component {
                     }
                     return innerResult;
                 });
+
+                if (result === true) {
+                    return result;
+                }
+
+                return result;
             }
         });
-
-        return result;
     };
 
     filterPrimaryBakeriesCollection = () => {
@@ -177,9 +185,7 @@ class Bakery extends Component {
     };
 
     elementInfiniteLoad = () => {
-        return <div className="infinite-list-item">
-            Loading...
-        </div>;
+        return <Loader />;
     };
 
     componentWillMount() {

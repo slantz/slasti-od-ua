@@ -19,6 +19,7 @@ import * as AboutActions from '../actions/AboutActions'
 import * as CartActions from '../actions/CartActions'
 import * as DOM_CONSTANTS from "../constants/Dom";
 import Header from "../components/sections/Header"
+import Footer from "../components/sections/Footer";
 
 class App extends Component {
     constructor(props) {
@@ -76,6 +77,7 @@ class App extends Component {
                                          transitionLeaveTimeout={300}>
                     <Header segment={segment} />
                     {React.cloneElement(this.props.children, {key : segment})}
+                    <Footer />
                 </ReactCSSTransitionGroup>
             </MuiThemeProvider>
         )

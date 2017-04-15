@@ -5,6 +5,7 @@ import App from './containers/App'
 import Bakery from './components/pages/Bakery'
 import BakeryDetails from './components/pages/BakeryDetails'
 import About from './components/pages/About'
+import Order from "./components/pages/Order";
 import Cart from './components/pages/Cart'
 import CartDetails from './components/pages/CartDetails'
 import Admin from './components/pages/Admin'
@@ -28,6 +29,7 @@ export default class RTRouter extends Component {
                     <Route path=":id" component={BakeryDetails}/>
                 </Route>
                 <Route path="about" component={About}/>
+                <Route path="order" component={Order}/>
                 <Route path="cart" component={Cart}>
                     <Route path=":id" component={CartDetails}/>
                 </Route>

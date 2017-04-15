@@ -33,7 +33,8 @@ export default class Nav extends Component {
         return (
             <Tabs initialSelectedIndex={this.setCurrentActiveTabIndex(segment)} value={segment} style={{'flex': '1 auto'}}>
                 <Tab label={<Link to="/bakery">Bakery</Link>} value="bakery"/>
-                <Tab label={<Link to="/about">about</Link>} value="about"/>
+                <Tab label={<Link to="/about">About</Link>} value="about"/>
+                <Tab label={<Link to="/order">Order</Link>} value="order"/>
                 <Tab label={<Link to="/cart">Cart</Link>} value="cart"/>
                 {adminLink()}
             </Tabs>

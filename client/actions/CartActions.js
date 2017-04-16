@@ -1,3 +1,4 @@
+import { push } from 'react-router-redux';
 import * as CORE_CONSTANTS from '../constants/Core'
 import * as CART_CONSTANTS from '../constants/Cart'
 import { CALL_API } from '../middleware/api'
@@ -61,5 +62,11 @@ export function setCartRedirectId(value) {
             type: CART_CONSTANTS.CART_SET_CART_REDIRECT_ID,
             payload: value
         });
+    }
+}
+
+export function goToCartDetails(cartId) {
+    return (dispatch) => {
+        dispatch(push(`/cart/${cartId}`));
     }
 }

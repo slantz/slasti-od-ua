@@ -31,6 +31,11 @@ class Header extends Component {
         return getInquiryIdFromLocalStorage();
     };
 
+    goToCartDetails = () => {
+        const { cart, CartActions: { goToCartDetails } } = this.props;
+        return goToCartDetails(cart.cartRedirectId);
+    };
+
     loginWithVk = () => {
         window.location.href = '/auth/vk'
     };
@@ -74,7 +79,7 @@ class Header extends Component {
                             <NavigationMenuIcon />
                         </IconButton>
                     }>
-                    {cart.data.inquiry && <MenuItem primaryText={cart.data.inquiry.isResolved ? "My order is READY!" : "My order is in progress"} />}
+                    {cart.data.inquiry && <MenuItem primaryText={cart.data.inquiry.isResolved ? "My order is READY!" : "My order is in progress"} onTouchTap={this.goToCartDetails} />}
                     {cart.data.inquiry && <Divider />}
                     <MenuItem primaryText="Logout" onTouchTap={this.logoutCurrentUser}/>
                 </IconMenu>

@@ -172,16 +172,21 @@ class Bakery extends Component {
     };
 
     filterPrimaryBakeriesCollection = () => {
-        const { bakery: { currentSkip, data: { items } }, filter: { filters } } = this.props;
+        const { bakery: { currentSkip, count, data: { items } }, filter: { filters } } = this.props;
 
         let noFilters = Object.keys(filters).every((filterKey) => !filters[filterKey].length);
 
-        return items
+        let filteredItems = items
             .filter(this.filterPrimaryBake)
             .map((bake) => {
                 return this.getBakeryCollectionElement(bake);
             })
             .slice(0, noFilters ? currentSkip : items.length);
+
+        return {
+            items: filteredItems,
+            length: noFilters ? count.count : filteredItems.length
+        };
     };
 
     elementInfiniteLoad = () => {
@@ -197,7 +202,7 @@ class Bakery extends Component {
     }
 
     render() {
-        const { user, bakery: { data, count, isFiltersVisible } } = this.props;
+        const { user, bakery: { data, isFiltersVisible } } = this.props;
 
         let styles = {};
 
@@ -207,16 +212,18 @@ class Bakery extends Component {
             styles = {'position': 'relative', 'marginTop': '0', 'marginLeft': '0', 'zIndex': '0'};
         }
 
+        let filteredBakery = this.filterPrimaryBakeriesCollection();
+
         return (
             <section id="sou-bakery">
                 {data.isFetching && data.items.length === 0 && this.elementInfiniteLoad()}
                 {this.props.children === null && <div>
                     <Filters />
                     <div className="i-transit-all" style={styles}>
-                        <div>Total amount of bakery {count.count}</div>
+                        <div>Total amount of bakery {filteredBakery.length}</div>
                         <Grid tagName="article" fluid={true}>
                             <Row middle="xs">
-                                {this.filterPrimaryBakeriesCollection()}
+                                {filteredBakery.items}
                             </Row>
                         </Grid>
                     </div>

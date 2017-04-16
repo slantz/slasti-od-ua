@@ -14,6 +14,7 @@ body {
     color: $secondary-text-color;
     main {
         position: relative;
+        z-index: 0;
         //flex: 1 0 auto;
         //display: flex;
     }
@@ -27,5 +28,41 @@ body {
     z-index: 1;
     + #sou-bakery {
         margin-top: 48px;
+    }
+}
+
+#sou-bakery {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    > div {
+        display: flex;
+        position: relative;
+        flex-direction: row;
+        flex: 0 1 auto;
+        justify-content: flex-start;
+        align-content: stretch;
+        align-items: flex-start;
+        z-index: 0;
+    }
+    &-filters {
+        width: 275px;
+        align-self: stretch;
+        flex: 0 1 auto;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        z-index: 1;
+        background-color: rgb(255, 255, 255);
+        border-right: 1px solid grey;
+    }
+    &-items {
+        position: relative;
+        margin-top: 0;
+        z-index: 0;
+        flex: 0 1 auto;
+        display: flex;
+        flex-direction: column;
     }
 }

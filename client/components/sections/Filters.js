@@ -113,9 +113,9 @@ class Filters extends Component {
         let styles = {};
 
         if (bakery.isFiltersVisible) {
-            styles = {'position': 'fixed', 'top': '48px', 'left': '0', 'bottom': '0', 'width': '275px', 'zIndex': '1', 'backgroundColor': '#fff', 'borderRight': '1px solid grey'};
+            styles = {'marginLeft': '0'};
         } else {
-            styles = {'position': 'fixed', 'top': '48px', 'left': '-275px', 'bottom': '0', 'width': '275px', 'zIndex': '1', 'backgroundColor': '#fff', 'borderRight': '1px solid grey'};
+            styles = {'marginLeft': '-275px'};
         }
 
         return (

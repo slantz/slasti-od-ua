@@ -93,13 +93,7 @@ class Bakery extends Component {
                     </CardMedia>
                     <CardTitle title={bake.name} subtitle={bake.description} />
                     <CardText>
-                        <Grid tagName="article">
-                            <Row middle="xs">
-                                <Col xs={12}>
-                                    <p>{bake.event && bake.event.type}</p>
-                                </Col>
-                            </Row>
-                        </Grid>
+                        <p>{bake.event && bake.event.type}</p>
                     </CardText>
                     <CardActions>
                         <Link to={"/bakery/" + bake._id}>
@@ -204,14 +198,6 @@ class Bakery extends Component {
     render() {
         const { user, bakery: { data, isFiltersVisible } } = this.props;
 
-        let styles = {};
-
-        if (isFiltersVisible) {
-            styles = {'position': 'relative', 'marginTop': '0', 'marginLeft': '275px', 'zIndex': '0'};
-        } else {
-            styles = {'position': 'relative', 'marginTop': '0', 'marginLeft': '0', 'zIndex': '0'};
-        }
-
         let filteredBakery = this.filterPrimaryBakeriesCollection();
 
         return (
@@ -219,7 +205,7 @@ class Bakery extends Component {
                 {data.isFetching && data.items.length === 0 && this.elementInfiniteLoad()}
                 {this.props.children === null && <div>
                     <Filters />
-                    <div className="i-transit-all" style={styles}>
+                    <div id="sou-bakery-items" className="i-transit-all">
                         <div>Total amount of bakery {filteredBakery.length}</div>
                         <Grid tagName="article" fluid={true}>
                             <Row middle="xs">

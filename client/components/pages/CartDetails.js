@@ -6,6 +6,7 @@ import {Card, CardActions, CardHeader, CardTitle, CardText} from 'material-ui/Ca
 import RaisedButton from 'material-ui/RaisedButton';
 import { Grid, Col, Row } from 'react-flexbox-grid/lib/index'
 import { Chip } from "material-ui";
+import Loader from "../elements/Loader";
 
 class CartDetails extends Component {
     constructor(props) {
@@ -98,7 +99,7 @@ class CartDetails extends Component {
                 </Grid>
             )
         } else if (cart.data.isFetching){
-            return <div>Loading</div>;
+            return <Loader />;
         } else {
             return <div>No element found!</div>;
         }

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as CoreActions from '../../actions/CoreActions'
+import * as CartActions from '../../actions/CartActions'
 import * as DOM_CONSTANTS from '../../constants/Dom'
 import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
@@ -16,6 +17,19 @@ class Header extends Component {
     constructor(props) {
         super(props)
     }
+
+    getInquiry = () => {
+        const { cart, CartActions: { getInquiry } } = this.props;
+
+        if (cart.cartRedirectId && cart.cartRedirectId.length > 0 && !cart.data.inquiry) {
+            return getInquiry(cart.cartRedirectId);
+        }
+    };
+
+    getInquiryIdFromLocalStorage = () => {
+        const { CartActions: { getInquiryIdFromLocalStorage } } = this.props;
+        return getInquiryIdFromLocalStorage();
+    };
 
     loginWithVk = () => {
         window.location.href = '/auth/vk'
@@ -53,6 +67,8 @@ class Header extends Component {
                 <ToolbarTitle text={`Greetings, ${user.payload.name}!`} />
                 <ToolbarSeparator />
                 <IconMenu
+                    onTouchTap={this.getInquiry}
+                    width={200}
                     iconButtonElement={
                         <IconButton touch={true}>
                             <NavigationMenuIcon />
@@ -77,6 +93,7 @@ class Header extends Component {
 
     componentDidMount() {
         window.addEventListener("scroll", this.toggleHeaderSticky);
+        this.getInquiryIdFromLocalStorage();
     }
 
     render() {
@@ -109,6 +126,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         CoreActions : bindActionCreators(CoreActions, dispatch),
+        CartActions : bindActionCreators(CartActions, dispatch)
     }
 }
 

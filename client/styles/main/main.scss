@@ -64,5 +64,28 @@ body {
         flex: 0 1 auto;
         display: flex;
         flex-direction: column;
+        padding-bottom: 200px;
     }
+}
+
+#sou-banner-content {
+    position: relative;
+    z-index: 1;
+    min-height: calc(100vh - 200px);
+}
+
+#cv-transition-group {
+    position: relative;
+    z-index: 0;
+}
+
+footer {
+    background-color: #eee;
+    min-height: 200px;
+    display: flex;
+    flex: 0 1 auto;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 0;
 }

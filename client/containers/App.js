@@ -75,8 +75,10 @@ class App extends Component {
                                          }
                                          transitionEnterTimeout={300}
                                          transitionLeaveTimeout={300}>
-                    <Header segment={segment} />
-                    {React.cloneElement(this.props.children, {key : segment})}
+                    <section id="sou-banner-content">
+                        <Header segment={segment} />
+                        {React.cloneElement(this.props.children, {key : segment})}
+                    </section>
                     <Footer />
                 </ReactCSSTransitionGroup>
             </MuiThemeProvider>

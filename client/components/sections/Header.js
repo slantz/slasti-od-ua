@@ -98,7 +98,7 @@ class Header extends Component {
     };
 
     componentDidMount() {
-        window.addEventListener("scroll", this.toggleHeaderSticky);
+        // window.addEventListener("scroll", this.toggleHeaderSticky);
         this.getInquiryIdFromLocalStorage();
     }
 
@@ -106,9 +106,9 @@ class Header extends Component {
         const { core: { user, isHeaderSticky }, segment } = this.props;
 
         return (
-            <header role="banner" className={isHeaderSticky ? DOM_CONSTANTS.JS_STICKY_HEADER : ""}>
+            <header role="banner" className="sou-header">
                 <Toolbar style={{'height': '60px'}}>
-                    <ToolbarGroup firstChild={true} style={{'flex': '0 1 auto', 'width': '50px', 'backgroundColor': CORE_CONSTANTS.COLORS.primary2Color}}>
+                    <ToolbarGroup className="sou-header__logo i-transit-all" firstChild={true} style={{'flex': '0 1 auto', 'width': '50px', 'backgroundColor': CORE_CONSTANTS.COLORS.primary2Color}}>
                         <img src="http://slasti.od.ua:3001/client/static/graphics/logo_big.png" height="45px" alt="Logo Slasti Od Ua" style={{'margin-left': '7px'}}/>
                     </ToolbarGroup>
                     <ToolbarGroup style={{'flex': '1 auto'}}>

@@ -80,10 +80,18 @@ class Bakery extends Component {
         }
     }, 100);
 
+    getFilterItemsTitle = (filteredBakeryLength) => {
+        const { bakery: { count } } = this.props;
+
+        return (
+            <h3 className="sou-bakery-items__title">Total amount of {filteredBakeryLength === count.count ? "filtered" : ""} bakery: <span className="sou-text-primary">{filteredBakeryLength}</span></h3>
+        );
+    };
+
     getBakeryCollectionElement = (bake) => {
         return (
-            <Col xs={12} sm={6} md={4} className="i-text-uppercase" key={bake._id}>
-                <Card>
+            <Col xs={12} sm={6} md={4} className="i-margin_block_vertical_bottom" key={bake._id}>
+                <Card className="i-text-left">
                     <CardMedia
                         overlay={
                             <CardTitle
@@ -95,7 +103,7 @@ class Bakery extends Component {
                     <CardText>
                         <p>{bake.event && bake.event.type}</p>
                     </CardText>
-                    <CardActions>
+                    <CardActions className="sou-bakery-items__card__action">
                         <Link to={"/bakery/" + bake._id}>
                             <RaisedButton
                                 label="More Details"
@@ -196,7 +204,7 @@ class Bakery extends Component {
     }
 
     render() {
-        const { user, bakery: { data, isFiltersVisible } } = this.props;
+        const { user, bakery: { data } } = this.props;
 
         let filteredBakery = this.filterPrimaryBakeriesCollection();
 
@@ -205,10 +213,10 @@ class Bakery extends Component {
                 {data.isFetching && data.items.length === 0 && this.elementInfiniteLoad()}
                 {this.props.children === null && <div>
                     <Filters />
-                    <div id="sou-bakery-items" className="i-transit-all">
-                        <div>Total amount of bakery {filteredBakery.length}</div>
-                        <Grid tagName="article" fluid={true}>
-                            <Row middle="xs">
+                    <div id="sou-bakery-items" className="sou-bakery-items i-transit-all i-box-sizing">
+                        {this.getFilterItemsTitle(filteredBakery.length)}
+                        <Grid tagName="article" className="sou-bakery-items__list i-box-sizing" fluid={true}>
+                            <Row top="xs">
                                 {filteredBakery.items}
                             </Row>
                         </Grid>
@@ -216,7 +224,7 @@ class Bakery extends Component {
                     <FloatingActionButton
                         secondary={true}
                         onTouchTap={this.toggleFilterVisibility}
-                        style={{'position': 'fixed', 'bottom': '24px', 'right': '24px', 'zIndex': '1'}}>
+                        style={{'position': 'fixed', 'bottom': '30px', 'right': '30px', 'zIndex': '1'}}>
                         <ImageTuneIcon />
                     </FloatingActionButton>
                     </div>

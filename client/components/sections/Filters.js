@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as FilterActions from '../../actions/FilterActions'
 import Select from "react-select";
-import { RaisedButton } from "material-ui";
+import { FlatButton, RaisedButton } from "material-ui";
 
 class Filters extends Component {
     constructor(props) {
@@ -115,16 +115,15 @@ class Filters extends Component {
         if (bakery.isFiltersVisible) {
             styles = {'marginLeft': '0'};
         } else {
-            styles = {'marginLeft': '-275px'};
+            styles = {'marginLeft': '-300px'};
         }
 
         return (
             <aside id="sou-bakery-filters"
-                   className="i-transit-all"
+                   className="sou-bakery-filters i-transit-all i-box-sizing"
                    style={styles}>
-                <h2>Wir sind die Filtern!</h2>
-                <RaisedButton label="Clear all filters" secondary={true} onTouchTap={this.clearAllFilters} />
-                <div>
+                <h3>Wir sind die Filtern!</h3>
+                <div className="sou-bakery-filters__list">
                     <Select
                         name="select-filter-bakery-ingredients"
                         multi={true}
@@ -196,6 +195,9 @@ class Filters extends Component {
                         onChange={(values) => this.setCurrentFilters("numberOfPieces", values)}
                     />
                 </div>
+                <p className="sou-bakery-filters__button-holder i-text-right">
+                    <FlatButton label="Clear all filters" primary={true} onTouchTap={this.clearAllFilters} />
+                </p>
             </aside>
         )
     }

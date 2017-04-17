@@ -2,14 +2,6 @@ import React, { Component } from 'react'
 import ReactCSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup'
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {teal700} from 'material-ui/styles/colors';
-import {teal500} from 'material-ui/styles/colors';
-import {teal100} from 'material-ui/styles/colors';
-import {white} from 'material-ui/styles/colors';
-import {amber500} from 'material-ui/styles/colors';
-import {grey900} from 'material-ui/styles/colors';
-import {grey600} from 'material-ui/styles/colors';
-import {grey400} from 'material-ui/styles/colors';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as CoreActions from '../actions/CoreActions'
@@ -76,7 +68,7 @@ class App extends Component {
                                          }
                                          transitionEnterTimeout={300}
                                          transitionLeaveTimeout={300}>
-                    <section id="sou-banner-content">
+                    <section id="sou-banner-content" className="sou-banner-content">
                         <Header segment={segment} />
                         {React.cloneElement(this.props.children, {key : segment})}
                     </section>

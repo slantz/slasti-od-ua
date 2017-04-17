@@ -23,7 +23,7 @@ class BakeryDetails extends Component {
                 <Grid tagName="article" fluid={true}>
                     <Row middle="xs" center="xs">
                         <Col xs={12} sm={8} className="i-text-uppercase">
-                            <Card>
+                            <Card className="i-text-left">
                                 <CardHeader
                                     title="URL Avatar"
                                     subtitle="Subtitle"

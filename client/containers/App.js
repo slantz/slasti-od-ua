@@ -18,6 +18,7 @@ import * as AdminActions from '../actions/AdminActions'
 import * as AboutActions from '../actions/AboutActions'
 import * as CartActions from '../actions/CartActions'
 import * as DOM_CONSTANTS from "../constants/Dom";
+import * as CORE_CONSTANTS from "../constants/Core";
 import Header from "../components/sections/Header"
 import Footer from "../components/sections/Footer";
 
@@ -34,15 +35,15 @@ class App extends Component {
     muiTheme = getMuiTheme({
         fontFamily: 'Muli, Arial, sans-serif',
         palette: {
-            primary1Color: teal500,
-            primary2Color: teal700,
-            primary3Color: grey600,
-            accent1Color: amber500,
-            accent2Color: teal100,
-            accent3Color: grey400,
-            textColor: grey900,
-            alternateTextColor: white,
-            borderColor: grey400,
+            primary1Color: CORE_CONSTANTS.COLORS.primary1Color,
+            primary2Color: CORE_CONSTANTS.COLORS.primary2Color,
+            primary3Color: CORE_CONSTANTS.COLORS.primary3Color,
+            accent1Color: CORE_CONSTANTS.COLORS.accent1Color,
+            accent2Color: CORE_CONSTANTS.COLORS.accent2Color,
+            accent3Color: CORE_CONSTANTS.COLORS.accent3Color,
+            textColor: CORE_CONSTANTS.COLORS.textColor,
+            alternateTextColor: CORE_CONSTANTS.COLORS.alternateTextColor,
+            borderColor: CORE_CONSTANTS.COLORS.borderColor,
         }
     });
 

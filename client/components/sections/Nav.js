@@ -25,17 +25,17 @@ export default class Nav extends Component {
 
         let adminLink = function() {
             if (checkUserIsAuthorized(user)) {
-                return  <Tab label={<Link to="/admin">Admin</Link>} value="admin"/>;
+                return  <Tab label={<Link to="/admin" style={{'height': '60px', 'width': '100%', 'display': 'flex', 'flex-direction': 'column', 'justify-content': 'center'}}>Admin</Link>} value="admin" style={{'height': '60px'}}/>;
             }
             return null;
         };
 
         return (
-            <Tabs initialSelectedIndex={this.setCurrentActiveTabIndex(segment)} value={segment} style={{'flex': '1 auto'}}>
-                <Tab label={<Link to="/bakery">Bakery</Link>} value="bakery"/>
-                <Tab label={<Link to="/about">About</Link>} value="about"/>
-                <Tab label={<Link to="/order">Order</Link>} value="order"/>
-                <Tab label={<Link to="/cart">Cart</Link>} value="cart"/>
+            <Tabs initialSelectedIndex={this.setCurrentActiveTabIndex(segment)} value={segment} style={{'flex': '1 auto'}} tabTemplateStyle={{'height': '60px'}}>
+                <Tab label={<Link to="/bakery" style={{'height': '60px', 'width': '100%', 'display': 'flex', 'flex-direction': 'column', 'justify-content': 'center'}}>Bakery</Link>} value="bakery" style={{'height': '60px'}}/>
+                <Tab label={<Link to="/about" style={{'height': '60px', 'width': '100%', 'display': 'flex', 'flex-direction': 'column', 'justify-content': 'center'}}>About</Link>} value="about" style={{'height': '60px'}}/>
+                <Tab label={<Link to="/order" style={{'height': '60px', 'width': '100%', 'display': 'flex', 'flex-direction': 'column', 'justify-content': 'center'}}>Order</Link>} value="order" style={{'height': '60px'}}/>
+                <Tab label={<Link to="/cart" style={{'height': '60px', 'width': '100%', 'display': 'flex', 'flex-direction': 'column', 'justify-content': 'center'}}>Cart</Link>} value="cart" style={{'height': '60px'}}/>
                 {adminLink()}
             </Tabs>
         )

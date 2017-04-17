@@ -1,3 +1,12 @@
+import {teal700} from 'material-ui/styles/colors';
+import {teal500} from 'material-ui/styles/colors';
+import {teal100} from 'material-ui/styles/colors';
+import {white} from 'material-ui/styles/colors';
+import {amber500} from 'material-ui/styles/colors';
+import {grey900} from 'material-ui/styles/colors';
+import {grey600} from 'material-ui/styles/colors';
+import {grey400} from 'material-ui/styles/colors';
+
 export const NUMBER_LOGO_SHADOWED = 5;
 export const CV = 'CV';
 export const API_ROOT = `http://slasti.od.ua${module.hot ? ':3001' : ''}`;
@@ -11,6 +20,18 @@ export const CORE_LOGOUT_SUCCESS = 'CORE_LOGOUT_SUCCESS';
 export const CORE_LOGOUT_FAILURE = 'CORE_LOGOUT_FAILURE';
 
 export const TOGGLE_HEADER_STICKY = 'TOGGLE_HEADER_STICKY';
+
+export const COLORS = {
+    primary1Color: teal500,
+    primary2Color: teal700,
+    primary3Color: grey600,
+    accent1Color: amber500,
+    accent2Color: teal100,
+    accent3Color: grey400,
+    textColor: grey900,
+    alternateTextColor: white,
+    borderColor: grey400
+};
 
 export const METHOD = {
     GET: 'GET',

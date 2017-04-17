@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import * as CoreActions from '../../actions/CoreActions'
 import * as CartActions from '../../actions/CartActions'
 import * as DOM_CONSTANTS from '../../constants/Dom'
+import * as CORE_CONSTANTS from '../../constants/Core'
 import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import NavigationMenuIcon from 'material-ui/svg-icons/navigation/menu';
@@ -106,8 +107,11 @@ class Header extends Component {
 
         return (
             <header role="banner" className={isHeaderSticky ? DOM_CONSTANTS.JS_STICKY_HEADER : ""}>
-                <Toolbar style={{'height': '48px'}}>
-                    <ToolbarGroup firstChild={true}  style={{'flex': '1 auto'}}>
+                <Toolbar style={{'height': '60px'}}>
+                    <ToolbarGroup firstChild={true} style={{'flex': '0 1 auto', 'width': '50px', 'backgroundColor': CORE_CONSTANTS.COLORS.primary2Color}}>
+                        <img src="http://slasti.od.ua:3001/client/static/graphics/logo_big.png" height="45px" alt="Logo Slasti Od Ua" style={{'margin-left': '7px'}}/>
+                    </ToolbarGroup>
+                    <ToolbarGroup style={{'flex': '1 auto'}}>
                         <Nav user={user} segment={segment} />
                     </ToolbarGroup>
                     {this.greet()}

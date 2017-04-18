@@ -125,8 +125,15 @@ body {
         width: 100%;
         &__article {
             min-height: calc(100vh - 60px);
-            &:first-child {
+            &_yellow {
                 color: $primary-text-color;
+                background-color: $triad-yellow-from-primary;
+            }
+            &_dark-green {
+                background-color: $triad-dark-green-from-primary;
+            }
+            &_brown {
+                background-color: $triad-brown-from-primary;
             }
         }
     }

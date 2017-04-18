@@ -1,6 +1,7 @@
 import React from 'react'
 import DatePicker from 'material-ui/DatePicker'
 import TimePicker from "material-ui/TimePicker";
+import { TextField } from "material-ui";
 
 function stringValidator(value) {
     return !value || value.length === 0;
@@ -105,11 +106,13 @@ export const warn = values => {
 
 export const renderField = ({ input, label, placeholder, type, meta: { touched, error, warning } }) => (
     <div>
-        <label htmlFor={input.name}>{label}</label>
-        <div>
-            <input {...input} placeholder={placeholder} type={type}/>
-            {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
-        </div>
+        <TextField hintText={placeholder} floatingLabelText={"Enter a " + placeholder} name={input.name} type={type} errorText={touched && (error ? error : warning)} {...input}/>
+    </div>
+);
+
+export const renderMultiLineField = ({ input, label, placeholder, type, meta: { touched, error, warning } }) => (
+    <div>
+        <TextField hintText={placeholder} floatingLabelText={"Enter a " + placeholder} name={input.name} type={type} errorText={touched && (error ? error : warning)} multiLine={true} rows={2} {...input}/>
     </div>
 );
 
@@ -128,11 +131,8 @@ export const renderFileField = ({ input, label, placeholder, type, accept, meta:
 
 export const renderDatePickerField = ({ input, label, mode, onChangeDate, meta: { touched, error, warning } }) => {
     return <div>
-        <label htmlFor={input.name}>{label}</label>
-        <div>
-            <DatePicker hintText={label} mode={mode} onChange={onChangeDate} />
+            <DatePicker hintText={label} mode={mode} onChange={onChangeDate} minDate={new Date()} defaultDate={new Date()}/>
             {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
-        </div>
     </div>
 };
 

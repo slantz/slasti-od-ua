@@ -10,7 +10,7 @@ export default class About extends Component {
     render() {
         return (
             <Grid tagName="section" id="sou-about" className="sou-about">
-                <Row tagName="article" className="sou-about__article" middle="xs" style={{'backgroundColor': '#E2B90B'}}>
+                <Row tagName="article" className="sou-about__article sou-about__article_yellow" middle="xs">
                     <Col xs={12}>
                         <h2 className="sou-about__article__head i-uppercase i-center">
                             about us
@@ -20,7 +20,7 @@ export default class About extends Component {
                         </div>
                     </Col>
                 </Row>
-                <Row tagName="article" className="sou-about__article" middle="xs" style={{'backgroundColor': '#074943'}}>
+                <Row tagName="article" className="sou-about__article sou-about__article_dark-green" middle="xs">
                     <Col xs={12}>
                         <h2 className="sou-about__article__head i-uppercase i-center">
                             what we do
@@ -30,7 +30,7 @@ export default class About extends Component {
                         </div>
                     </Col>
                 </Row>
-                <Row tagName="article" className="sou-about__article" middle="xs" style={{'backgroundColor': '#63520A'}}>
+                <Row tagName="article" className="sou-about__article sou-about__article_brown" middle="xs">
                     <Col xs={12}>
                         <h2 className="sou-about__article__head i-uppercase i-center">
                             why us

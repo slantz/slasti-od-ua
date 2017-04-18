@@ -86,7 +86,7 @@ class Order extends Component {
         if (about.data.inquiry) {
             this.setInquiryIdToLocalStorage(about.data.inquiry.id);
             return <article>
-                <h3>Thank you for your request!</h3>
+                <h2>Thank you for your request!</h2>
                 <Link to={`/cart/${about.data.inquiry.id}`}>Go to your order!</Link>
                 <Link to="/bakery">Continue browsing</Link>
             </article>;

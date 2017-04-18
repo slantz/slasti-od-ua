@@ -78,6 +78,18 @@ class Order extends Component {
         postInquiry({inquiry});
     };
 
+    getInquiryPageHeader = () => {
+        const {
+            about
+        } = this.props;
+
+        if (about.data.inquiry) {
+            return <h2>You've just placed your order.</h2>;
+        } else {
+            return <h2 className="i-pad_block_horizontal_left">Please enter your order details.</h2>;
+        }
+    };
+
     getInquiryFormOrThxMessage = () => {
         const {
             about
@@ -85,11 +97,13 @@ class Order extends Component {
 
         if (about.data.inquiry) {
             this.setInquiryIdToLocalStorage(about.data.inquiry.id);
-            return <article>
-                <h2>Thank you for your request!</h2>
-                <Link to={`/cart/${about.data.inquiry.id}`}>Go to your order!</Link>
-                <Link to="/bakery">Continue browsing</Link>
-            </article>;
+            return (
+                <article>
+                    <h3>Thank you for your request!</h3>
+                    <Link to={`/cart/${about.data.inquiry.id}`}>Go to your order!</Link>
+                    <Link to="/bakery">Continue browsing</Link>
+                </article>
+            );
         } else {
             return <AboutInquiryPostForm onSubmit={this.postInquiry}
                                          setCurrentDate={this.setCurrentDate}
@@ -100,6 +114,7 @@ class Order extends Component {
     render() {
         return (
             <article id="sou-about">
+                {this.getInquiryPageHeader()}
                 {this.getInquiryFormOrThxMessage()}
             </article>
         )

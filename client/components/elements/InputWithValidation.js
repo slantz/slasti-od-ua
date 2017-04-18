@@ -105,15 +105,11 @@ export const warn = values => {
 };
 
 export const renderField = ({ input, label, placeholder, type, meta: { touched, error, warning } }) => (
-    <div>
-        <TextField hintText={placeholder} floatingLabelText={"Enter a " + placeholder} name={input.name} type={type} errorText={touched && (error ? error : warning)} {...input}/>
-    </div>
+    <TextField hintText={placeholder} floatingLabelText={"Enter a " + placeholder} name={input.name} type={type} errorText={touched && (error ? error : warning)} fullWidth={true} {...input}/>
 );
 
 export const renderMultiLineField = ({ input, label, placeholder, type, meta: { touched, error, warning } }) => (
-    <div>
-        <TextField hintText={placeholder} floatingLabelText={"Enter a " + placeholder} name={input.name} type={type} errorText={touched && (error ? error : warning)} multiLine={true} rows={2} {...input}/>
-    </div>
+    <TextField hintText={placeholder} floatingLabelText={"Enter a " + placeholder} name={input.name} type={type} errorText={touched && (error ? error : warning)} multiLine={true} fullWidth={true} {...input}/>
 );
 
 export const renderFileField = ({ input, label, placeholder, type, accept, meta: { touched, error, warning } }) => {
@@ -131,7 +127,7 @@ export const renderFileField = ({ input, label, placeholder, type, accept, meta:
 
 export const renderDatePickerField = ({ input, label, mode, onChangeDate, meta: { touched, error, warning } }) => {
     return <div>
-            <DatePicker hintText={label} mode={mode} onChange={onChangeDate} minDate={new Date()} defaultDate={new Date()}/>
+            <DatePicker hintText={label} floatingLabelText={"Pick a " + label} mode={mode} onChange={onChangeDate} minDate={new Date()} defaultDate={new Date()} fullWidth={true}/>
             {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
     </div>
 };
@@ -141,10 +137,12 @@ export const renderTimePickerField = ({ input, hintText, formatTime, okLabel, ca
         <div>
             <TimePicker
                 hintText={hintText}
+                floatingLabelText={"Pick a " + hintText}
                 format={formatTime}
                 okLabel={okLabel}
                 cancelLabel={cancelLabel}
                 onChange={onChangeTime}
+                fullWidth={true}
             />
             {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
         </div>

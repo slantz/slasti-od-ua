@@ -120,6 +120,16 @@ body {
             }
         }
     }
+    &-about {
+        color: $primary-color-text;
+        width: 100%;
+        &__article {
+            min-height: calc(100vh - 60px);
+            &:first-child {
+                color: $primary-text-color;
+            }
+        }
+    }
     &-text {
         &-primary {
             color: $primary-color;

@@ -72,6 +72,20 @@
     }
 }
 
+.i-flex {
+    &-page {
+        &-vertical {
+            &-header-footer {
+                min-height: calc(100vh - 260px);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+    }
+}
+
 .i-none {
     display: none !important;
 }

@@ -5,7 +5,7 @@ import * as CartActions from '../../actions/CartActions'
 
 import TextField from 'material-ui/TextField';
 import {orange500, blue500} from 'material-ui/styles/colors';
-import { RaisedButton } from "material-ui";
+import { Divider, RaisedButton } from "material-ui";
 import { Link } from "react-router";
 
 const styles = {
@@ -41,7 +41,7 @@ class Cart extends Component {
 
         if (children === null) {
             return (
-                <article id="sou-cart">
+                <article id="sou-cart" className="sou-cart i-flex-page-vertical-header-footer">
                     <TextField
                         floatingLabelText="Please enter Inquiry Id"
                         floatingLabelStyle={styles.floatingLabelStyle}
@@ -49,13 +49,15 @@ class Cart extends Component {
                         defaultValue={cart.cartRedirectId}
                         onChange={this.setCartRedirectId}
                     />
-                    <Link to={`/cart/${cart.cartRedirectId}`}>
-                        <RaisedButton
-                            label="Go to Your inquiry"
-                            secondary={true}
-                            disabled={!cart.cartRedirectId}
-                            style={styles.button}/>
-                    </Link>
+                    <p>
+                        <Link to={`/cart/${cart.cartRedirectId}`}>
+                            <RaisedButton
+                                label="Go to Your inquiry"
+                                secondary={true}
+                                disabled={!cart.cartRedirectId}
+                                style={styles.button}/>
+                        </Link>
+                    </p>
                 </article>
             )
         } else {

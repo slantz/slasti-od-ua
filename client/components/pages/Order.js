@@ -141,7 +141,7 @@ class Order extends Component {
         } = this.props;
 
         return (
-            <article id="sou-about" className={about.data.inquiry && "sou-about_ordered"}>
+            <article id="sou-about" className={about.data.inquiry && "i-flex-page-vertical-header-footer"}>
                 {this.getInquiryPageHeader()}
                 {this.getInquiryFormOrThxMessage()}
             </article>

@@ -4,6 +4,8 @@ import {connect} from 'react-redux'
 import * as AboutActions from '../../actions/AboutActions'
 import AboutInquiryPostForm from "../popover/AboutInquiryPostForm";
 import { Link } from "react-router";
+import { Col, Grid, Row } from "react-flexbox-grid";
+import { RaisedButton } from "material-ui";
 
 class Order extends Component {
     constructor(props) {
@@ -84,7 +86,7 @@ class Order extends Component {
         } = this.props;
 
         if (about.data.inquiry) {
-            return <h2>You've just placed your order.</h2>;
+            return <h2 className="i-center">You've just placed your order.</h2>;
         } else {
             return <h2 className="i-pad_block_horizontal_left">Please enter your order details.</h2>;
         }
@@ -98,11 +100,33 @@ class Order extends Component {
         if (about.data.inquiry) {
             this.setInquiryIdToLocalStorage(about.data.inquiry.id);
             return (
-                <article>
-                    <h3>Thank you for your request!</h3>
-                    <Link to={`/cart/${about.data.inquiry.id}`}>Go to your order!</Link>
-                    <Link to="/bakery">Continue browsing</Link>
-                </article>
+                <Grid tagName="article" className="sou-about__ordered-holder i-center" fluid>
+                    <Row middle="xs">
+                        <Col xs={12}>
+                            <h3>Thank you for your request!</h3>
+                            <Row>
+                                <Col xs={12} sm={6}>
+                                    <p>
+                                        <Link to={`/cart/${about.data.inquiry.id}`}>
+                                            <RaisedButton
+                                                label="Go to your order!"
+                                                secondary={true} />
+                                        </Link>
+                                    </p>
+                                </Col>
+                                <Col xs={12} sm={6}>
+                                    <p>
+                                        <Link to="/bakery">
+                                            <RaisedButton
+                                                label="Continue browsing"
+                                                primary={true}/>
+                                        </Link>
+                                    </p>
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
+                </Grid>
             );
         } else {
             return <AboutInquiryPostForm onSubmit={this.postInquiry}
@@ -112,8 +136,12 @@ class Order extends Component {
     };
 
     render() {
+        const {
+            about
+        } = this.props;
+
         return (
-            <article id="sou-about">
+            <article id="sou-about" className={about.data.inquiry && "sou-about_ordered"}>
                 {this.getInquiryPageHeader()}
                 {this.getInquiryFormOrThxMessage()}
             </article>

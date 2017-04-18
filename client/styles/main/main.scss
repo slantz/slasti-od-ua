@@ -123,6 +123,18 @@ body {
     &-about {
         color: $primary-color-text;
         width: 100%;
+        &_ordered {
+            min-height: calc(100vh - 260px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        &__ordered-holder {
+            @media #{$medium-up} {
+                width: 500px;
+            }
+        }
         &__article {
             min-height: calc(100vh - 60px);
             &_yellow {

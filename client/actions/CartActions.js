@@ -70,3 +70,9 @@ export function goToCartDetails(cartId) {
         dispatch(push(`/cart/${cartId}`));
     }
 }
+
+export function goToOrder() {
+    return (dispatch) => {
+        dispatch(push('/order'));
+    }
+}

@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as CoreActions from '../../actions/CoreActions'
 import * as CartActions from '../../actions/CartActions'
-import * as DOM_CONSTANTS from '../../constants/Dom'
 import * as CORE_CONSTANTS from '../../constants/Core'
 import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
@@ -35,6 +34,11 @@ class Header extends Component {
     goToCartDetails = () => {
         const { cart, CartActions: { goToCartDetails } } = this.props;
         return goToCartDetails(cart.cartRedirectId);
+    };
+
+    goToOrder = () => {
+        const { CartActions: { goToOrder } } = this.props;
+        return goToOrder();
     };
 
     loginWithVk = () => {
@@ -69,7 +73,7 @@ class Header extends Component {
         }
 
         return (
-            <ToolbarGroup lastChild={true} style={{paddingLeft: '40px'}}>
+            <ToolbarGroup className="sou-header__toolbar__greet" lastChild={true}>
                 <ToolbarTitle text={`Greetings, ${user.payload.name}!`} />
                 <ToolbarSeparator />
                 <IconMenu
@@ -81,7 +85,8 @@ class Header extends Component {
                         </IconButton>
                     }>
                     {cart.data.inquiry && <MenuItem primaryText={cart.data.inquiry.isResolved ? "My order is READY!" : "My order is in progress"} onTouchTap={this.goToCartDetails} />}
-                    {cart.data.inquiry && <Divider />}
+                    {!cart.data.inquiry && <MenuItem primaryText="Hey, maybe it's high time to place a new order?" onTouchTap={this.goToOrder} />}
+                    <Divider />
                     <MenuItem primaryText="Logout" onTouchTap={this.logoutCurrentUser}/>
                 </IconMenu>
             </ToolbarGroup>
@@ -107,11 +112,11 @@ class Header extends Component {
 
         return (
             <header role="banner" className="sou-header">
-                <Toolbar style={{'height': '60px'}}>
-                    <ToolbarGroup className="sou-header__logo i-transit-all" firstChild={true} style={{'flex': '0 1 auto', 'width': '50px', 'backgroundColor': CORE_CONSTANTS.COLORS.primary2Color}}>
-                        <img src="http://slasti.od.ua:3001/client/static/graphics/logo_big.png" height="45px" alt="Logo Slasti Od Ua" style={{'margin-left': '7px'}}/>
+                <Toolbar className="sou-header__toolbar">
+                    <ToolbarGroup className="sou-header__logo i-transit-all" firstChild={true}>
+                        <img src="http://slasti.od.ua:3001/client/static/graphics/logo_big.png" height="45px" alt="Logo Slasti Od Ua"/>
                     </ToolbarGroup>
-                    <ToolbarGroup style={{'flex': '1 auto'}}>
+                    <ToolbarGroup className="sou-header__navigation_holder">
                         <Nav user={user} segment={segment} />
                     </ToolbarGroup>
                     {this.greet()}

@@ -33,6 +33,12 @@ export const COLORS = {
     borderColor: grey400
 };
 
+export const SIZES = {
+    HEADER: {
+        HEIGHT: '60px'
+    }
+};
+
 export const METHOD = {
     GET: 'GET',
     POST: 'POST',

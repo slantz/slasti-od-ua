@@ -33,6 +33,11 @@ export const COLORS = {
     borderColor: grey400
 };
 
+export const DATES = {
+    MONTHS: ["Jan", "Feb", "March", "Apr", "May", "June", "July", "August", "Sept", "Oct", "Nov", "Dec"],
+    DAYS: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+};
+
 export const SIZES = {
     HEADER: {
         HEIGHT: '60px'

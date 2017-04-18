@@ -175,6 +175,13 @@ body {
             color: $primary-color;
         }
     }
+    &-cart {
+        &-details {
+            &__column {
+                padding: $smallSpacing $smallSpacing / 4;
+            }
+        }
+    }
 }
 
 .Select-control {

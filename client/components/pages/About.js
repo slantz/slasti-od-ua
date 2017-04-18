@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from "react-router";
 import { Col, Grid, Row } from "react-flexbox-grid";
 
 export default class About extends Component {

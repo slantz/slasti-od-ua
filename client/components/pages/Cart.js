@@ -5,7 +5,7 @@ import * as CartActions from '../../actions/CartActions'
 
 import TextField from 'material-ui/TextField';
 import {orange500, blue500} from 'material-ui/styles/colors';
-import { Divider, RaisedButton } from "material-ui";
+import { RaisedButton } from "material-ui";
 import { Link } from "react-router";
 
 const styles = {

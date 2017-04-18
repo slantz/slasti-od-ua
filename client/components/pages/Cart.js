@@ -41,7 +41,7 @@ class Cart extends Component {
 
         if (children === null) {
             return (
-                <article id="sou-cart" className="sou-cart i-flex-page-vertical-header-footer">
+                <section id="sou-cart" className="sou-cart i-flex-page-vertical-header-footer">
                     <TextField
                         floatingLabelText="Please enter Inquiry Id"
                         floatingLabelStyle={styles.floatingLabelStyle}
@@ -58,13 +58,13 @@ class Cart extends Component {
                                 style={styles.button}/>
                         </Link>
                     </p>
-                </article>
+                </section>
             )
         } else {
             return (
-                <article id="sou-cart">
+                <section id="sou-cart">
                     {children}
-                </article>
+                </section>
             )
         }
 

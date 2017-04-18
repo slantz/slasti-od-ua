@@ -98,7 +98,7 @@ class CartDetails extends Component {
                                             }
                                         </Row>
                                     </CardText>
-                                    <CardActions>
+                                    <CardActions style={{'paddingBottom': CORE_CONSTANTS.SIZES.SMALL_PADDING}}>
                                         <Row style={{'margin': '0'}}>
                                             <Col xs={12}>
                                                 <RaisedButton

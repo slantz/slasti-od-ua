@@ -30,7 +30,10 @@ export const COLORS = {
     accent3Color: grey400,
     textColor: grey900,
     alternateTextColor: white,
-    borderColor: grey400
+    borderColor: grey400,
+    vk: '#45668e',
+    facebook: '#3b5998',
+    instagram: '#c32aa3'
 };
 
 export const DATES = {
@@ -41,7 +44,8 @@ export const DATES = {
 export const SIZES = {
     HEADER: {
         HEIGHT: '60px'
-    }
+    },
+    SMALL_PADDING: '2rem'
 };
 
 export const METHOD = {

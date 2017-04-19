@@ -5,7 +5,15 @@ import { RaisedButton } from "material-ui";
 import { Col, Grid, Row } from "react-flexbox-grid";
 
 let AboutInquiryPostForm = (props) => {
-    const { handleSubmit, setCurrentDate, setCurrentTime } = props;
+    const { handleSubmit, setCurrentDate, setCurrentTime, defaultBakeForComment } = props;
+
+    function getDefaultComment() {
+        if (!defaultBakeForComment) {
+            return "";
+        }
+
+        return `I liked this bakery ${defaultBakeForComment._id} for this ${defaultBakeForComment.event.type} event! Please advice me smth similar!`;
+    }
 
     return (
         <form onSubmit={handleSubmit}>
@@ -53,14 +61,13 @@ let AboutInquiryPostForm = (props) => {
                                component={InputWithValidation.renderMultiLineField}
                                type="text"
                                label="Comment"
+                               defaultValue={getDefaultComment()}
                                placeholder="Comment"/>
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={12}>
-                        <p>
-                            <RaisedButton label="Submit new Basis" secondary={true} type="submit" />
-                        </p>
+                    <Col xs={12} className="i-margin_block_vertical_top">
+                        <RaisedButton label="Submit new Basis" secondary={true} type="submit" />
                     </Col>
                 </Row>
             </Grid>

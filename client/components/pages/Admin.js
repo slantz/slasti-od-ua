@@ -18,13 +18,13 @@ class Admin extends Component {
         const { user } = this.props;
 
         return (
-            <article id="sou-catalog">
+            <section id="sou-admin" className="sou-admin">
                 {user.isFetching === false && user.status !== null && <div>Hey, {user.payload.name}!</div>}
                 <Link to="admin/update">Go to admin update page</Link>
                 <Link to="admin/upload">Go to admin upload page</Link>
                 <Link to="admin/inquiry">Go to admin inquiry page</Link>
                 {this.props.children}
-            </article>
+            </section>
         )
     }
 }

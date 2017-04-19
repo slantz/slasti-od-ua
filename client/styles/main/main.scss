@@ -184,6 +184,7 @@ body {
             color: $primary-color;
         }
     }
+    &-bakery,
     &-cart {
         &-details {
             &__column {
@@ -206,6 +207,9 @@ body {
                 }
             }
         }
+    }
+    &-order {
+        padding: $smallSpacing * 3 0;
     }
 }
 

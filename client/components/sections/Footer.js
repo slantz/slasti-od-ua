@@ -29,7 +29,7 @@ export default class Footer extends Component {
                                 </Col>
                                 <Col xs={12} sm={6}>
                                     <h4>Social media:</h4>
-                                    <p>
+                                    <div>
                                         <IconButton
                                             iconClassName="sou-footer__social__icon icon-instagram"
                                             iconStyle={{'color': CORE_CONSTANTS.COLORS.instagram, 'fontSize': '30px'}}
@@ -51,7 +51,7 @@ export default class Footer extends Component {
                                             href="https://vk.com/id63830569"
                                             target="_blank"
                                         />
-                                    </p>
+                                    </div>
                                 </Col>
                             </Row>
                         </Col>

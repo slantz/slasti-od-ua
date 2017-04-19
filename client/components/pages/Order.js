@@ -14,17 +14,22 @@ class Order extends Component {
 
     setCurrentDate = (nullValue, date) => {
         const { AboutActions: { setCurrentDate } } = this.props;
-        setCurrentDate(date)
+        setCurrentDate(date);
     };
 
     setCurrentTime = (nullValue, time) => {
         const { AboutActions: { setCurrentTime } } = this.props;
-        setCurrentTime(time)
+        setCurrentTime(time);
     };
 
     setInquiryIdToLocalStorage = (id) => {
         const { AboutActions: { setInquiryIdToLocalStorage } } = this.props;
-        setInquiryIdToLocalStorage(id)
+        setInquiryIdToLocalStorage(id);
+    };
+
+    removeBakeryFromBakeDetails = () => {
+        const { AboutActions: { removeBakeryFromBakeDetails } } = this.props;
+        removeBakeryFromBakeDetails();
     };
 
     postInquiry = () => {
@@ -129,11 +134,22 @@ class Order extends Component {
                 </Grid>
             );
         } else {
+            let defaultBakeForComment = null;
+
+            if (about.bakeryFromBakeDetails !== null) {
+                defaultBakeForComment = Object.assign({}, about.bakeryFromBakeDetails);
+            }
+
             return <AboutInquiryPostForm onSubmit={this.postInquiry}
                                          setCurrentDate={this.setCurrentDate}
-                                         setCurrentTime={this.setCurrentTime} />;
+                                         setCurrentTime={this.setCurrentTime}
+                                         defaultBakeForComment={defaultBakeForComment}/>;
         }
     };
+
+    componentWillUnmount() {
+        this.removeBakeryFromBakeDetails();
+    }
 
     render() {
         const {
@@ -141,10 +157,10 @@ class Order extends Component {
         } = this.props;
 
         return (
-            <article id="sou-about" className={about.data.inquiry && "i-flex-page-vertical-header-footer"}>
+            <section id="sou-order" className={about.data.inquiry ? "sou-order i-flex-page-vertical-header-footer" : "sou-order"}>
                 {this.getInquiryPageHeader()}
                 {this.getInquiryFormOrThxMessage()}
-            </article>
+            </section>
         )
     }
 }

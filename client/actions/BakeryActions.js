@@ -1,6 +1,8 @@
+import { push } from 'react-router-redux';
 import * as CORE_CONSTANTS from '../constants/Core'
 import { CALL_API } from '../middleware/api'
 import * as BAKERY_CONSTANTS from '../constants/Bakery'
+import * as ABOUT_CONSTANTS from '../constants/About'
 
 function shouldMakeAdminRequest(state) {
     return state.isFetching !== true;
@@ -88,6 +90,21 @@ export function toggleFilterVisibility() {
     return (dispatch) => {
         dispatch({
             type: BAKERY_CONSTANTS.TOGGLE_FILTER_VISIBILITY
+        });
+    }
+}
+
+export function goToOrderPageWithSomeDetails() {
+    return (dispatch) => {
+        dispatch(push('/order'));
+    }
+}
+
+export function setBakeryFromBakeDetails(bake) {
+    return (dispatch) => {
+        dispatch({
+            type: ABOUT_CONSTANTS.SET_BAKERY_FROM_BAKE_DETAILS,
+            payload: bake
         });
     }
 }

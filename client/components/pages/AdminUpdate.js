@@ -16,14 +16,7 @@ import Loader from "../elements/Loader";
 class AdminUpdate extends Component {
     constructor(props) {
         super(props);
-        this.isPrepopulatedOnInitialLoad = {
-            all: false,
-            basis: false,
-            ingredients: false,
-            filling: false,
-            decor: false,
-            event: false
-        };
+        this.isPrepopulatedOnInitialLoad = false;
     }
 
     showIngredientsNewForm = () => {
@@ -69,6 +62,11 @@ class AdminUpdate extends Component {
     setCurrentEvent = (value) => {
         const { AdminActions: { setCurrentEvent } } = this.props;
         return setCurrentEvent(value);
+    };
+
+    setCurrentStuff = (data) => {
+        const { AdminActions: { setCurrentStuff } } = this.props;
+        return setCurrentStuff(data);
     };
 
     setCurrentIngredientForCreationForm = (ingredient) => {
@@ -282,44 +280,40 @@ class AdminUpdate extends Component {
         } = this.props;
 
         if (bakeryItem.item) {
-            if (!this.isPrepopulatedOnInitialLoad.all) {
+            if (!this.isPrepopulatedOnInitialLoad) {
                 if (currentBasis && currentFilling && currentIngredients && currentDecor && currentEvent) {
-                    if (!this.isPrepopulatedOnInitialLoad.basis && currentBasis.length === 0) {
-                        this.setCurrentBasis(bakeryItem.item.basis);
-                        this.isPrepopulatedOnInitialLoad.basis = true;
-                        return this.elementInfiniteLoad();
+                    let data = {};
+
+                    if (currentBasis.length === 0) {
+                        data.basis = bakeryItem.item.basis;
                     }
 
-                    if (!this.isPrepopulatedOnInitialLoad.filling && currentFilling.length === 0) {
-                        this.setCurrentFilling(bakeryItem.item.filling);
-                        this.isPrepopulatedOnInitialLoad.filling = true;
-                        return this.elementInfiniteLoad();
+                    if (currentFilling.length === 0) {
+                        data.filling = bakeryItem.item.filling;
                     }
 
-                    if (!this.isPrepopulatedOnInitialLoad.ingredients && currentIngredients.length === 0) {
-                        this.setCurrentIngredients(bakeryItem.item.ingredients);
-                        this.isPrepopulatedOnInitialLoad.ingredients = true;
-                        return this.elementInfiniteLoad();
+                    if (currentIngredients.length === 0) {
+                        data.ingredients = bakeryItem.item.ingredients;
                     }
 
-                    if (!this.isPrepopulatedOnInitialLoad.event && !currentEvent || Object.keys(currentEvent).length === 0) {
-                        this.setCurrentEvent(bakeryItem.item.event);
-                        this.isPrepopulatedOnInitialLoad.event = true;
-                        return this.elementInfiniteLoad();
+                    if (!currentEvent || Object.keys(currentEvent).length === 0) {
+                        data.event = bakeryItem.item.event;
                     }
 
-                    if (!this.isPrepopulatedOnInitialLoad.decor && currentDecor.length === 0) {
-                        this.setCurrentDecor(bakeryItem.item.decor.map((dec) => {
+                    if (currentDecor.length === 0) {
+                        data.decor = bakeryItem.item.decor.map((dec) => {
                             return {
                                 label: dec,
                                 value: dec
                             };
-                        }));
-                        this.isPrepopulatedOnInitialLoad.decor = true;
-                        return this.elementInfiniteLoad();
+                        });
                     }
 
-                    this.isPrepopulatedOnInitialLoad.all = true;
+                    this.isPrepopulatedOnInitialLoad = true;
+
+                    if (Object.keys(data).length > 0) {
+                        return this.setCurrentStuff(data);
+                    }
                 }
             }
 
@@ -440,15 +434,7 @@ class AdminUpdate extends Component {
             }
         } = this.props;
 
-        this.isPrepopulatedOnInitialLoad = {
-            all: false,
-            basis: false,
-            ingredients: false,
-            filling: false,
-            decor: false,
-            event: false
-        };
-
+        this.isPrepopulatedOnInitialLoad = false;
         clearCurrentStuff();
     }
 

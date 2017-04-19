@@ -492,6 +492,15 @@ export function clearCurrentStuff() {
     }
 }
 
+export function setCurrentStuff(data) {
+    return (dispatch) => {
+        dispatch({
+            type: ADMIN_CONSTANTS.SET_CURRENT_STUFF,
+            payload: data
+        });
+    }
+}
+
 export function createIntermediateFileReaderObject(currentFileToCrop, nextFileIndex) {
     return (dispatch) => {
         return dispatch({

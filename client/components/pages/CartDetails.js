@@ -8,6 +8,7 @@ import { Grid, Col, Row } from 'react-flexbox-grid/lib/index'
 import { Chip, Paper } from "material-ui";
 import Loader from "../elements/Loader";
 import * as CORE_CONSTANTS from '../../constants/Core'
+import NoElement from "../elements/NoElement";
 
 class CartDetails extends Component {
     constructor(props) {
@@ -118,7 +119,7 @@ class CartDetails extends Component {
         } else if (cart.data.isFetching){
             return <Loader />;
         } else {
-            return <h3 className="i-center">No element found!</h3>;
+            return <NoElement/>;
         }
     };
 

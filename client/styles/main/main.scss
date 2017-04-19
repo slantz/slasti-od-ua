@@ -147,6 +147,15 @@ body {
                 z-index: 0;
             }
         }
+        &-details {
+            position: relative;
+            z-index: 1;
+            min-height: calc(100vh - 480px);
+            display: flex;
+            flex: 1 auto;
+            justify-content: center;
+            align-items: center;
+        }
     }
     &-about {
         color: $primary-color-text;

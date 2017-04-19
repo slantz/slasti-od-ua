@@ -6,6 +6,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import RaisedButton from 'material-ui/RaisedButton';
 import { Grid, Col, Row } from 'react-flexbox-grid/lib/index'
 import { Chip } from "material-ui";
+import NoElement from "../elements/NoElement";
 
 class BakeryDetails extends Component {
     constructor(props) {
@@ -85,13 +86,13 @@ class BakeryDetails extends Component {
                 </Grid>
             )
         } else {
-            return <div>No element found!</div>
+            return <NoElement/>;
         }
     };
 
     render() {
         return (
-            <section id="sou-bakery-detail">
+            <section id="sou-bakery-details" className="sou-bakery-details">
                 {this.getBakeryElement()}
             </section>
         )

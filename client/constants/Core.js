@@ -45,6 +45,11 @@ export const SIZES = {
     HEADER: {
         HEIGHT: '60px'
     },
+    ICON: {
+        WIDTH: '30px',
+        HEIGHT: '30px',
+        MARGIN_RIGHT: '8px'
+    },
     SMALL_PADDING: '2rem'
 };
 

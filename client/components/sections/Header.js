@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as CoreActions from '../../actions/CoreActions'
 import * as CartActions from '../../actions/CartActions'
-import * as CORE_CONSTANTS from '../../constants/Core'
 import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import NavigationMenuIcon from 'material-ui/svg-icons/navigation/menu';

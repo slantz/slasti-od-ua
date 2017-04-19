@@ -109,7 +109,7 @@ export const renderField = ({ input, label, placeholder, type, meta: { touched, 
 );
 
 export const renderMultiLineField = ({ input, label, placeholder, type, defaultValue, meta: { touched, error, warning } }) => (
-    <TextField hintText={placeholder} floatingLabelText={"Enter a " + placeholder} name={input.name} type={type} errorText={touched && (error ? error : warning)} value={defaultValue} multiLine={true} fullWidth={true}/>
+    <TextField hintText={placeholder} floatingLabelText={"Enter a " + placeholder} name={input.name} type={type} errorText={touched && (error ? error : warning)} defaultValue={defaultValue} multiLine={true} fullWidth={true} />
 );
 
 export const renderFileField = ({ input, label, placeholder, type, accept, meta: { touched, error, warning } }) => {

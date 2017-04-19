@@ -54,6 +54,9 @@
             margin-bottom: $mediumSpacing;
             &_top {
                 margin-top: $mediumSpacing;
+                &_0 {
+                    margin-top: 0;
+                }
             }
             &_bottom {
                 margin-bottom: $mediumSpacing;

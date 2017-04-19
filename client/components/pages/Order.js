@@ -41,6 +41,7 @@ class Order extends Component {
             }
         } = this.props;
         let formValues = form['admin-inquiry-post'].values;
+        let registeredValues = form['admin-inquiry-post'].registeredFields;
 
 
         let inquiry = {
@@ -55,8 +56,8 @@ class Order extends Component {
             inquiry.phone = formValues.phone;
         }
 
-        if (formValues.comment) {
-            inquiry.comment = formValues.comment;
+        if (registeredValues.comment && document.querySelector('textarea[name="comment"]').value !== "") {
+            inquiry.comment = document.querySelector('textarea[name="comment"]').value;
         }
 
         if (about.currentDate) {
@@ -93,7 +94,7 @@ class Order extends Component {
         if (about.data.inquiry) {
             return <h2 className="i-center">You've just placed your order.</h2>;
         } else {
-            return <h2 className="i-pad_block_horizontal_left">Please enter your order details.</h2>;
+            return <h2 className="i-pad_block_horizontal_left i-margin_block_vertical_top_0">Please enter your order details.</h2>;
         }
     };
 

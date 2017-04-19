@@ -49,40 +49,38 @@ class BakeryDetails extends Component {
                                         }>
                                         <img src={`http://slasti.od.ua:3001/client/static/images/${bake.imgUrl}`} />
                                     </CardMedia>
-                                    <CardTitle title={bake.category} subtitle={bake.event.type} />
+                                    <CardTitle title={bake.category} subtitle={bake.event ? bake.event.type : ''} />
                                     <CardText>
-                                        <Grid tagName="article">
-                                            <Row middle="xs">
-                                                <Col xs={12}>
-                                                    <h4>Ingredients</h4>
-                                                    {bake.ingredients.map((ingredient) => {
-                                                        return <Chip key={ingredient._id}>{ingredient.type} / {ingredient.taste} / {ingredient.substance}</Chip>;
-                                                    })}
-                                                </Col>
-                                                <Col xs={12}>
-                                                    <h4>Filling</h4>
-                                                    {bake.filling.map((filling) => {
-                                                        return <Chip key={filling._id}>{filling.taste} / {filling.composition}</Chip>;
-                                                    })}
-                                                </Col>
-                                                <Col xs={12}>
-                                                    <h4>Basis</h4>
-                                                    {bake.basis.map((basis) => {
-                                                        return <Chip key={basis._id}>{basis.type} / {basis.composition}</Chip>;
-                                                    })}
-                                                </Col>
-                                                <Col xs={12}>
-                                                    <h4>Decor</h4>
-                                                    {bake.decor.map((decor, index) => {
-                                                        return <Chip key={index}>{decor}</Chip>;
-                                                    })}
-                                                </Col>
-                                                <Col xs={12}>
-                                                    <h4>Event</h4>
-                                                    <Chip>{bake.event && bake.event.type}</Chip>
-                                                </Col>
-                                            </Row>
-                                        </Grid>
+                                        <Row middle="xs">
+                                            <Col xs={12}>
+                                                <h4>Ingredients</h4>
+                                                {bake.ingredients.map((ingredient) => {
+                                                    return <Chip key={ingredient._id}>{ingredient.type} / {ingredient.taste} / {ingredient.substance}</Chip>;
+                                                })}
+                                            </Col>
+                                            <Col xs={12}>
+                                                <h4>Filling</h4>
+                                                {bake.filling.map((filling) => {
+                                                    return <Chip key={filling._id}>{filling.taste} / {filling.composition}</Chip>;
+                                                })}
+                                            </Col>
+                                            <Col xs={12}>
+                                                <h4>Basis</h4>
+                                                {bake.basis.map((basis) => {
+                                                    return <Chip key={basis._id}>{basis.type} / {basis.composition}</Chip>;
+                                                })}
+                                            </Col>
+                                            <Col xs={12}>
+                                                <h4>Decor</h4>
+                                                {bake.decor.map((decor, index) => {
+                                                    return <Chip key={index}>{decor}</Chip>;
+                                                })}
+                                            </Col>
+                                            <Col xs={12}>
+                                                <h4>Event</h4>
+                                                <Chip>{bake.event && bake.event.type}</Chip>
+                                            </Col>
+                                        </Row>
                                     </CardText>
                                     <CardActions>
                                         <RaisedButton label="Go to order page" primary={true} onTouchTap={() => this.goToOrderPageWithSomeDetails(bake)} />

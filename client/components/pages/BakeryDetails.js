@@ -7,6 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { Grid, Col, Row } from 'react-flexbox-grid/lib/index'
 import { Chip, Paper } from "material-ui";
 import NoElement from "../elements/NoElement";
+import { Link } from "react-router";
 
 class BakeryDetails extends Component {
     constructor(props) {
@@ -84,10 +85,13 @@ class BakeryDetails extends Component {
                                     </CardText>
                                     <CardActions>
                                         <RaisedButton label="Go to order page" primary={true} onTouchTap={() => this.goToOrderPageWithSomeDetails(bake)} />
-                                        {user.admin && <RaisedButton
-                                            label="Update"
-                                            secondary={true}
-                                            href={"/admin/update/" + bake._id}/>}
+                                        {user.admin && (
+                                            <Link to={"/admin/update/" + bake._id}>
+                                                <RaisedButton
+                                                    label="Update"
+                                                    secondary={true}/>
+                                            </Link>
+                                        )}
                                     </CardActions>
                                 </Card>
                             </Paper>

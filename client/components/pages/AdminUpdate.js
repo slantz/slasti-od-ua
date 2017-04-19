@@ -11,11 +11,19 @@ import AdminCreateFillingForm from '../popover/AdminCreateFillingForm';
 import AdminCreateBasisForm from '../popover/AdminCreateBasisForm';
 import AdminCreateCategoryWeightDecorForm from "../popover/AdminCreateCategoryWeightDecorForm";
 import AdminCreateEventForm from "../popover/AdminCreateEventForm";
+import Loader from "../elements/Loader";
 
 class AdminUpdate extends Component {
     constructor(props) {
         super(props);
-        this.isPrepopulatedOnInitialLoad = false;
+        this.isPrepopulatedOnInitialLoad = {
+            all: false,
+            basis: false,
+            ingredients: false,
+            filling: false,
+            decor: false,
+            event: false
+        };
     }
 
     showIngredientsNewForm = () => {
@@ -211,9 +219,7 @@ class AdminUpdate extends Component {
     };
 
     elementInfiniteLoad = () => {
-        return <div className="infinite-list-item">
-            Loading...
-        </div>;
+        return <Loader/>;
     };
 
     getBakeryById = () => {
@@ -276,39 +282,44 @@ class AdminUpdate extends Component {
         } = this.props;
 
         if (bakeryItem.item) {
-            if (!this.isPrepopulatedOnInitialLoad) {
+            if (!this.isPrepopulatedOnInitialLoad.all) {
                 if (currentBasis && currentFilling && currentIngredients && currentDecor && currentEvent) {
-                    if (currentBasis.length === 0) {
+                    if (!this.isPrepopulatedOnInitialLoad.basis && currentBasis.length === 0) {
                         this.setCurrentBasis(bakeryItem.item.basis);
+                        this.isPrepopulatedOnInitialLoad.basis = true;
                         return this.elementInfiniteLoad();
                     }
 
-                    if (currentFilling.length === 0) {
+                    if (!this.isPrepopulatedOnInitialLoad.filling && currentFilling.length === 0) {
                         this.setCurrentFilling(bakeryItem.item.filling);
+                        this.isPrepopulatedOnInitialLoad.filling = true;
                         return this.elementInfiniteLoad();
                     }
 
-                    if (currentIngredients.length === 0) {
+                    if (!this.isPrepopulatedOnInitialLoad.ingredients && currentIngredients.length === 0) {
                         this.setCurrentIngredients(bakeryItem.item.ingredients);
+                        this.isPrepopulatedOnInitialLoad.ingredients = true;
                         return this.elementInfiniteLoad();
                     }
 
-                    if (!currentEvent || Object.keys(currentEvent).length === 0) {
+                    if (!this.isPrepopulatedOnInitialLoad.event && !currentEvent || Object.keys(currentEvent).length === 0) {
                         this.setCurrentEvent(bakeryItem.item.event);
+                        this.isPrepopulatedOnInitialLoad.event = true;
                         return this.elementInfiniteLoad();
                     }
 
-                    if (currentDecor.length === 0) {
+                    if (!this.isPrepopulatedOnInitialLoad.decor && currentDecor.length === 0) {
                         this.setCurrentDecor(bakeryItem.item.decor.map((dec) => {
                             return {
                                 label: dec,
                                 value: dec
                             };
                         }));
+                        this.isPrepopulatedOnInitialLoad.decor = true;
                         return this.elementInfiniteLoad();
                     }
 
-                    this.isPrepopulatedOnInitialLoad = true;
+                    this.isPrepopulatedOnInitialLoad.all = true;
                 }
             }
 
@@ -331,77 +342,75 @@ class AdminUpdate extends Component {
                                 </CardMedia>
                                 <CardTitle title="Card title" subtitle="Card subtitle" />
                                 <CardText>
-                                    <Grid tagName="article">
-                                        <Row middle="xs">
+                                    <Row middle="xs">
+                                        <Col xs={12}>
+                                            <Select.Creatable
+                                                name="select-admin-upload-bakery-ingredients"
+                                                value={currentIngredients}
+                                                multi={true}
+                                                valueKey="_id"
+                                                labelKey="type"
+                                                options={ingredients}
+                                                onChange={this.setCurrentIngredients}
+                                            />
+                                        </Col>
+                                        <Col xs={12}>
+                                            <Select.Creatable
+                                                name="select-admin-upload-bakery-filling"
+                                                value={currentFilling}
+                                                multi={true}
+                                                valueKey="_id"
+                                                labelKey="composition"
+                                                options={filling}
+                                                onChange={this.setCurrentFilling}
+                                            />
+                                        </Col>
+                                        <Col xs={12}>
+                                            <Select.Creatable
+                                                name="select-admin-upload-bakery-basis"
+                                                value={currentBasis}
+                                                multi={true}
+                                                valueKey="_id"
+                                                labelKey="type"
+                                                options={basis}
+                                                onChange={this.setCurrentBasis}
+                                            />
+                                        </Col>
+                                        <Col xs={12}>
+                                            <Select.Creatable
+                                                name="select-admin-upload-bakery-event"
+                                                value={currentEvent}
+                                                valueKey="_id"
+                                                labelKey="type"
+                                                options={events}
+                                                onChange={this.setCurrentEvent}
+                                            />
+                                        </Col>
+                                        <Col xs={12}>
+                                            <AdminCreateCategoryWeightDecorForm currentDecor={currentDecor}
+                                                                                onSetCurrentDecor={this.setCurrentDecor}/>
+                                        </Col>
+                                        {ingredients_showCreateNewForm &&
                                             <Col xs={12}>
-                                                <Select.Creatable
-                                                    name="select-admin-upload-bakery-ingredients"
-                                                    value={currentIngredients}
-                                                    multi={true}
-                                                    valueKey="_id"
-                                                    labelKey="type"
-                                                    options={ingredients}
-                                                    onChange={this.setCurrentIngredients}
-                                                />
+                                                <AdminCreateIngredientsForm onSubmit={this.setCurrentIngredientForCreationForm}/>
                                             </Col>
+                                        }
+                                        {filling_showCreateNewForm &&
                                             <Col xs={12}>
-                                                <Select.Creatable
-                                                    name="select-admin-upload-bakery-filling"
-                                                    value={currentFilling}
-                                                    multi={true}
-                                                    valueKey="_id"
-                                                    labelKey="composition"
-                                                    options={filling}
-                                                    onChange={this.setCurrentFilling}
-                                                />
+                                                <AdminCreateFillingForm onSubmit={this.setCurrentFillingForCreationForm}/>
                                             </Col>
+                                        }
+                                        {basis_showCreateNewForm &&
                                             <Col xs={12}>
-                                                <Select.Creatable
-                                                    name="select-admin-upload-bakery-basis"
-                                                    value={currentBasis}
-                                                    multi={true}
-                                                    valueKey="_id"
-                                                    labelKey="type"
-                                                    options={basis}
-                                                    onChange={this.setCurrentBasis}
-                                                />
+                                                <AdminCreateBasisForm onSubmit={this.setCurrentBasisForCreationForm}/>
                                             </Col>
+                                        }
+                                        {event_showCreateNewForm &&
                                             <Col xs={12}>
-                                                <Select.Creatable
-                                                    name="select-admin-upload-bakery-event"
-                                                    value={currentEvent}
-                                                    valueKey="_id"
-                                                    labelKey="type"
-                                                    options={events}
-                                                    onChange={this.setCurrentEvent}
-                                                />
+                                                <AdminCreateEventForm onSubmit={this.setCurrentEventForCreationForm}/>
                                             </Col>
-                                            <Col xs={12}>
-                                                <AdminCreateCategoryWeightDecorForm currentDecor={currentDecor}
-                                                                                    onSetCurrentDecor={this.setCurrentDecor}/>
-                                            </Col>
-                                            {ingredients_showCreateNewForm &&
-                                                <Col xs={12}>
-                                                    <AdminCreateIngredientsForm onSubmit={this.setCurrentIngredientForCreationForm}/>
-                                                </Col>
-                                            }
-                                            {filling_showCreateNewForm &&
-                                                <Col xs={12}>
-                                                    <AdminCreateFillingForm onSubmit={this.setCurrentFillingForCreationForm}/>
-                                                </Col>
-                                            }
-                                            {basis_showCreateNewForm &&
-                                                <Col xs={12}>
-                                                    <AdminCreateBasisForm onSubmit={this.setCurrentBasisForCreationForm}/>
-                                                </Col>
-                                            }
-                                            {event_showCreateNewForm &&
-                                                <Col xs={12}>
-                                                    <AdminCreateEventForm onSubmit={this.setCurrentEventForCreationForm}/>
-                                                </Col>
-                                            }
-                                        </Row>
-                                    </Grid>
+                                        }
+                                    </Row>
                                 </CardText>
                                 <CardActions>
                                     <RaisedButton label="Update" primary={true} onTouchTap={this.update}/>
@@ -422,6 +431,25 @@ class AdminUpdate extends Component {
         this.getFilling();
         this.getBasis();
         this.getEvents();
+    }
+
+    componentWillUnmount() {
+        const {
+            AdminActions: {
+                clearCurrentStuff
+            }
+        } = this.props;
+
+        this.isPrepopulatedOnInitialLoad = {
+            all: false,
+            basis: false,
+            ingredients: false,
+            filling: false,
+            decor: false,
+            event: false
+        };
+
+        clearCurrentStuff();
     }
 
     render() {

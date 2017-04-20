@@ -56,25 +56,25 @@ class BakeryDetails extends Component {
                                         <Row middle="xs">
                                             <Col xs={12}>
                                                 <h4>Ingredients</h4>
-                                                {bake.ingredients.map((ingredient) => {
+                                                {bake.ingredients && bake.ingredients.map((ingredient) => {
                                                     return <Chip key={ingredient._id}>{ingredient.type} / {ingredient.taste} / {ingredient.substance}</Chip>;
                                                 })}
                                             </Col>
                                             <Col xs={12}>
                                                 <h4>Filling</h4>
-                                                {bake.filling.map((filling) => {
+                                                {bake.filling && bake.filling.map((filling) => {
                                                     return <Chip key={filling._id}>{filling.taste} / {filling.composition}</Chip>;
                                                 })}
                                             </Col>
                                             <Col xs={12}>
                                                 <h4>Basis</h4>
-                                                {bake.basis.map((basis) => {
+                                                {bake.basis && bake.basis.map((basis) => {
                                                     return <Chip key={basis._id}>{basis.type} / {basis.composition}</Chip>;
                                                 })}
                                             </Col>
                                             <Col xs={12}>
                                                 <h4>Decor</h4>
-                                                {bake.decor.map((decor, index) => {
+                                                {bake.decor && bake.decor.map((decor, index) => {
                                                     return <Chip key={index}>{decor}</Chip>;
                                                 })}
                                             </Col>

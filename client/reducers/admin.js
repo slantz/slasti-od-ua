@@ -548,6 +548,23 @@ export default function admin(state = {
                 }
             });
             break;
+        case ADMIN_CONSTANTS.ADMIN_DELETE_BAKERY_ITEM_REQUEST:
+            assignedState = Object.assign({}, state, {
+                bakeryItem: {
+                    isFetching: true,
+                    item: null
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_DELETE_BAKERY_ITEM_SUCCESS:
+        case ADMIN_CONSTANTS.ADMIN_DELETE_BAKERY_ITEM_FAILURE:
+            assignedState = Object.assign({}, state, {
+                bakeryItem: {
+                    isFetching: false,
+                    item: null,
+                }
+            });
+            break;
         case ADMIN_CONSTANTS.ADMIN_GET_INQUIRY_REQUEST:
             assignedState = Object.assign({}, state, {
                 inquiry: {

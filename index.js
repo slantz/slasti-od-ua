@@ -177,9 +177,7 @@ app.delete('/api/bakery', function(req, res, next) {
     res.json(req.user);
 });
 
-app.delete('/api/bakery/:id', function(req, res, next) {
-    res.json(req.user);
-});
+app.delete('/api/bakery/:id', bakery.remove);
 
 //INGREDIENTS CRUD
 app.get('/api/ingredients', ingredient.all);

@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 
+const fs = require('fs');
 const mongoose = require('mongoose');
 const { wrap: async } = require('co');
 const Bakery = mongoose.model('Bakery');
@@ -49,6 +50,9 @@ exports.all = async(function* (req, res) {
                     console.log('all | api/bakery | Bakery.find | ', err);
                 }
                 else {
+                    if (docs.length === 0) {
+                        res.status(401).json({ error: "Item was removed" });
+                    }
                     console.log('all of %d bakeries were successfully fetched.', docs.length);
                 }
             })
@@ -118,5 +122,59 @@ exports.count = async(function* (req, res){
             count: bakeryCount,
             limit: 30
         }
+    });
+});
+
+exports.remove = async(function* (req, res){
+    let isRemoved = null;
+
+    let removeFromDbPromise = new Promise(function(resolve, reject) {
+        Bakery
+            .findByIdAndRemove(req.params.id, function(err, doc) {
+                if (err) {
+                    console.log('all | api/inquiry | Inquiry.find | ', err);
+                    reject(err);
+                }
+                else {
+                    console.log('[%s] inquiry was successfully fetched.', doc.id);
+                    resolve(doc);
+                }
+            });
+    });
+
+    let deleteImagePromise = new Promise(function(resolve, reject){
+        removeFromDbPromise
+            .then(function(doc){
+                let resultHandler = function(err) {
+                    if (err) {
+                        console.log("unlink failed", err);
+                        reject(err);
+                    }
+                    else {
+                        console.log("file deleted");
+                        resolve();
+                    }
+                };
+
+                let filePath = __dirname.replace("/server/api/controllers", `/client/static/images/${doc.imgUrl}`);
+
+                fs.unlink(filePath, resultHandler);
+            })
+            .catch(function(){
+                reject();
+            });
+    });
+
+    try {
+        isRemoved = yield Promise.all([
+            removeFromDbPromise,
+            deleteImagePromise,
+        ]);
+    } catch(e) {
+        res.status(400).json({ error: new Error(e.message).toString() });
+    }
+
+    res.json({
+        isRemoved
     });
 });

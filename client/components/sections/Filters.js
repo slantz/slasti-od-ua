@@ -107,21 +107,24 @@ class Filters extends Component {
         return clearAllFilters();
     };
 
+    getFiltersClassName = (isFiltersVisible) => {
+        let className = "sou-bakery-filters i-transit-all i-box-sizing";
+
+        if (!isFiltersVisible) {
+            className += " sou-bakery-filters_hidden";
+        } else {
+            window.scrollTo(0, 0);
+        }
+
+        return className;
+    };
+
     render() {
         const { bakery, filter: { filters }} = this.props;
 
-        let styles = {};
-
-        if (bakery.isFiltersVisible) {
-            styles = {'marginLeft': '0'};
-        } else {
-            styles = {'marginLeft': '-300px'};
-        }
-
         return (
             <aside id="sou-bakery-filters"
-                   className="sou-bakery-filters i-transit-all i-box-sizing"
-                   style={styles}>
+                   className={this.getFiltersClassName(bakery.isFiltersVisible)}>
                 <h3>Wir sind die Filtern!</h3>
                 <div className="sou-bakery-filters__list">
                     <Select

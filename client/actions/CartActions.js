@@ -71,8 +71,32 @@ export function goToCartDetails(cartId) {
     }
 }
 
+export function goToBakery() {
+    return (dispatch) => {
+        dispatch(push('/bakery'));
+    }
+}
+
+export function goToAbout() {
+    return (dispatch) => {
+        dispatch(push('/about'));
+    }
+}
+
+export function goToCart() {
+    return (dispatch) => {
+        dispatch(push('/cart'));
+    }
+}
+
 export function goToOrder() {
     return (dispatch) => {
         dispatch(push('/order'));
+    }
+}
+
+export function goToAdmin() {
+    return (dispatch) => {
+        dispatch(push('/admin'));
     }
 }

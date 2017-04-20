@@ -78,7 +78,9 @@ body {
         &__toolbar {
             height: 60px !important;
             &__greet {
-                padding-left: $twiceSpacing;
+                @media #{$medium-up} {
+                    padding-left: $twiceSpacing;
+                }
             }
         }
         &__navigation {
@@ -96,6 +98,24 @@ body {
                 justify-content: center;
             }
         }
+        @media #{$large-only} {
+            position: relative;
+            &__toolbar {
+                height: auto !important;
+                padding: 0 !important;
+                flex-direction: column;
+                &__greet {
+                    margin-right: 0 !important;
+                }
+            }
+            &__logo {
+                width: 100%;
+                justify-content: center !important;
+                margin-left: 0 !important;
+                padding: $twiceSmallSpacing;
+                box-sizing: border-box;
+            }
+        }
     }
     &-banner {
         &-content {
@@ -103,6 +123,9 @@ body {
             z-index: 1;
             min-height: calc(100vh - 480px);
             padding-top: 60px;
+            @media #{$large-only} {
+                padding-top: 0;
+            }
         }
     }
     &-bakery {

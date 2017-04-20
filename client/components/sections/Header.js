@@ -35,9 +35,29 @@ class Header extends Component {
         return goToCartDetails(cart.cartRedirectId);
     };
 
+    goToBakery = () => {
+        const { CartActions: { goToBakery } } = this.props;
+        return goToBakery();
+    };
+
+    goToAbout = () => {
+        const { CartActions: { goToAbout } } = this.props;
+        return goToAbout();
+    };
+
+    goToCart = () => {
+        const { CartActions: { goToCart } } = this.props;
+        return goToCart();
+    };
+
     goToOrder = () => {
         const { CartActions: { goToOrder } } = this.props;
         return goToOrder();
+    };
+
+    goToAdmin = () => {
+        const { CartActions: { goToAdmin } } = this.props;
+        return goToAdmin();
     };
 
     loginWithVk = () => {
@@ -83,6 +103,14 @@ class Header extends Component {
                             <NavigationMenuIcon />
                         </IconButton>
                     }>
+                    <div className="i-hide-medium-up">
+                        <MenuItem primaryText="Bakery" onTouchTap={this.goToBakery} />
+                        <MenuItem primaryText="About" onTouchTap={this.goToAbout} />
+                        <MenuItem primaryText="Cart" onTouchTap={this.goToCart} />
+                        <MenuItem primaryText="Order" onTouchTap={this.goToOrder} />
+                        <MenuItem primaryText="Admin" onTouchTap={this.goToAdmin} />
+                        <Divider/>
+                    </div>
                     {cart.data.inquiry && <MenuItem primaryText={cart.data.inquiry.isResolved ? "My order is READY!" : "My order is in progress"} onTouchTap={this.goToCartDetails} />}
                     {!cart.data.inquiry && <MenuItem primaryText="Hey, maybe it's high time to place a new order?" onTouchTap={this.goToOrder} />}
                     <Divider />
@@ -115,7 +143,7 @@ class Header extends Component {
                     <ToolbarGroup className="sou-header__logo i-transit-all" firstChild={true}>
                         <img src="http://slasti.od.ua:3001/client/static/graphics/logo_big.png" height="45px" alt="Logo Slasti Od Ua"/>
                     </ToolbarGroup>
-                    <ToolbarGroup className="sou-header__navigation_holder">
+                    <ToolbarGroup className="sou-header__navigation_holder i-hide-medium-down">
                         <Nav user={user} segment={segment} />
                     </ToolbarGroup>
                     {this.greet()}

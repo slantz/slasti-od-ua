@@ -171,3 +171,53 @@
 .i-break-word {
     word-break: break-word;
 }
+
+.i-hide {
+    &-small-down {
+        @media #{$small-only} {
+            display: none !important;
+        }
+    }
+    &-medium-down {
+        @media #{$medium-only} {
+            display: none !important;
+        }
+    }
+    &-large-down {
+        @media #{$large-only} {
+            display: none !important;
+        }
+    }
+    &-xlarge-down {
+        @media #{$xlarge-only} {
+            display: none !important;
+        }
+    }
+}
+
+.i-hide {
+    &-medium-up {
+        display: block;
+        @media #{$medium-up} {
+            display: none;
+        }
+    }
+    &-large-up {
+        display: block;
+        @media #{$large-up} {
+            display: none;
+        }
+    }
+    &-xlarge-up {
+        display: block;
+        @media #{$xlarge-up} {
+            display: none;
+        }
+    }
+    &-xxlarge-up {
+        display: block;
+        @media #{$xxlarge-up} {
+            display: none;
+        }
+    }
+}

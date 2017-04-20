@@ -8,6 +8,7 @@ import { Grid, Col, Row } from 'react-flexbox-grid/lib/index'
 import { Chip, Paper } from "material-ui";
 import NoElement from "../elements/NoElement";
 import { Link } from "react-router";
+import * as CORE_CONSTANTS from "../../constants/Core";
 
 class BakeryDetails extends Component {
     constructor(props) {
@@ -90,6 +91,14 @@ class BakeryDetails extends Component {
                                                 <RaisedButton
                                                     label="Update"
                                                     secondary={true}/>
+                                            </Link>
+                                        )}
+                                        {user.admin && (
+                                            <Link className="i-right i-margin_block_horizontal_right_0" to={"/admin/delete/" + bake._id}>
+                                                <RaisedButton
+                                                    label="Delete"
+                                                    backgroundColor={CORE_CONSTANTS.COLORS.alert}
+                                                    buttonStyle={{'color': CORE_CONSTANTS.COLORS.alternateTextColor}}/>
                                             </Link>
                                         )}
                                     </CardActions>

@@ -7,12 +7,14 @@ function constructEndpoint(endpoint) {
 }
 
 // This makes every API response to return Promise object.
-function callApi(endpoint) {
+function callApi(endpoint, method) {
     const fullUrl = constructEndpoint(endpoint);
+    let request = {
+        credentials: 'include',
+        method : method,
+    };
 
-    return fetch(fullUrl, {
-        credentials: 'include', //pass cookies, for authentication
-    })
+    return fetch(fullUrl, request)
         .then(response => response
                 .json()
                 .then(
@@ -104,8 +106,9 @@ export default store => next => action => {
     next(actionWith({type : requestType}));
 
     switch (method) {
-        case CORE_CONSTANTS.METHOD.GET: {
-            return callApi(endpoint).then(
+        case CORE_CONSTANTS.METHOD.GET:
+        case CORE_CONSTANTS.METHOD.DELETE: {
+            return callApi(endpoint, method).then(
                 response => {
                     next(actionWith({
                         payload : response,

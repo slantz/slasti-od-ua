@@ -11,7 +11,6 @@ import AdminCreateFillingForm from '../popover/AdminCreateFillingForm';
 import AdminCreateBasisForm from '../popover/AdminCreateBasisForm';
 import AdminCreateCategoryWeightDecorForm from "../popover/AdminCreateCategoryWeightDecorForm";
 import AdminCreateEventForm from "../popover/AdminCreateEventForm";
-import Loader from "../elements/Loader";
 
 class AdminUpdate extends Component {
     constructor(props) {
@@ -214,10 +213,6 @@ class AdminUpdate extends Component {
                 }
             }
         }, params.id);
-    };
-
-    elementInfiniteLoad = () => {
-        return <Loader/>;
     };
 
     getBakeryById = () => {

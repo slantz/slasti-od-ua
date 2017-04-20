@@ -33,7 +33,8 @@ export const COLORS = {
     borderColor: grey400,
     vk: '#45668e',
     facebook: '#3b5998',
-    instagram: '#c32aa3'
+    instagram: '#c32aa3',
+    alert: '#C91914',
 };
 
 export const DATES = {

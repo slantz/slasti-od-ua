@@ -218,6 +218,20 @@ function bakeryById(id) {
     }
 }
 
+function deleteBakeryById(id) {
+    return {
+        [CALL_API]: {
+            method: CORE_CONSTANTS.METHOD.DELETE,
+            types: [
+                ADMIN_CONSTANTS.ADMIN_DELETE_BAKERY_ITEM_REQUEST,
+                ADMIN_CONSTANTS.ADMIN_DELETE_BAKERY_ITEM_SUCCESS,
+                ADMIN_CONSTANTS.ADMIN_DELETE_BAKERY_ITEM_FAILURE
+            ],
+            endpoint: `/api/bakery/${id}`
+        }
+    }
+}
+
 function resolveAnInquiry(id) {
     return {
         [CALL_API]: {
@@ -566,6 +580,15 @@ export function getBakeryById(id) {
     return (dispatch, getState) => {
         if (shouldMakeAdminRequest(getState().admin.bakeryItem)) {
             return dispatch(bakeryById(id))
+        }
+        return null;
+    }
+}
+
+export function deleteBakery(id) {
+    return (dispatch, getState) => {
+        if (shouldMakeAdminRequest(getState().admin.bakeryItem)) {
+            return dispatch(deleteBakeryById(id))
         }
         return null;
     }

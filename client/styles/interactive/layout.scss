@@ -22,6 +22,14 @@
     }
 }
 
+.i-left {
+    float: left;
+}
+
+.i-right {
+    float: right;
+}
+
 .i-pad {
     &_block {
         &_vertical {
@@ -70,6 +78,9 @@
             }
             &_right {
                 margin-right: $smallSpacing;
+                &_0 {
+                    margin-right: 0 !important;
+                }
             }
         }
     }

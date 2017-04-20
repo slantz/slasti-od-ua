@@ -271,6 +271,9 @@ body {
         > section {
             flex: 1 auto;
         }
+        @media #{$medium-only} {
+            flex-direction: column;
+        }
     }
 }
 

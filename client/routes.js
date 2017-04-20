@@ -54,7 +54,7 @@ export default class RTRouter extends Component {
         const { history } = this.props;
         const routes = this.routes;
         return (
-            <Router history={ history } routes={ routes } />
+            <Router onUpdate={() => window.scrollTo(0, 0)} history={ history } routes={ routes } />
         );
     }
 }

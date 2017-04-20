@@ -7,7 +7,7 @@ import {grey900} from 'material-ui/styles/colors';
 import {grey600} from 'material-ui/styles/colors';
 import {grey400} from 'material-ui/styles/colors';
 
-export const NUMBER_LOGO_SHADOWED = 5;
+export const CROP_IMAGE_RATIO = 4/3;
 export const CV = 'CV';
 export const API_ROOT = `http://slasti.od.ua${module.hot ? ':3001' : ''}`;
 
@@ -51,7 +51,8 @@ export const SIZES = {
         HEIGHT: '30px',
         MARGIN_RIGHT: '8px'
     },
-    SMALL_PADDING: '2rem'
+    SMALL_PADDING: '2rem',
+    ADMIN_UPLOAD_DIALOG_MIN_HEIGHT: '300px'
 };
 
 export const METHOD = {

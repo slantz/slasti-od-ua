@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as AdminActions from '../../actions/AdminActions'
+import * as CORE_CONSTANTS from '../../constants/Core'
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
@@ -36,21 +37,16 @@ class AdminInquiry extends Component {
 
         return (
             <article>{inquiry.items.map((item, index) => {
-                let color = {};
-
-                if (item.isResolved) {
-                    color.backgroundColor = 'grey';
-                }
-
-                return <Card key={index} containerStyle={color}>
+                return <Card key={index} className={item.isResolved ? "c-color-background-primary-color-light" : "c-color-background-triad-yellow-from-primary"}>
                             <CardHeader
                                 title={item.name}
+                                titleColor={item.isResolved ? CORE_CONSTANTS.COLORS.alternateTextColor : CORE_CONSTANTS.COLORS.textColor}
                                 actAsExpander={true}
                                 showExpandableButton={true}
                             />
                             <CardActions>
-                                <RaisedButton label="Update Price" primary={true} onTouchTap={() => this.updatePriceForInquiry(item)}/>
-                                <RaisedButton label="Resolve" secondary={true} onTouchTap={() => this.resolve(item)} />
+                                <RaisedButton label="Update Price" primary={true} onTouchTap={() => this.updatePriceForInquiry(item)} disabled={item.isResolved} />
+                                <RaisedButton label="Resolve" secondary={true} onTouchTap={() => this.resolve(item)} disabled={item.isResolved} />
                             </CardActions>
                             <CardText expandable={true}>
                                 <Paper zDepth={2}>

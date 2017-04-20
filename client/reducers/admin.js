@@ -450,7 +450,7 @@ export default function admin(state = {
             break;
         case ADMIN_CONSTANTS.SHOW_BASIS_NEW_FORM:
             assignedState = Object.assign({}, state, {
-                event_showCreateNewForm: !state.event_showCreateNewForm
+                basis_showCreateNewForm: !state.basis_showCreateNewForm
             });
             break;
         case ADMIN_CONSTANTS.SHOW_EVENT_NEW_FORM:

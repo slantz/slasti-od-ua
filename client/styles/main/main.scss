@@ -59,6 +59,7 @@ body {
         ~ section {
             position: relative;
             z-index: 0;
+            min-height: calc(100vh - 480px);
         }
         &__logo {
             flex: 0 1 auto;
@@ -210,6 +211,20 @@ body {
     }
     &-order {
         padding: $smallSpacing * 3 0;
+    }
+    &-admin {
+        display: flex;
+        &__menu {
+            flex: 0 1 auto;
+        }
+        &__root-empty {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        > section {
+            flex: 1 auto;
+        }
     }
 }
 

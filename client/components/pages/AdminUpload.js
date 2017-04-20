@@ -23,7 +23,7 @@ class AdminUpload extends Component {
 
     render() {
         return (
-            <section>
+            <section className="sou-admin__root-empty">
                 <AdminUploadImagesForm
                     onSubmit={dummyOnChangeHandlerForValidation}
                     onChange={this.handleFilesChange}

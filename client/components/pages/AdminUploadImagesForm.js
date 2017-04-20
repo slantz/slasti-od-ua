@@ -3,9 +3,9 @@ import { Field, reduxForm } from 'redux-form'
 import * as InputWithValidation from '../elements/InputWithValidation'
 
 const AdminUploadImagesForm = (props) => {
-    const { handleSubmit, onChange, pristine, submitting } = props;
+    const { onChange, pristine, submitting } = props;
     return (
-        <form onSubmit={handleSubmit}>
+        <form>
             <fieldset>
                 <label htmlFor="files">Upload files</label>
                 <div>
@@ -17,9 +17,6 @@ const AdminUploadImagesForm = (props) => {
                            accept="image/*"
                            onChange={onChange}/>
                 </div>
-            </fieldset>
-            <fieldset>
-                <button type="submit" disabled={pristine || submitting}>Dummy submit</button>
             </fieldset>
         </form>
     )

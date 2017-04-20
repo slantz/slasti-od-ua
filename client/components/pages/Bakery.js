@@ -96,7 +96,7 @@ class Bakery extends Component {
                         overlay={
                             <CardTitle
                                 title={bake.category}
-                                subtitle={`${bake.numberOfPieces} ${bake.category}${bake.numberOfPieces > 1 ? "s" : null}`} />}>
+                                subtitle={`${bake.numberOfPieces} ${bake.category}${bake.numberOfPieces > 1 ? "s" : ""}`} />}>
                         <img src={`http://slasti.od.ua:3001/client/static/images/${bake.imgUrl}`} />
                     </CardMedia>
                     <CardTitle title={bake.name} subtitle={bake.description} />

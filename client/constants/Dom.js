@@ -1,4 +1,4 @@
-export const ID_ROOT = 'cv-root';
+export const ID_ROOT = 'sou';
 export const ID_CSS_TRANSITION_GROUP = 'cv-transition-group';
 export const CLASS_BACK_IN_BLACK = 'back-in-black';
 export const INNER_TEXT_BACK_IN_BLACK_DEFAULT = 'Back in black';

@@ -283,6 +283,7 @@ app.post('/api/admin/upload/images', upload.array('images'), admin.upload);
 app.get(/^\/.*(?!(auth|api)).*$/, function(req, res) {
   res.render('index', {
     env: env,
+    ga: process.env.GA,
     user: req.user
   });
 });

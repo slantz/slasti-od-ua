@@ -6,7 +6,8 @@ export default function about(state = {
         isFetching : false
     },
     currentDate: null,
-    currentTime: null
+    currentTime: null,
+    bakeryFromBakeDetails: null
 }, {type, payload}) {
     let assignedState;
 
@@ -45,6 +46,16 @@ export default function about(state = {
         case ABOUT_CONSTANTS.ABOUT_SET_CURRENT_TIME:
             assignedState = Object.assign({}, state, {
                 currentTime: payload
+            });
+            break;
+        case ABOUT_CONSTANTS.SET_BAKERY_FROM_BAKE_DETAILS:
+            assignedState = Object.assign({}, state, {
+                bakeryFromBakeDetails: payload
+            });
+            break;
+        case ABOUT_CONSTANTS.REMOVE_BAKERY_FROM_BAKE_DETAILS:
+            assignedState = Object.assign({}, state, {
+                bakeryFromBakeDetails: null
             });
             break;
         default:

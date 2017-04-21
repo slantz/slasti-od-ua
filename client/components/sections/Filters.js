@@ -3,6 +3,7 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as FilterActions from '../../actions/FilterActions'
 import Select from "react-select";
+import { FlatButton, RaisedButton } from "material-ui";
 
 class Filters extends Component {
     constructor(props) {
@@ -106,13 +107,26 @@ class Filters extends Component {
         return clearAllFilters();
     };
 
+    getFiltersClassName = (isFiltersVisible) => {
+        let className = "sou-bakery-filters i-transit-all i-box-sizing";
+
+        if (!isFiltersVisible) {
+            className += " sou-bakery-filters_hidden";
+        } else {
+            window.scrollTo(0, 0);
+        }
+
+        return className;
+    };
+
     render() {
-        const { filter: { filters }} = this.props;
+        const { bakery, filter: { filters }} = this.props;
+
         return (
-            <aside id="sou-bakery-filters">
-                <h2>Wir sind die Filtern!</h2>
-                <button onClick={this.clearAllFilters}>Clear all filters</button>
-                <div>
+            <aside id="sou-bakery-filters"
+                   className={this.getFiltersClassName(bakery.isFiltersVisible)}>
+                <h3>Wir sind die Filtern!</h3>
+                <div className="sou-bakery-filters__list">
                     <Select
                         name="select-filter-bakery-ingredients"
                         multi={true}
@@ -184,6 +198,9 @@ class Filters extends Component {
                         onChange={(values) => this.setCurrentFilters("numberOfPieces", values)}
                     />
                 </div>
+                <p className="sou-bakery-filters__button-holder i-text-right">
+                    <FlatButton label="Clear all filters" primary={true} onTouchTap={this.clearAllFilters} />
+                </p>
             </aside>
         )
     }

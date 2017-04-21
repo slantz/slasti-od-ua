@@ -52,7 +52,8 @@ export default function core(state = {
         isFetching: false,
         fetcher: userFetchingPromises.all,
         status: null
-    }
+    },
+    isHeaderSticky: false
 }, { type, payload }) {
     switch(type) {
         case CONSTANTS.SUCCESS:
@@ -82,6 +83,38 @@ export default function core(state = {
                     isFetching: true,
                     payload: {}
                 }
+            });
+        case CONSTANTS.CORE_LOGOUT_SUCCESS:
+            actionPromisesCallbacks.success();
+            return Object.assign({}, state, {
+                user: {
+                    status: CONSTANTS.USER.STATUS.UNAUTHORIZED,
+                    isFetching: false,
+                    payload: {}
+                }
+            });
+        case CONSTANTS.CORE_LOGOUT_FAILURE:
+            actionPromisesCallbacks.failure();
+            return Object.assign({}, state, {
+                user: {
+                    status: state.user.status,
+                    isFetching: false,
+                    payload: state.user.payload
+                }
+            });
+        case CONSTANTS.CORE_LOGOUT_REQUEST:
+            actionPromisesCallbacks.request();
+            return Object.assign({}, state, {
+                user: {
+                    status: null,
+                    fetcher: userFetchingPromises.all,
+                    isFetching: true,
+                    payload: state.user.payload
+                }
+            });
+        case CONSTANTS.TOGGLE_HEADER_STICKY:
+            return Object.assign({}, state, {
+                isHeaderSticky: payload
             });
         default: return state
     }

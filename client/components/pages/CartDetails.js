@@ -5,17 +5,14 @@ import * as CartActions from '../../actions/CartActions'
 import {Card, CardActions, CardHeader, CardTitle, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Grid, Col, Row } from 'react-flexbox-grid/lib/index'
-import { Chip } from "material-ui";
+import { Chip, Paper } from "material-ui";
+import Loader from "../elements/Loader";
+import * as CORE_CONSTANTS from '../../constants/Core'
+import NoElement from "../elements/NoElement";
 
 class CartDetails extends Component {
     constructor(props) {
         super(props);
-        this.resolvedCardStyles = {
-            backgroundColor: 'green'
-        };
-        this.progressCardStyles = {
-            backgroundColor: 'yellow'
-        };
     }
 
     refreshInquiryStatus = () => {
@@ -30,6 +27,12 @@ class CartDetails extends Component {
         }
     };
 
+    convertToReadableDate = (rawDate) => {
+        let date = new Date(rawDate);
+
+        return `${CORE_CONSTANTS.DATES.DAYS[date.getUTCDay()]}, ${CORE_CONSTANTS.DATES.MONTHS[date.getMonth()]} ${date.getDate()} ${date.getUTCFullYear()}`;
+    };
+
     getInquiry = () => {
         const { params } = this.props;
         const { CartActions: { getInquiry } } = this.props;
@@ -38,69 +41,85 @@ class CartDetails extends Component {
         });
     };
 
+    getPriceMessage = (price) => {
+        if (price === 0) {
+            return "Please contact us to arrange a price!";
+        }
+
+        return `You've arranged a ${price} price.`;
+    };
+
     getCartElement = () => {
         const { cart } = this.props;
 
         if (cart.data.inquiry) {
             return (
                 <Grid tagName="article" fluid={true}>
-                    <Row middle="xs">
-                        <Col xs={12} sm={8} className="i-text-uppercase">
-                            <Card style={cart.data.inquiry.isResolved ? this.resolvedCardStyles : this.progressCardStyles}>
-                                <CardHeader
-                                    title={cart.data.inquiry.id}
-                                    subtitle={cart.data.inquiry.isResolved ? 'Your Order is ready!' : 'Your order is being processed!'}
-                                />
-                                <CardTitle title={cart.data.inquiry.price} />
-                                <CardText>
-                                    <Grid tagName="article">
+                    <Row center="xs">
+                        <Col xs={12} sm={8} className="sou-cart-details__column">
+                            <Paper zDepth={3} rounded={false}>
+                                <Card className="i-text-left c-color-background-primary-color-text-background" style={{'boxShadow': 'none', 'borderRadius': '0'}}>
+                                    <CardHeader
+                                        className={cart.data.inquiry.isResolved ? "c-color-background-triad-dark-green-from-primary" : "c-color-background-triad-yellow-from-primary"}
+                                        title={cart.data.inquiry.id}
+                                        titleColor={cart.data.inquiry.isResolved && CORE_CONSTANTS.COLORS.alternateTextColor}
+                                        subtitleColor={cart.data.inquiry.isResolved && CORE_CONSTANTS.COLORS.alternateTextColor}
+                                        subtitle={cart.data.inquiry.isResolved ? 'Your Order is ready!' : 'Your order is being processed!'}
+                                    />
+                                    <CardTitle title={this.getPriceMessage(cart.data.inquiry.price)} />
+                                    <CardText>
                                         <Row middle="xs">
-                                            <Col xs={12}>
+                                            <Col xs={12} sm={6}>
                                                 <h4>Name</h4>
-                                                <Chip>{cart.data.inquiry.name}</Chip>
+                                                <Chip backgroundColor={CORE_CONSTANTS.COLORS.accent2Color}>{cart.data.inquiry.name}</Chip>
                                             </Col>
                                             {cart.data.inquiry.email &&
-                                                <Col xs={12}>
+                                                <Col xs={12} sm={6}>
                                                     <h4>Email</h4>
-                                                    <Chip>{cart.data.inquiry.email}</Chip>
+                                                    <Chip backgroundColor={CORE_CONSTANTS.COLORS.accent2Color}>{cart.data.inquiry.email}</Chip>
                                                 </Col>
                                             }
                                             {cart.data.inquiry.phone &&
-                                                <Col xs={12}>
+                                                <Col xs={12} sm={6}>
                                                     <h4>Phone</h4>
-                                                    <Chip>{cart.data.inquiry.phone}</Chip>
+                                                    <Chip backgroundColor={CORE_CONSTANTS.COLORS.accent2Color}>{cart.data.inquiry.phone}</Chip>
                                                 </Col>
                                             }
                                             {cart.data.inquiry.timeToCall &&
-                                                <Col xs={12}>
-                                                    <h4>Time to call</h4>
-                                                    <Chip>{cart.data.inquiry.timeToCall}</Chip>
+                                                <Col xs={12} sm={6}>
+                                                    <h4>Picked date to call</h4>
+                                                    <Chip backgroundColor={CORE_CONSTANTS.COLORS.accent2Color}>{this.convertToReadableDate(cart.data.inquiry.timeToCall)}</Chip>
                                                 </Col>
                                             }
                                             {cart.data.inquiry.comment &&
                                                 <Col xs={12}>
-                                                    <h4>Email</h4>
-                                                    <p>{cart.data.inquiry.comment}</p>
+                                                    <h4>Comment</h4>
+                                                    <p className="i-break-word">{cart.data.inquiry.comment}</p>
                                                 </Col>
                                             }
                                         </Row>
-                                    </Grid>
-                                </CardText>
-                                <CardActions>
-                                    <RaisedButton
-                                        label="Refresh"
-                                        secondary={true}
-                                        onTouchTap={this.refreshInquiryStatus}/>
-                                </CardActions>
-                            </Card>
+                                    </CardText>
+                                    <CardActions style={{'paddingBottom': CORE_CONSTANTS.SIZES.SMALL_PADDING}}>
+                                        <Row style={{'margin': '0'}}>
+                                            <Col xs={12}>
+                                                <RaisedButton
+                                                    label="Refresh"
+                                                    primary={true}
+                                                    onTouchTap={this.refreshInquiryStatus}
+                                                    fullWidth={true} />
+                                            </Col>
+                                        </Row>
+                                    </CardActions>
+                                </Card>
+                            </Paper>
                         </Col>
                     </Row>
                 </Grid>
             )
         } else if (cart.data.isFetching){
-            return <div>Loading</div>;
+            return <Loader />;
         } else {
-            return <div>No element found!</div>;
+            return <NoElement/>;
         }
     };
 
@@ -110,9 +129,9 @@ class CartDetails extends Component {
 
     render() {
         return (
-            <article id="sou-cart-details">
+            <section id="sou-cart-details" className="sou-cart-details">
                 {this.getCartElement()}
-            </article>
+            </section>
         )
     }
 }

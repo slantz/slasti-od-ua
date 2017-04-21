@@ -1,6 +1,7 @@
 import React from 'react'
 import DatePicker from 'material-ui/DatePicker'
 import TimePicker from "material-ui/TimePicker";
+import { TextField } from "material-ui";
 
 function stringValidator(value) {
     return !value || value.length === 0;
@@ -104,13 +105,11 @@ export const warn = values => {
 };
 
 export const renderField = ({ input, label, placeholder, type, meta: { touched, error, warning } }) => (
-    <div>
-        <label htmlFor={input.name}>{label}</label>
-        <div>
-            <input {...input} placeholder={placeholder} type={type}/>
-            {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
-        </div>
-    </div>
+    <TextField hintText={placeholder} floatingLabelText={"Enter a " + placeholder} name={input.name} type={type} errorText={touched && (error ? error : warning)} fullWidth={true} {...input}/>
+);
+
+export const renderMultiLineField = ({ input, label, placeholder, type, defaultValue, meta: { touched, error, warning } }) => (
+    <TextField hintText={placeholder} floatingLabelText={"Enter a " + placeholder} name={input.name} type={type} errorText={touched && (error ? error : warning)} defaultValue={defaultValue} multiLine={true} fullWidth={true} />
 );
 
 export const renderFileField = ({ input, label, placeholder, type, accept, meta: { touched, error, warning } }) => {
@@ -128,11 +127,8 @@ export const renderFileField = ({ input, label, placeholder, type, accept, meta:
 
 export const renderDatePickerField = ({ input, label, mode, onChangeDate, meta: { touched, error, warning } }) => {
     return <div>
-        <label htmlFor={input.name}>{label}</label>
-        <div>
-            <DatePicker hintText={label} mode={mode} onChange={onChangeDate} />
+            <DatePicker hintText={label} floatingLabelText={"Pick a " + label} mode={mode} onChange={onChangeDate} minDate={new Date()} defaultDate={new Date()} fullWidth={true}/>
             {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
-        </div>
     </div>
 };
 
@@ -141,10 +137,12 @@ export const renderTimePickerField = ({ input, hintText, formatTime, okLabel, ca
         <div>
             <TimePicker
                 hintText={hintText}
+                floatingLabelText={"Pick a " + hintText}
                 format={formatTime}
                 okLabel={okLabel}
                 cancelLabel={cancelLabel}
                 onChange={onChangeTime}
+                fullWidth={true}
             />
             {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
         </div>

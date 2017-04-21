@@ -26,7 +26,7 @@ export default function filter(state = {
                     ingredients: [],
                     filling: [],
                     basis: [],
-                    events: [],
+                    event: [],
                     decor: [],
                     numberOfPieces: []
                 }

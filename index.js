@@ -122,6 +122,15 @@ app.get('/auth/vk/callback',
     })
 );
 
+app.get('/auth/logout', function(req, res){
+    req.logout();
+    res.json({
+        'user': {
+            admin: false
+        }
+    });
+});
+
 // TODO move this to some authorization middleware module
 var userTypes = {
     any: function(types) {
@@ -168,9 +177,7 @@ app.delete('/api/bakery', function(req, res, next) {
     res.json(req.user);
 });
 
-app.delete('/api/bakery/:id', function(req, res, next) {
-    res.json(req.user);
-});
+app.delete('/api/bakery/:id', bakery.remove);
 
 //INGREDIENTS CRUD
 app.get('/api/ingredients', ingredient.all);

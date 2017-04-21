@@ -10,7 +10,8 @@ export default function bakery(state = {
         limit: null,
         isFetching : false
     },
-    currentSkip: 0
+    currentSkip: 0,
+    isFiltersVisible: true
 }, {type, payload}) {
     let assignedState;
 
@@ -93,6 +94,11 @@ export default function bakery(state = {
         case BAKERY_CONSTANTS.SET_CURRENT_SKIP:
             assignedState = Object.assign({}, state, {
                 currentSkip: payload
+            });
+            break;
+        case BAKERY_CONSTANTS.TOGGLE_FILTER_VISIBILITY:
+            assignedState = Object.assign({}, state, {
+                isFiltersVisible: !state.isFiltersVisible
             });
             break;
         default:

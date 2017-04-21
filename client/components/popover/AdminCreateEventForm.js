@@ -2,6 +2,7 @@ import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import {connect} from 'react-redux'
 import * as InputWithValidation from '../elements/InputWithValidation'
+import { RaisedButton } from "material-ui";
 
 let AdminCreateEventForm = (props) => {
     const { handleSubmit } = props;
@@ -16,7 +17,7 @@ let AdminCreateEventForm = (props) => {
                        placeholder="Event"/>
             </fieldset>
             <fieldset>
-                <button type="submit">Submit new Event</button>
+                <RaisedButton primary={true} label="Submit new Event" type="submit" />
             </fieldset>
         </form>
     )

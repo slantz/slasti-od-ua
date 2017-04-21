@@ -1,6 +1,10 @@
-$smallSpacing: 16px;
+$smallSpacing: 2rem;
+
+$oneAndQuarterSpacing: $smallSpacing * 1.25;
 
 $mediumSpacing: $smallSpacing * 1.5;
+
+$twiceSpacing: $smallSpacing * 2;
 
 $twiceSmallSpacing: $smallSpacing / 2;
 $fourthSmallSpacing: $smallSpacing / 4;

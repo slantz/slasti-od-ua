@@ -3,7 +3,7 @@ $base-em-size: 16;
 $breakpoints: (
     small: 0,
     medium: #{640 / $base-em-size}em,
-    large: #{1024 / $base-em-size}em,
+    large: #{800 / $base-em-size}em,
     xlarge: #{1200 / $base-em-size}em,
     xxlarge: #{1440 / $base-em-size}em,
 ) !default;

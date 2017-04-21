@@ -3,6 +3,7 @@ import { Field, reduxForm } from 'redux-form'
 import {connect} from 'react-redux'
 import * as InputWithValidation from '../elements/InputWithValidation'
 import * as UTIL from '../../util/util'
+import { RaisedButton } from "material-ui";
 
 let AdminCreateFillingForm = (props) => {
     const { handleSubmit } = props;
@@ -10,27 +11,19 @@ let AdminCreateFillingForm = (props) => {
     return (
         <form onSubmit={handleSubmit}>
             <fieldset>
-                <label htmlFor="taste">Create Filling Taste</label>
-                <div>
-                    <Field name="taste"
-                           component={InputWithValidation.renderField}
-                           type="text"
-                           label="Taste"
-                           placeholder="Taste"/>
-                </div>
+                <Field name="taste"
+                       component={InputWithValidation.renderField}
+                       type="text"
+                       label="Taste"
+                       placeholder="Taste"/>
+                <Field name="composition"
+                       component={InputWithValidation.renderField}
+                       type="text"
+                       label="Composition"
+                       placeholder="Composition"/>
             </fieldset>
             <fieldset>
-                <label htmlFor="composition">Create Filling Composition</label>
-                <div>
-                    <Field name="composition"
-                           component={InputWithValidation.renderField}
-                           type="text"
-                           label="Composition"
-                           placeholder="Composition"/>
-                </div>
-            </fieldset>
-            <fieldset>
-                <button type="submit">Submit new Filling</button>
+                <RaisedButton primary={true} label="Submit new Filling" type="submit" />
             </fieldset>
         </form>
     )

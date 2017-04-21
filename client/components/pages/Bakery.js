@@ -5,6 +5,13 @@ import * as BakeryActions from '../../actions/BakeryActions'
 import { debounce } from "../../util/util";
 import Filters from "../sections/Filters";
 import { Link } from "react-router";
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import RaisedButton from 'material-ui/RaisedButton';
+import { Grid, Col, Row } from 'react-flexbox-grid/lib/index'
+import { Chip } from "material-ui";
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ImageTuneIcon from 'material-ui/svg-icons/image/tune';
+import Loader from "../elements/Loader";
 
 class Bakery extends Component {
     constructor(props) {
@@ -54,6 +61,11 @@ class Bakery extends Component {
         return setCurrentSkip(currentSkip);
     };
 
+    toggleFilterVisibility = () => {
+        const { BakeryActions: { toggleFilterVisibility } } = this.props;
+        return toggleFilterVisibility();
+    };
+
     loadMoreBakeryOnScroll = debounce((e) => {
         const {
             bakery: {
@@ -68,17 +80,40 @@ class Bakery extends Component {
         }
     }, 100);
 
+    getFilterItemsTitle = (filteredBakeryLength) => {
+        const { bakery: { count } } = this.props;
+
+        return (
+            <h3 className="sou-bakery-items__title">Total amount of {filteredBakeryLength === count.count ? "filtered" : ""} bakery: <span className="sou-text-primary">{filteredBakeryLength}</span></h3>
+        );
+    };
+
     getBakeryCollectionElement = (bake) => {
-        return <article className="bake" key={bake._id} style={{
-            'width': '300px',
-            'display': 'inline-block'
-        }}><Link to={"/bakery/" + bake._id}>
-            <img
-                src={`http://slasti.od.ua:3001/client/static/images/${bake.imgUrl}`}
-                width="300px"
-                height={300 * 3/4 + "px"}
-                alt={bake._id} />
-        </Link></article>;
+        return (
+            <Col xs={12} sm={6} md={4} className="i-margin_block_vertical_bottom" key={bake._id}>
+                <Card className="i-text-left">
+                    <CardMedia
+                        overlay={
+                            <CardTitle
+                                title={bake.category}
+                                subtitle={`${bake.numberOfPieces} ${bake.category}${bake.numberOfPieces > 1 ? "s" : ""}`} />}>
+                        <img src={`http://slasti.od.ua:3001/client/static/images/${bake.imgUrl}`} />
+                    </CardMedia>
+                    <CardTitle title={bake.name} subtitle={bake.description} />
+                    <CardText>
+                        <p>{bake.event && bake.event.type}</p>
+                    </CardText>
+                    <CardActions className="sou-bakery-items__card__action">
+                        <Link to={"/bakery/" + bake._id}>
+                            <RaisedButton
+                                label="More Details"
+                                secondary={true}
+                                alt={`More Details about ${bake.name}`}/>
+                        </Link>
+                    </CardActions>
+                </Card>
+            </Col>
+        );
     };
 
     filterPrimaryBake = (bake) => {
@@ -91,7 +126,7 @@ class Bakery extends Component {
             return true;
         }
 
-        Object.keys(filters).forEach((filterKey) => {
+        return Object.keys(filters).some((filterKey) => {
             if (filters[filterKey].length > 0) {
                 result = filters[filterKey].some((filter) => {
                     let innerResult = false;
@@ -106,13 +141,16 @@ class Bakery extends Component {
                                         return bakeFilterKey.taste === filter._id;
                                     }
                                 });
-                            }
-                            if (bake[filterKey].some((bakeFilterKey) => typeof bakeFilterKey === "string")) {
+                            } else if (bake[filterKey].some((bakeFilterKey) => typeof bakeFilterKey === "string")) {
                                 innerResult = bake[filterKey].some((bakeFilterKey) => bakeFilterKey === filter._id);
                             }
                         }
-                    } else if (typeof bake[filterKey] === "object") {
-                        innerResult = bake[filterKey].type === filter._id;
+                    } else if (bake[filterKey] && typeof bake[filterKey] === "object") {
+                        if (bake[filterKey].type === 'ANY') {
+                            innerResult = true;
+                        } else {
+                            innerResult = bake[filterKey].type === filter._id;
+                        }
                     } else {
                         switch (typeof bake[filterKey]) {
                             case "string":
@@ -125,29 +163,36 @@ class Bakery extends Component {
                     }
                     return innerResult;
                 });
+
+                if (result === true) {
+                    return result;
+                }
+
+                return result;
             }
         });
-
-        return result;
     };
 
     filterPrimaryBakeriesCollection = () => {
-        const { bakery: { currentSkip, data: { items } }, filter: { filters } } = this.props;
+        const { bakery: { currentSkip, count, data: { items } }, filter: { filters } } = this.props;
 
         let noFilters = Object.keys(filters).every((filterKey) => !filters[filterKey].length);
 
-        return items
+        let filteredItems = items
             .filter(this.filterPrimaryBake)
             .map((bake) => {
                 return this.getBakeryCollectionElement(bake);
             })
             .slice(0, noFilters ? currentSkip : items.length);
+
+        return {
+            items: filteredItems,
+            length: noFilters ? count.count : filteredItems.length
+        };
     };
 
     elementInfiniteLoad = () => {
-        return <div className="infinite-list-item">
-            Loading...
-        </div>;
+        return <Loader />;
     };
 
     componentWillMount() {
@@ -161,18 +206,29 @@ class Bakery extends Component {
     render() {
         const { user, bakery: { data } } = this.props;
 
+        let filteredBakery = this.filterPrimaryBakeriesCollection();
+
         return (
             <section id="sou-bakery">
                 {data.isFetching && data.items.length === 0 && this.elementInfiniteLoad()}
                 {this.props.children === null && <div>
-                    <Filters/>
-                    <div id="scroll-container" style={{
-                        display: 'flex',
-                        flexDirection: 'column'
-                    }}>
-                        {this.filterPrimaryBakeriesCollection()}
+                    <Filters />
+                    <div id="sou-bakery-items" className="sou-bakery-items i-transit-all i-box-sizing">
+                        {this.getFilterItemsTitle(filteredBakery.length)}
+                        <Grid tagName="article" className="sou-bakery-items__list i-box-sizing" fluid={true}>
+                            <Row top="xs">
+                                {filteredBakery.items}
+                            </Row>
+                        </Grid>
                     </div>
-                </div>}
+                    <FloatingActionButton
+                        secondary={true}
+                        onTouchTap={this.toggleFilterVisibility}
+                        style={{'position': 'fixed', 'bottom': '30px', 'right': '30px', 'zIndex': '1'}}>
+                        <ImageTuneIcon />
+                    </FloatingActionButton>
+                    </div>
+                }
                 {!(data.isFetching && data.items.length === 0) && this.props.children}
             </section>
         )

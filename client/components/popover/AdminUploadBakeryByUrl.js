@@ -9,7 +9,10 @@ import AdminCreateBasisForm from './AdminCreateBasisForm';
 import AdminCreateCategoryWeightDecorForm from "./AdminCreateCategoryWeightDecorForm";
 import * as AdminActions from '../../actions/AdminActions'
 import * as ADMIN_CONSTANTS from '../../constants/Admin'
+import * as CORE_CONSTANTS from '../../constants/Core'
 import AdminCreateEventForm from "./AdminCreateEventForm";
+import { Dialog, Divider, FlatButton } from "material-ui";
+import { Col, Grid, Row } from "react-flexbox-grid";
 
 class AdminUploadBakeryByUrl extends Component {
     constructor(props) {
@@ -404,6 +407,20 @@ class AdminUploadBakeryByUrl extends Component {
         }).then(() => this.submitAndGoToNextImage());
     };
 
+    getDialogSubmitAndGoToNextButton = (isNextItem) => {
+        return (
+            <FlatButton
+                label={"Submit" + (isNextItem ? " and go to next image" : "")}
+                primary={true}
+                onTouchTap={this.submitAndGoToNextImage}
+            />
+        );
+    };
+
+    getDialogActions = (isNextItem) => {
+        return [ this.getDialogSubmitAndGoToNextButton(isNextItem) ];
+    };
+
     componentWillMount() {
         this.getIngredients();
         this.getFilling();
@@ -482,89 +499,103 @@ class AdminUploadBakeryByUrl extends Component {
         }
 
         return (
-            <aside>
-                <section id="sou-catalog-bulk-images-uploaded">
+            <Dialog
+                title="Set all bakery data"
+                actions={this.getDialogActions(isNextItem)}
+                modal={true}
+                open={true}
+                autoScrollBodyContent={true}
+                bodyStyle={{'min-height': CORE_CONSTANTS.SIZES.ADMIN_UPLOAD_DIALOG_MIN_HEIGHT}}
+            >
+                <aside>
                     {currentFileToCrop &&
-                        <article style={{'max-width': '500px', 'height': 'auto'}}>
-                            <button onClick={this.submitAndGoToNextImage}>Submit {isNextItem && <span>and go to next image</span>}</button>
-                            <ReactCrop src={currentFileToCrop.target.result} crop={{aspect: 4/3}} onComplete={this.cropImage}/>
-                            <canvas
-                                id="canvas111"
-                                style={{'max-width': '500px', 'height': 'auto'}}>
-                            </canvas>
-                        </article>
+                        <Grid tagName="article" id="sou-catalog-bulk-images-uploaded" fluid={true}>
+                            <Row>
+                                <Col xs={12}>
+                                    <ReactCrop src={currentFileToCrop.target.result} crop={{aspect: CORE_CONSTANTS.CROP_IMAGE_RATIO}} onComplete={this.cropImage}/>
+                                    <canvas id="canvas111" className="i-none"></canvas>
+                                </Col>
+                            </Row>
+                        </Grid>
                     }
-                </section>
-                <section>
-                    <article>
-                        <Select.Creatable
-                            name="select-admin-upload-bakery-ingredients"
-                            value={currentIngredients}
-                            multi={true}
-                            valueKey="_id"
-                            labelKey="type"
-                            options={ingredients}
-                            onChange={this.setCurrentIngredients}
-                        />
-                    </article>
-                    <article>
-                        <Select.Creatable
-                            name="select-admin-upload-bakery-filling"
-                            value={currentFilling}
-                            multi={true}
-                            valueKey="_id"
-                            labelKey="composition"
-                            options={filling}
-                            onChange={this.setCurrentFilling}
-                        />
-                    </article>
-                    <article>
-                        <Select.Creatable
-                            name="select-admin-upload-bakery-basis"
-                            value={currentBasis}
-                            multi={true}
-                            valueKey="_id"
-                            labelKey="type"
-                            options={basis}
-                            onChange={this.setCurrentBasis}
-                        />
-                    </article>
-                    <article>
-                        <Select.Creatable
-                            name="select-admin-upload-bakery-event"
-                            value={currentEvent}
-                            valueKey="_id"
-                            labelKey="type"
-                            options={events}
-                            onChange={this.setCurrentEvent}
-                        />
-                    </article>
-                </section>
-                <section id="admin-add-category-weight-decor-form">
-                    <AdminCreateCategoryWeightDecorForm currentDecor={currentDecor}
-                                                        onSetCurrentDecor={this.setCurrentDecor}/>
-                </section>
-                {ingredients_showCreateNewForm &&
-                    <section id="admin-create-new-ingredients-form">
-                        <AdminCreateIngredientsForm onSubmit={this.setCurrentIngredientForCreationForm}/>
-                    </section>
-                }
-                {filling_showCreateNewForm &&
-                    <section id="admin-create-new-filling-form">
-                        <AdminCreateFillingForm onSubmit={this.setCurrentFillingForCreationForm}/>
-                    </section>
-                }
-                {basis_showCreateNewForm &&
-                    <section id="admin-create-new-basis-form">
-                        <AdminCreateBasisForm onSubmit={this.setCurrentBasisForCreationForm}/>
-                    </section>
-                }
-                {event_showCreateNewForm &&
-                <section id="admin-create-new-events-form">
-                    <AdminCreateEventForm onSubmit={this.setCurrentEventForCreationForm}/>
-                </section>
-                }
-            </aside>
+                    {currentFileToCrop && <Divider/>}
+                    <Grid tagName="article" fluid={true}>
+                        <Row>
+                            <Col xs={12}>
+                                <Select.Creatable
+                                    name="select-admin-upload-bakery-ingredients"
+                                    value={currentIngredients}
+                                    multi={true}
+                                    valueKey="_id"
+                                    labelKey="type"
+                                    options={ingredients}
+                                    placeholder="Select an ingredient"
+                                    onChange={this.setCurrentIngredients}
+                                />
+                            </Col>
+                            <Col xs={12}>
+                                <Select.Creatable
+                                    name="select-admin-upload-bakery-filling"
+                                    value={currentFilling}
+                                    multi={true}
+                                    valueKey="_id"
+                                    labelKey="composition"
+                                    options={filling}
+                                    placeholder="Select a filling"
+                                    onChange={this.setCurrentFilling}
+                                />
+                            </Col>
+                            <Col xs={12}>
+                                <Select.Creatable
+                                    name="select-admin-upload-bakery-basis"
+                                    value={currentBasis}
+                                    multi={true}
+                                    valueKey="_id"
+                                    labelKey="type"
+                                    options={basis}
+                                    placeholder="Select a basis"
+                                    onChange={this.setCurrentBasis}
+                                />
+                            </Col>
+                            <Col xs={12}>
+                                <Select.Creatable
+                                    name="select-admin-upload-bakery-event"
+                                    value={currentEvent}
+                                    valueKey="_id"
+                                    labelKey="type"
+                                    options={events}
+                                    addLabelText="Select an event"
+                                    onChange={this.setCurrentEvent}
+                                />
+                            </Col>
+                            <Col xs={12} id="admin-add-category-weight-decor-form">
+                                <AdminCreateCategoryWeightDecorForm currentDecor={currentDecor}
+                                                                    onSetCurrentDecor={this.setCurrentDecor}/>
+                            </Col>
+                            {ingredients_showCreateNewForm &&
+                                <Col xs={12} id="admin-create-new-ingredients-form">
+                                    <AdminCreateIngredientsForm onSubmit={this.setCurrentIngredientForCreationForm}/>
+                                </Col>
+                            }
+                            {filling_showCreateNewForm &&
+                            <Col xs={12} id="admin-create-new-filling-form">
+                                <AdminCreateFillingForm onSubmit={this.setCurrentFillingForCreationForm}/>
+                            </Col>
+                            }
+                            {basis_showCreateNewForm &&
+                            <Col xs={12} id="admin-create-new-basis-form">
+                                <AdminCreateBasisForm onSubmit={this.setCurrentBasisForCreationForm}/>
+                            </Col>
+                            }
+                            {event_showCreateNewForm &&
+                            <Col xs={12} id="admin-create-new-events-form">
+                                <AdminCreateEventForm onSubmit={this.setCurrentEventForCreationForm}/>
+                            </Col>
+                            }
+                        </Row>
+                    </Grid>
+                </aside>
+            </Dialog>
         )
     }
 }

@@ -3,28 +3,42 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
 import * as AdminActions from '../../actions/AdminActions'
+import Paper from 'material-ui/Paper';
+import Menu from 'material-ui/Menu';
+import MenuItem from 'material-ui/MenuItem';
+import Divider from 'material-ui/Divider';
+import FileUpload from 'material-ui/svg-icons/file/file-upload';
+import ShoppingCart from 'material-ui/svg-icons/action/shopping-cart';
 
 class Admin extends Component {
     constructor(props) {
         super(props)
     }
 
-    doStuff = () => {
-        const { AdminActions: { doStuff } } = this.props;
-        doStuff()
+    getRootElementStub = () => {
+        const { children } = this.props;
+
+        if (children === null) {
+            return <section className="sou-admin__root-empty">Please select a page.</section>;
+        }
+
+        return null;
     };
 
     render() {
-        const { user } = this.props;
-
         return (
-            <article id="sou-catalog">
-                {user.isFetching === false && user.status !== null && <div>Hey, {user.payload.name}!</div>}
-                <Link to="admin/update">Go to admin update page</Link>
-                <Link to="admin/upload">Go to admin upload page</Link>
-                <Link to="admin/inquiry">Go to admin inquiry page</Link>
+            <section id="sou-admin" className="sou-admin">
+                <Paper className="sou-admin__menu" zDepth={2} style={{'display': 'inline-block'}}>
+                    <Menu>
+                        <MenuItem leftIcon={<FileUpload />} children={<Link to="/admin/upload">File upload page</Link>} />
+                        <Divider />
+                        <MenuItem leftIcon={<ShoppingCart />} children={<Link to="/admin/inquiry">Inquiries page</Link>} />
+                        <Divider />
+                    </Menu>
+                </Paper>
+                {this.getRootElementStub()}
                 {this.props.children}
-            </article>
+            </section>
         )
     }
 }

@@ -60,3 +60,20 @@ export function setInquiryIdToLocalStorage(id) {
         });
     }
 }
+
+export function setBakeryFromBakeDetails(bake) {
+    return (dispatch) => {
+        dispatch({
+            type: ABOUT_CONSTANTS.SET_BAKERY_FROM_BAKE_DETAILS,
+            payload: bake
+        });
+    }
+}
+
+export function removeBakeryFromBakeDetails() {
+    return (dispatch) => {
+        dispatch({
+            type: ABOUT_CONSTANTS.REMOVE_BAKERY_FROM_BAKE_DETAILS
+        });
+    }
+}

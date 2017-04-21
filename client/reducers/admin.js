@@ -114,7 +114,7 @@ export default function admin(state = {
             assignedState = Object.assign({}, state, {
                 ingredients: {
                     ingredients: payload.ingredients,
-                    currentIngredients: [],
+                    currentIngredients: state.ingredients.currentIngredients,
                     isFetching: false
                 }
             });
@@ -123,7 +123,7 @@ export default function admin(state = {
             assignedState = Object.assign({}, state, {
                 ingredients: {
                     ingredients: [],
-                    currentIngredients: [],
+                    currentIngredients: state.ingredients.currentIngredients,
                     isFetching: false
                 }
             });
@@ -132,6 +132,7 @@ export default function admin(state = {
             assignedState = Object.assign({}, state, {
                 ingredients: {
                     isFetching: true,
+                    currentIngredients: state.ingredients.currentIngredients
                 }
             });
             break;
@@ -139,7 +140,7 @@ export default function admin(state = {
             assignedState = Object.assign({}, state, {
                 filling: {
                     filling: payload.filling,
-                    currentFilling: [],
+                    currentFilling: state.filling.currentFilling,
                     isFetching: false
                 }
             });
@@ -148,7 +149,7 @@ export default function admin(state = {
             assignedState = Object.assign({}, state, {
                 filling: {
                     filling: [],
-                    currentFilling: [],
+                    currentFilling: state.filling.currentFilling,
                     isFetching: false
                 }
             });
@@ -157,6 +158,7 @@ export default function admin(state = {
             assignedState = Object.assign({}, state, {
                 filling: {
                     isFetching: true,
+                    currentFilling: state.filling.currentFilling
                 }
             });
             break;
@@ -164,7 +166,7 @@ export default function admin(state = {
             assignedState = Object.assign({}, state, {
                 basis: {
                     basis: payload.basis,
-                    currentBasis: [],
+                    currentBasis: state.basis.currentBasis,
                     isFetching: false
                 }
             });
@@ -173,7 +175,7 @@ export default function admin(state = {
             assignedState = Object.assign({}, state, {
                 basis: {
                     basis: [],
-                    currentBasis: [],
+                    currentBasis: state.basis.currentBasis,
                     isFetching: false
                 }
             });
@@ -182,6 +184,7 @@ export default function admin(state = {
             assignedState = Object.assign({}, state, {
                 basis: {
                     isFetching: true,
+                    currentBasis: state.basis.currentBasis
                 }
             });
             break;
@@ -189,7 +192,7 @@ export default function admin(state = {
             assignedState = Object.assign({}, state, {
                 event: {
                     events: payload.events,
-                    currentEvent: {},
+                    currentEvent: state.event.currentEvent,
                     isFetching: false
                 }
             });
@@ -198,7 +201,7 @@ export default function admin(state = {
             assignedState = Object.assign({}, state, {
                 event: {
                     events: [],
-                    currentEvent: {},
+                    currentEvent: state.event.currentEvent,
                     isFetching: false
                 }
             });
@@ -207,6 +210,7 @@ export default function admin(state = {
             assignedState = Object.assign({}, state, {
                 event: {
                     isFetching: true,
+                    currentEvent: state.event.currentEvent
                 }
             });
             break;
@@ -446,7 +450,7 @@ export default function admin(state = {
             break;
         case ADMIN_CONSTANTS.SHOW_BASIS_NEW_FORM:
             assignedState = Object.assign({}, state, {
-                event_showCreateNewForm: !state.event_showCreateNewForm
+                basis_showCreateNewForm: !state.basis_showCreateNewForm
             });
             break;
         case ADMIN_CONSTANTS.SHOW_EVENT_NEW_FORM:
@@ -491,6 +495,35 @@ export default function admin(state = {
                 currentDecor: []
             });
             break;
+        case ADMIN_CONSTANTS.SET_CURRENT_STUFF:
+            assignedState = Object.assign({}, state, {
+                filling: {
+                    isFetching: false,
+                    filling: state.filling.filling,
+                    currentFilling: payload.filling,
+                    showCreateNewForm: false
+                },
+                basis: {
+                    isFetching: false,
+                    basis: state.basis.basis,
+                    currentBasis: payload.basis,
+                    showCreateNewForm: false
+                },
+                ingredients: {
+                    isFetching: false,
+                    ingredients: state.ingredients.ingredients,
+                    currentIngredients: payload.ingredients,
+                    showCreateNewForm: false
+                },
+                event: {
+                    isFetching: false,
+                    events: state.event.events,
+                    currentEvent: payload.event,
+                    showCreateNewForm: false
+                },
+                currentDecor: payload.decor
+            });
+            break;
         case ADMIN_CONSTANTS.ADMIN_GET_BAKERY_ITEM_REQUEST:
             assignedState = Object.assign({}, state, {
                 bakeryItem: {
@@ -508,6 +541,23 @@ export default function admin(state = {
             });
             break;
         case ADMIN_CONSTANTS.ADMIN_GET_BAKERY_ITEM_FAILURE:
+            assignedState = Object.assign({}, state, {
+                bakeryItem: {
+                    isFetching: false,
+                    item: null,
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_DELETE_BAKERY_ITEM_REQUEST:
+            assignedState = Object.assign({}, state, {
+                bakeryItem: {
+                    isFetching: true,
+                    item: null
+                }
+            });
+            break;
+        case ADMIN_CONSTANTS.ADMIN_DELETE_BAKERY_ITEM_SUCCESS:
+        case ADMIN_CONSTANTS.ADMIN_DELETE_BAKERY_ITEM_FAILURE:
             assignedState = Object.assign({}, state, {
                 bakeryItem: {
                     isFetching: false,

@@ -5,10 +5,12 @@ import App from './containers/App'
 import Bakery from './components/pages/Bakery'
 import BakeryDetails from './components/pages/BakeryDetails'
 import About from './components/pages/About'
+import Order from "./components/pages/Order";
 import Cart from './components/pages/Cart'
 import CartDetails from './components/pages/CartDetails'
 import Admin from './components/pages/Admin'
 import AdminUpdate from './components/pages/AdminUpdate'
+import AdminDelete from "./components/pages/AdminDelete";
 import AdminUpload from './components/pages/AdminUpload'
 import AdminInquiry from './components/pages/AdminInquiry'
 import AdminUploadBakeryByUrl from './components/popover/AdminUploadBakeryByUrl'
@@ -28,11 +30,13 @@ export default class RTRouter extends Component {
                     <Route path=":id" component={BakeryDetails}/>
                 </Route>
                 <Route path="about" component={About}/>
+                <Route path="order" component={Order}/>
                 <Route path="cart" component={Cart}>
                     <Route path=":id" component={CartDetails}/>
                 </Route>
                 <Route path="admin" component={Admin} onEnter={(nextState, replace, callback) => { this.requireLogin(nextState, replace, callback) }}>
                     <Route path="update/:id" component={AdminUpdate}/>
+                    <Route path="delete/:id" component={AdminDelete}/>
                     <Route path="upload" component={AdminUpload}>
                         <Route path="bakery/:url" component={AdminUploadBakeryByUrl}/>
                     </Route>
@@ -50,7 +54,7 @@ export default class RTRouter extends Component {
         const { history } = this.props;
         const routes = this.routes;
         return (
-            <Router history={ history } routes={ routes } />
+            <Router onUpdate={() => window.scrollTo(0, 0)} history={ history } routes={ routes } />
         );
     }
 }

@@ -1,50 +1,78 @@
-.ui-button {
-    border: none;
-    background: none;
-    padding: $twiceSmallSpacing $oneAndAHalfSmallSpacing;
-    text-transform: uppercase;
-    cursor: pointer;
-    font-family: Audiowide, sans-serif  ;
-    appearance: none;
-    &.black {
-        background: $color-black;
-        color: $color-white;
-        &:hover {
-            background: $color-black-hover;
+.c {
+    &-color {
+        &-primary-color {
+            color: $primary-color !important;
         }
-        &:active {
-            background: $color-black-active;
+        &-primary-color-dark {
+            color: $primary-color-dark !important;
         }
-    }
-    &.purple {
-        background-color: $color-purple;
-        color: $color-white;
-        &:hover {
-            background: $color-purple-hover;
+        &-primary-color-light {
+            color: $primary-color-light !important;
         }
-        &:active {
-            background: $color-purple-active;
+        &-primary-color-text {
+            color: $primary-color-text !important;
         }
-    }
-    &.white {
-        background-color: $color-white;
-        &:hover {
-            background: $color-white-hover;
+        &-primary-color-text-background {
+            color: $primary-color-text-background !important;
         }
-        &:active {
-            background: $color-white-active;
+        &-accent-color {
+            color: $accent-color !important;
         }
-        &-t50 {
-            background-color: rgba($color-white, $opacity-50);
-            &:hover {
-                background: $color-white-t50-hover;
+        &-primary-text-color {
+            color: $primary-text-color !important;
+        }
+        &-secondary-text-color {
+            color: $secondary-text-color !important;
+        }
+        &-divider-color {
+            color: $divider-color !important;
+        }
+        &-triad-brown-from-primary {
+            color: $triad-brown-from-primary !important;
+        }
+        &-triad-yellow-from-primary {
+            color: $triad-yellow-from-primary !important;
+        }
+        &-triad-dark-green-from-primary {
+            color: $triad-dark-green-from-primary !important;
+        }
+        &-background {
+            &-primary-color {
+                background-color: $primary-color !important;
             }
-            &:active {
-                background: $color-white-t50-active;
+            &-primary-color-dark {
+                background-color: $primary-color-dark !important;
             }
-        }
-        &-text {
-            color: $color-white;
+            &-primary-color-light {
+                background-color: $primary-color-light !important;
+            }
+            &-primary-color-text {
+                background-color: $primary-color-text !important;
+            }
+            &-primary-color-text-background {
+                background-color: $primary-color-text-background !important;
+            }
+            &-accent-color {
+                background-color: $accent-color !important;
+            }
+            &-primary-text-color {
+                background-color: $primary-text-color !important;
+            }
+            &-secondary-text-color {
+                background-color: $secondary-text-color !important;
+            }
+            &-divider-color {
+                background-color: $divider-color !important;
+            }
+            &-triad-brown-from-primary {
+                background-color: $triad-brown-from-primary !important;
+            }
+            &-triad-yellow-from-primary {
+                background-color: $triad-yellow-from-primary !important;
+            }
+            &-triad-dark-green-from-primary {
+                background-color: $triad-dark-green-from-primary !important;
+            }
         }
     }
 }

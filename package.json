@@ -73,6 +73,7 @@
     "passport-vkontakte": "0.3.2",
     "pixi.js": "^4.0.0-rc3",
     "postcss": "5.2.16",
+    "prerender-node": "2.7.1",
     "react": "^15.2.0",
     "react-dom": "^15.2.0",
     "react-flexbox-grid": "^0.10.2",

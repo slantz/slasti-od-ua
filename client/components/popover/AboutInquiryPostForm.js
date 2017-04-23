@@ -67,7 +67,7 @@ let AboutInquiryPostForm = (props) => {
                 </Row>
                 <Row>
                     <Col xs={12} className="i-margin_block_vertical_top">
-                        <RaisedButton label="Submit new Basis" secondary={true} type="submit" />
+                        <RaisedButton label="Submit new Inquiry" secondary={true} type="submit" />
                     </Col>
                 </Row>
             </Grid>

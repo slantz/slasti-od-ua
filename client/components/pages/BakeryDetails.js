@@ -36,7 +36,6 @@ class BakeryDetails extends Component {
                                 <Card className="i-text-left c-color-background-primary-color-text-background" style={{'boxShadow': 'none', 'borderRadius': '0'}}>
                                     <CardHeader
                                         title={bake.category}
-                                        subtitle="Subtitle"
                                         children={<span>
                                             <span>
                                                 {bake.numberOfPieces} {bake.category}{bake.numberOfPieces > 1 ? "s" : null}

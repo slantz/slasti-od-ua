@@ -6,20 +6,17 @@ var config = require('./webpack.config.base.js');
 var SaveAssetsJson = require('assets-webpack-plugin');
 
 config.bail = true;
-config.debug = false;
 config.profile = false;
-config.devtool = '#source-map';
 
 config.output = {
-  path: './client/dist',
-  pathInfo: true,
+  path: __dirname + '/client/dist',
+  pathinfo: true,
   publicPath: '/client/dist/',
   filename: 'bundle.[hash].min.js'
 };
 
 config.plugins = config.plugins.concat([
-  new webpack.optimize.OccurenceOrderPlugin(true),
-  new webpack.optimize.DedupePlugin(),
+  new webpack.optimize.OccurrenceOrderPlugin(true),
   new webpack.optimize.UglifyJsPlugin({
     output: {
       comments: false
@@ -27,7 +24,8 @@ config.plugins = config.plugins.concat([
     compress: {
       warnings: false,
       screw_ie8: true
-    }
+    },
+    sourcemap: false
   }),
   new SaveAssetsJson({
     path: process.cwd(),

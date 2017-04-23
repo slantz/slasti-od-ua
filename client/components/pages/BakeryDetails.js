@@ -49,7 +49,7 @@ class BakeryDetails extends Component {
                                                 title={bake.name}
                                                 subtitle={bake.description} />
                                         }>
-                                        <img src={`http://slasti.od.ua:3001/client/static/images/${bake.imgUrl}`} />
+                                        <img src={`${CORE_CONSTANTS.IMAGES_ROOT}${bake.imgUrl}`} />
                                     </CardMedia>
                                     <CardTitle title={bake.category} subtitle={bake.event ? bake.event.type : ''} />
                                     <CardText>

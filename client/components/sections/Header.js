@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as CoreActions from '../../actions/CoreActions'
 import * as CartActions from '../../actions/CartActions'
+import * as CORE_CONSTANTS from '../../constants/Core'
 import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import NavigationMenuIcon from 'material-ui/svg-icons/navigation/menu';
@@ -141,7 +142,7 @@ class Header extends Component {
             <header role="banner" className="sou-header">
                 <Toolbar className="sou-header__toolbar">
                     <ToolbarGroup className="sou-header__logo i-transit-all" firstChild={true}>
-                        <img src="http://slasti.od.ua:3001/client/static/graphics/logo_big.png" height="45px" alt="Logo Slasti Od Ua"/>
+                        <img src={`${CORE_CONSTANTS.GRAPHICS_ROOT}logo_big.png`} height="45px" alt="Logo Slasti Od Ua"/>
                     </ToolbarGroup>
                     <ToolbarGroup className="sou-header__navigation_holder i-hide-medium-down">
                         <Nav user={user} segment={segment} />

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as AdminActions from '../../actions/AdminActions'
+import * as CORE_CONSTANTS from '../../constants/Core';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Grid, Col, Row } from 'react-flexbox-grid/lib/index';
@@ -327,7 +328,7 @@ class AdminUpdate extends Component {
                                     </span>}
                                 />
                                 <CardMedia overlay={<CardTitle title={bakeryItem.name} subtitle={bakeryItem.description} />}>
-                                    <img src={`http://slasti.od.ua:3001/client/static/images/${bakeryItem.item.imgUrl}`} />
+                                    <img src={`${CORE_CONSTANTS.IMAGES_ROOT}${bakeryItem.item.imgUrl}`} />
                                 </CardMedia>
                                 <CardTitle title="Card title" subtitle="Card subtitle" />
                                 <CardText>

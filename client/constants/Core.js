@@ -10,6 +10,8 @@ import {grey400} from 'material-ui/styles/colors';
 export const CROP_IMAGE_RATIO = 4/3;
 export const CV = 'CV';
 export const API_ROOT = `http://slasti.od.ua${module.hot ? ':3001' : ''}`;
+export const IMAGES_ROOT = `http://slasti.od.ua${module.hot ? ':3001' : ''}/client/static/images/`;
+export const GRAPHICS_ROOT = `http://slasti.od.ua${module.hot ? ':3001' : ''}/client/static/graphics/`;
 
 export const REQUEST = 'CORE_REQUEST';
 export const SUCCESS = 'CORE_SUCCESS';

@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
+import * as CORE_CONSTANTS from '../../constants/Core'
 import * as BakeryActions from '../../actions/BakeryActions'
 import { debounce } from "../../util/util";
 import Filters from "../sections/Filters";
 import { Link } from "react-router";
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {Card, CardActions, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Grid, Col, Row } from 'react-flexbox-grid/lib/index'
-import { Chip } from "material-ui";
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ImageTuneIcon from 'material-ui/svg-icons/image/tune';
 import Loader from "../elements/Loader";
@@ -97,7 +97,7 @@ class Bakery extends Component {
                             <CardTitle
                                 title={bake.category}
                                 subtitle={`${bake.numberOfPieces} ${bake.category}${bake.numberOfPieces > 1 ? "s" : ""}`} />}>
-                        <img src={`http://slasti.od.ua:3001/client/static/images/${bake.imgUrl}`} />
+                        <img src={`${CORE_CONSTANTS.IMAGES_ROOT}${bake.imgUrl}`} />
                     </CardMedia>
                     <CardTitle title={bake.name} subtitle={bake.description} />
                     <CardText>

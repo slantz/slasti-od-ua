@@ -8,6 +8,7 @@ import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from "material-ui/RaisedButton";
+import { ru_RU } from "../../constants/Translations";
 
 class AdminInquiry extends Component {
     constructor(props) {
@@ -45,22 +46,22 @@ class AdminInquiry extends Component {
                                 showExpandableButton={true}
                             />
                             <CardActions>
-                                <RaisedButton label="Update Price" primary={true} onTouchTap={() => this.updatePriceForInquiry(item)} disabled={item.isResolved} />
-                                <RaisedButton label="Resolve" secondary={true} onTouchTap={() => this.resolve(item)} disabled={item.isResolved} />
+                                <RaisedButton label={ru_RU['COMPONENT.PAGES.ADMIN.INQUIRY.UPDATE_PRICE']} primary={true} onTouchTap={() => this.updatePriceForInquiry(item)} disabled={item.isResolved} />
+                                <RaisedButton label={ru_RU['COMPONENT.PAGES.ADMIN.INQUIRY.RESOLVE']} secondary={true} onTouchTap={() => this.resolve(item)} disabled={item.isResolved} />
                             </CardActions>
                             <CardText expandable={true}>
                                 <Paper zDepth={2}>
-                                    <TextField hintText="Price" style={style} underlineShow={false} defaultValue={item.price} onChange={this.setTempPriceToUpdate}/>
+                                    <TextField hintText={ru_RU['COMPONENT.PAGES.ADMIN.INQUIRY.PRICE']} style={style} underlineShow={false} defaultValue={item.price} onChange={this.setTempPriceToUpdate}/>
                                     <Divider />
-                                    <TextField hintText="First name" style={style} underlineShow={false} defaultValue={item.name} />
+                                    <TextField hintText={ru_RU['COMPONENT.PAGES.ADMIN.INQUIRY.FIRST_NAME']} style={style} underlineShow={false} defaultValue={item.name} />
                                     <Divider />
-                                    <TextField hintText="Email" style={style} underlineShow={false} defaultValue={item.email} />
+                                    <TextField hintText={ru_RU['COMPONENT.PAGES.ADMIN.INQUIRY.EMAIL']} style={style} underlineShow={false} defaultValue={item.email} />
                                     <Divider />
-                                    <TextField hintText="Phone" style={style} underlineShow={false} defaultValue={item.phone} />
+                                    <TextField hintText={ru_RU['COMPONENT.PAGES.ADMIN.INQUIRY.PHONE']} style={style} underlineShow={false} defaultValue={item.phone} />
                                     <Divider />
-                                    <TextField hintText="Time to call" style={style} underlineShow={false} defaultValue={item.timeToCall} />
+                                    <TextField hintText={ru_RU['COMPONENT.PAGES.ADMIN.INQUIRY.TIME_TO_CALL']} style={style} underlineShow={false} defaultValue={item.timeToCall} />
                                     <Divider />
-                                    <TextField hintText="Comment" style={style} underlineShow={false} defaultValue={item.comment} />
+                                    <TextField hintText={ru_RU['COMPONENT.PAGES.ADMIN.INQUIRY.COMMENT']} style={style} underlineShow={false} defaultValue={item.comment} />
                                     <Divider />
                                 </Paper>
                             </CardText>
@@ -83,7 +84,7 @@ class AdminInquiry extends Component {
         const { AdminActions: { updatePriceForInquiry } } = this.props;
 
         if (this.tempPriceToUpdate === null) {
-            alert('please make some price changes first and the press "update price"');
+            alert(ru_RU['COMPONENT.PAGES.ADMIN.INQUIRY.ALERT_UPDATE_PRICE_FIRST']);
         } else {
             return updatePriceForInquiry(item.id, this.tempPriceToUpdate).then(() => this.tempPriceToUpdate = null);
         }

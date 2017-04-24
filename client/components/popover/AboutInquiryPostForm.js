@@ -3,6 +3,7 @@ import { Field, reduxForm } from 'redux-form'
 import * as InputWithValidation from '../elements/InputWithValidation'
 import { RaisedButton } from "material-ui";
 import { Col, Grid, Row } from "react-flexbox-grid";
+import { ru_RU } from "../../constants/Translations";
 
 let AboutInquiryPostForm = (props) => {
     const { handleSubmit, setCurrentDate, setCurrentTime, defaultBakeForComment } = props;
@@ -12,7 +13,7 @@ let AboutInquiryPostForm = (props) => {
             return "";
         }
 
-        return `I liked this bakery ${defaultBakeForComment._id} for this ${defaultBakeForComment.event.type} event! Please advice me smth similar!`;
+        return `${ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.I_LIKED_THIS_BAKERY']} [${defaultBakeForComment._id}] ${ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.FOR_THIS']} [${defaultBakeForComment.event.type}] ${ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.ADVICE']}`;
     }
 
     return (
@@ -23,51 +24,51 @@ let AboutInquiryPostForm = (props) => {
                         <Field name="name"
                                component={InputWithValidation.renderField}
                                type="text"
-                               label="Name"
-                               placeholder="Name"/>
+                               label={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.NAME']}
+                               placeholder={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.NAME']}/>
                     </Col>
                     <Col xs={12} sm={6} md={4}>
                         <Field name="email"
                                component={InputWithValidation.renderField}
                                type="email"
-                               label="Email"
-                               placeholder="Email"/>
+                               label={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.EMAIL']}
+                               placeholder={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.EMAIL']}/>
                     </Col>
                     <Col xs={12} sm={6} md={4}>
                         <Field name="phone"
                                component={InputWithValidation.renderField}
                                type="text"
-                               label="Phone"
-                               placeholder="Phone"/>
+                               label={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.PHONE']}
+                               placeholder={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.PHONE']}/>
                     </Col>
                     <Col xs={12} sm={6} md={4}>
                         <Field name="date"
                                component={InputWithValidation.renderDatePickerField}
-                               label="date"
+                               label={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.DATE']}
                                mode="landscape"
                                onChangeDate={setCurrentDate}/>
                     </Col>
                     <Col xs={12} sm={6} md={4}>
                         <Field name="time"
                                component={InputWithValidation.renderTimePickerField}
-                               hintText="suitable time"
+                               hintText={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.SUITABLE_TIME']}
                                formatTime="24hr"
-                               okLabel="Ok"
-                               cancelLabel="Cancel"
+                               okLabel={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.OK']}
+                               cancelLabel={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.CANCEL']}
                                onChangeTime={setCurrentTime}/>
                     </Col>
                     <Col xs={12} sm={6} md={4}>
                         <Field name="comment"
                                component={InputWithValidation.renderMultiLineField}
                                type="text"
-                               label="Comment"
+                               label={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.COMMENT']}
                                defaultValue={getDefaultComment()}
-                               placeholder="Comment"/>
+                               placeholder={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.COMMENT']}/>
                     </Col>
                 </Row>
                 <Row>
                     <Col xs={12} className="i-margin_block_vertical_top">
-                        <RaisedButton label="Submit new Inquiry" secondary={true} type="submit" />
+                        <RaisedButton label={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.SUBMIT']} secondary={true} type="submit" />
                     </Col>
                 </Row>
             </Grid>

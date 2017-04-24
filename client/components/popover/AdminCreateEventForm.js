@@ -3,6 +3,7 @@ import { Field, reduxForm } from 'redux-form'
 import {connect} from 'react-redux'
 import * as InputWithValidation from '../elements/InputWithValidation'
 import { RaisedButton } from "material-ui";
+import { ru_RU } from "../../constants/Translations";
 
 let AdminCreateEventForm = (props) => {
     const { handleSubmit } = props;
@@ -13,11 +14,11 @@ let AdminCreateEventForm = (props) => {
                 <Field name="type"
                        component={InputWithValidation.renderField}
                        type="text"
-                       label="Event"
-                       placeholder="Event"/>
+                       label={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_EVENT_FORM.EVENT']}
+                       placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_EVENT_FORM.EVENT']}/>
             </fieldset>
             <fieldset>
-                <RaisedButton primary={true} label="Submit new Event" type="submit" />
+                <RaisedButton primary={true} label={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_EVENT_FORM.SUBMIT']} type="submit" />
             </fieldset>
         </form>
     )

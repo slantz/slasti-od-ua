@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import * as InputWithValidation from '../elements/InputWithValidation'
 import * as UTIL from '../../util/util'
 import { RaisedButton } from "material-ui";
+import { ru_RU } from "../../constants/Translations";
 
 let AdminCreateBasisForm = (props) => {
     const { handleSubmit } = props;
@@ -14,16 +15,16 @@ let AdminCreateBasisForm = (props) => {
                 <Field name="type"
                        component={InputWithValidation.renderField}
                        type="text"
-                       label="Type"
-                       placeholder="Type"/>
+                       label={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_BASIS_FORM.TYPE']}
+                       placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_BASIS_FORM.TYPE']}/>
                 <Field name="composition"
                        component={InputWithValidation.renderField}
                        type="text"
-                       label="Composition"
-                       placeholder="Composition"/>
+                       label={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_BASIS_FORM.COMPOSITION']}
+                       placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_BASIS_FORM.COMPOSITION']}/>
             </fieldset>
             <fieldset>
-                <RaisedButton primary={true} label="Submit new Basis" type="submit" />
+                <RaisedButton primary={true} label={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_BASIS_FORM.SUBMIT']} type="submit" />
             </fieldset>
         </form>
     )

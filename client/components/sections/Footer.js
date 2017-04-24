@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Col, Grid, Row } from "react-flexbox-grid";
 import { IconButton } from "material-ui";
 import * as CORE_CONSTANTS from "../../constants/Core"
+import { ru_RU } from "../../constants/Translations";
 
 export default class Footer extends Component {
     constructor(props) {
@@ -16,19 +17,19 @@ export default class Footer extends Component {
                         <Col xs={12}>
                             <Row>
                                 <Col xs={12}>
-                                    <h3 className="sou-footer__title">Contact us</h3>
+                                    <h3 className="sou-footer__title">{ru_RU['COMPONENT.SECTIONS.FOOTER.CONTACT_US']}</h3>
                                 </Col>
                             </Row>
                             <hr/>
                             <Row right="xs">
                                 <Col xs={12} sm={6}>
-                                    <h4>Telephone:</h4>
+                                    <h4>{ru_RU['COMPONENT.SECTIONS.FOOTER.TELEPHONE']}:</h4>
                                     <div>+3657868789789789</div>
-                                    <h4>Email:</h4>
+                                    <h4>{ru_RU['COMPONENT.SECTIONS.FOOTER.EMAIL']}:</h4>
                                     <div>sffgdgfgh@dghghjg.ghj</div>
                                 </Col>
                                 <Col xs={12} sm={6}>
-                                    <h4>Social media:</h4>
+                                    <h4>{ru_RU['COMPONENT.SECTIONS.FOOTER.SOCIAL_MEDIA']}:</h4>
                                     <div>
                                         <IconButton
                                             iconClassName="sou-footer__social__icon icon-instagram"

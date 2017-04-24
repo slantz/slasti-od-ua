@@ -12,6 +12,7 @@ import { Grid, Col, Row } from 'react-flexbox-grid/lib/index'
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ImageTuneIcon from 'material-ui/svg-icons/image/tune';
 import Loader from "../elements/Loader";
+import { ru_RU } from "../../constants/Translations";
 
 class Bakery extends Component {
     constructor(props) {
@@ -84,7 +85,7 @@ class Bakery extends Component {
         const { bakery: { count } } = this.props;
 
         return (
-            <h3 className="sou-bakery-items__title">Total amount of {filteredBakeryLength === count.count ? "filtered" : ""} bakery: <span className="sou-text-primary">{filteredBakeryLength}</span></h3>
+            <h3 className="sou-bakery-items__title">{ru_RU['COMPONENT.PAGES.BAKERY.ITEMS_TITLE.TOTAL']} {filteredBakeryLength === count.count ? ru_RU['COMPONENT.PAGES.BAKERY.ITEMS_TITLE.FILTERED'] : ""} {ru_RU['COMPONENT.PAGES.BAKERY.ITEMS_TITLE.BAKERY']}: <span className="sou-text-primary">{filteredBakeryLength}</span></h3>
         );
     };
 
@@ -96,7 +97,7 @@ class Bakery extends Component {
                         overlay={
                             <CardTitle
                                 title={bake.category}
-                                subtitle={`${bake.numberOfPieces} ${bake.category}${bake.numberOfPieces > 1 ? "s" : ""}`} />}>
+                                subtitle={`${bake.numberOfPieces} ${bake.category}${bake.numberOfPieces > 1 ? "ов" : ""}`} />}>
                         <img src={`${CORE_CONSTANTS.IMAGES_ROOT}${bake.imgUrl}`} />
                     </CardMedia>
                     <CardTitle title={bake.name} subtitle={bake.description} />
@@ -106,9 +107,9 @@ class Bakery extends Component {
                     <CardActions className="sou-bakery-items__card__action">
                         <Link to={"/bakery/" + bake._id}>
                             <RaisedButton
-                                label="More Details"
+                                label={ru_RU['COMPONENT.PAGES.BAKERY.MORE_DETAILS']}
                                 secondary={true}
-                                alt={`More Details about ${bake.name}`}/>
+                                alt={`${ru_RU['COMPONENT.PAGES.BAKERY.MORE_DETAILS_ABOUT']} ${bake.name}`}/>
                         </Link>
                     </CardActions>
                 </Card>
@@ -146,7 +147,7 @@ class Bakery extends Component {
                             }
                         }
                     } else if (bake[filterKey] && typeof bake[filterKey] === "object") {
-                        if (bake[filterKey].type === 'ANY') {
+                        if (bake[filterKey].type === ru_RU['COMPONENT.PAGES.BAKERY.TYPE.ANY']) {
                             innerResult = true;
                         } else {
                             innerResult = bake[filterKey].type === filter._id;

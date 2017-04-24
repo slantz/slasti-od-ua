@@ -12,6 +12,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 import Nav from './Nav'
 import { Divider } from "material-ui";
+import { ru_RU } from "../../constants/Translations";
 
 class Header extends Component {
     constructor(props) {
@@ -79,7 +80,7 @@ class Header extends Component {
 
         return <ToolbarGroup lastChild={true} >
             <RaisedButton
-                label="VK login"
+                label={ru_RU['COMPONENT.SECTIONS.HEADER.VK_LOGIN']}
                 secondary={true}
                 onTouchTap={this.loginWithVk} />
         </ToolbarGroup>;
@@ -94,7 +95,7 @@ class Header extends Component {
 
         return (
             <ToolbarGroup className="sou-header__toolbar__greet" lastChild={true}>
-                <ToolbarTitle text={`Greetings, ${user.payload.name}!`} />
+                <ToolbarTitle text={`${ru_RU['COMPONENT.SECTIONS.HEADER.GREETINGS']}, ${user.payload.name}!`} />
                 <ToolbarSeparator />
                 <IconMenu
                     onTouchTap={this.getInquiry}
@@ -105,17 +106,17 @@ class Header extends Component {
                         </IconButton>
                     }>
                     <div className="i-hide-medium-up">
-                        <MenuItem primaryText="Bakery" onTouchTap={this.goToBakery} />
-                        <MenuItem primaryText="About" onTouchTap={this.goToAbout} />
-                        <MenuItem primaryText="Cart" onTouchTap={this.goToCart} />
-                        <MenuItem primaryText="Order" onTouchTap={this.goToOrder} />
-                        <MenuItem primaryText="Admin" onTouchTap={this.goToAdmin} />
+                        <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MENU.BAKERY']} onTouchTap={this.goToBakery} />
+                        <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MENU.ABOUT']} onTouchTap={this.goToAbout} />
+                        <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MENU.CART']} onTouchTap={this.goToCart} />
+                        <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MENU.ORDER']} onTouchTap={this.goToOrder} />
+                        <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MENU.ADMIN']} onTouchTap={this.goToAdmin} />
                         <Divider/>
                     </div>
-                    {cart.data.inquiry && <MenuItem primaryText={cart.data.inquiry.isResolved ? "My order is READY!" : "My order is in progress"} onTouchTap={this.goToCartDetails} />}
-                    {!cart.data.inquiry && <MenuItem primaryText="Hey, maybe it's high time to place a new order?" onTouchTap={this.goToOrder} />}
+                    {cart.data.inquiry && <MenuItem primaryText={cart.data.inquiry.isResolved ? ru_RU['COMPONENT.SECTIONS.HEADER.MY_ORDER_IS_READY'] : ru_RU['COMPONENT.SECTIONS.HEADER.MY_ORDER_IS_IN_PROGRESS']} onTouchTap={this.goToCartDetails} />}
+                    {!cart.data.inquiry && <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MAYBE_PLACE_AN_ORDER']} onTouchTap={this.goToOrder} />}
                     <Divider />
-                    <MenuItem primaryText="Logout" onTouchTap={this.logoutCurrentUser}/>
+                    <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.LOGOUT']} onTouchTap={this.logoutCurrentUser}/>
                 </IconMenu>
             </ToolbarGroup>
         );

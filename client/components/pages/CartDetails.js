@@ -9,6 +9,7 @@ import { Chip, Paper } from "material-ui";
 import Loader from "../elements/Loader";
 import * as CORE_CONSTANTS from '../../constants/Core'
 import NoElement from "../elements/NoElement";
+import { ru_RU } from "../../constants/Translations";
 
 class CartDetails extends Component {
     constructor(props) {
@@ -43,10 +44,10 @@ class CartDetails extends Component {
 
     getPriceMessage = (price) => {
         if (price === 0) {
-            return "Please contact us to arrange a price!";
+            return ru_RU['COMPONENT.PAGES.CART_DETAILS.PLEASE_CONTACT_US_TO_ARRANGE_A_PRICE'];
         }
 
-        return `You've arranged a ${price} price.`;
+        return `${ru_RU['COMPONENT.PAGES.CART_DETAILS.YOU_VE_ARRANGED_A']} ${price} ${ru_RU['COMPONENT.PAGES.CART_DETAILS.PRICE']}`;
     };
 
     getCartElement = () => {
@@ -64,36 +65,36 @@ class CartDetails extends Component {
                                         title={cart.data.inquiry.id}
                                         titleColor={cart.data.inquiry.isResolved && CORE_CONSTANTS.COLORS.alternateTextColor}
                                         subtitleColor={cart.data.inquiry.isResolved && CORE_CONSTANTS.COLORS.alternateTextColor}
-                                        subtitle={cart.data.inquiry.isResolved ? 'Your Order is ready!' : 'Your order is being processed!'}
+                                        subtitle={cart.data.inquiry.isResolved ? ru_RU['COMPONENT.PAGES.CART_DETAILS.ORDER_IS_READY'] : ru_RU['COMPONENT.PAGES.CART_DETAILS.ORDER_IS_PROCESSED']}
                                     />
                                     <CardTitle title={this.getPriceMessage(cart.data.inquiry.price)} />
                                     <CardText>
                                         <Row middle="xs">
                                             <Col xs={12} sm={6}>
-                                                <h4>Name</h4>
+                                                <h4>{ru_RU['COMPONENT.PAGES.CART_DETAILS.NAME']}</h4>
                                                 <Chip backgroundColor={CORE_CONSTANTS.COLORS.accent2Color}>{cart.data.inquiry.name}</Chip>
                                             </Col>
                                             {cart.data.inquiry.email &&
                                                 <Col xs={12} sm={6}>
-                                                    <h4>Email</h4>
+                                                    <h4>{ru_RU['COMPONENT.PAGES.CART_DETAILS.EMAIL']}</h4>
                                                     <Chip backgroundColor={CORE_CONSTANTS.COLORS.accent2Color}>{cart.data.inquiry.email}</Chip>
                                                 </Col>
                                             }
                                             {cart.data.inquiry.phone &&
                                                 <Col xs={12} sm={6}>
-                                                    <h4>Phone</h4>
+                                                    <h4>{ru_RU['COMPONENT.PAGES.CART_DETAILS.PHONE']}</h4>
                                                     <Chip backgroundColor={CORE_CONSTANTS.COLORS.accent2Color}>{cart.data.inquiry.phone}</Chip>
                                                 </Col>
                                             }
                                             {cart.data.inquiry.timeToCall &&
                                                 <Col xs={12} sm={6}>
-                                                    <h4>Picked date to call</h4>
+                                                    <h4>{ru_RU['COMPONENT.PAGES.CART_DETAILS.PICKED_DATE_TO_CALL']}</h4>
                                                     <Chip backgroundColor={CORE_CONSTANTS.COLORS.accent2Color}>{this.convertToReadableDate(cart.data.inquiry.timeToCall)}</Chip>
                                                 </Col>
                                             }
                                             {cart.data.inquiry.comment &&
                                                 <Col xs={12}>
-                                                    <h4>Comment</h4>
+                                                    <h4>{ru_RU['COMPONENT.PAGES.CART_DETAILS.COMMENT']}</h4>
                                                     <p className="i-break-word">{cart.data.inquiry.comment}</p>
                                                 </Col>
                                             }
@@ -103,7 +104,7 @@ class CartDetails extends Component {
                                         <Row style={{'margin': '0'}}>
                                             <Col xs={12}>
                                                 <RaisedButton
-                                                    label="Refresh"
+                                                    label={ru_RU['COMPONENT.PAGES.CART_DETAILS.REFRESH']}
                                                     primary={true}
                                                     onTouchTap={this.refreshInquiryStatus}
                                                     fullWidth={true} />

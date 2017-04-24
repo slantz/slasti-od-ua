@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import WarningIcon from 'material-ui/svg-icons/alert/warning';
 import * as CORE_CONSTANTS from '../../constants/Core'
+import { ru_RU } from "../../constants/Translations";
 
 export default class NoElement extends Component {
     constructor(props) {
@@ -17,7 +18,7 @@ export default class NoElement extends Component {
         return (
             <h3 className="i-center">
                 <WarningIcon className="i-inline-block" style={this.styles}/>
-                <span className="i-inline-block">No element found!</span>
+                <span className="i-inline-block">{ru_RU['COMPONENT.ELEMENT.NO_ELEMENT']}</span>
             </h3>
         )
     }

@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import * as InputWithValidation from '../elements/InputWithValidation'
 import * as UTIL from '../../util/util'
 import { RaisedButton } from "material-ui";
+import { ru_RU } from "../../constants/Translations";
 
 let AdminCreateIngredientsForm = (props) => {
     const { handleSubmit } = props;
@@ -14,26 +15,26 @@ let AdminCreateIngredientsForm = (props) => {
                 <Field name="type"
                        component={InputWithValidation.renderField}
                        type="text"
-                       label="Type"
-                       placeholder="Type"/>
+                       label={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_INGREDIENTS_FORM.TYPE']}
+                       placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_INGREDIENTS_FORM.TYPE']}/>
                 <Field name="taste"
                        component={InputWithValidation.renderField}
                        type="text"
-                       label="Taste"
-                       placeholder="Taste"/>
+                       label={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_INGREDIENTS_FORM.TASTE']}
+                       placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_INGREDIENTS_FORM.TASTE']}/>
                 <Field name="substance"
                        component={InputWithValidation.renderField}
                        type="text"
-                       label="Substance"
-                       placeholder="Substance"/>
+                       label={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_INGREDIENTS_FORM.SUBSTANCE']}
+                       placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_INGREDIENTS_FORM.SUBSTANCE']}/>
                 <Field name="price"
                        component={InputWithValidation.renderField}
                        type="number"
-                       label="Price"
-                       placeholder="Price"/>
+                       label={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_INGREDIENTS_FORM.PRICE']}
+                       placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_INGREDIENTS_FORM.PRICE']}/>
             </fieldset>
             <fieldset>
-                <RaisedButton label="Submit new Ingredient" primary={true} type="submit" />
+                <RaisedButton label={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_INGREDIENTS_FORM.SUBMIT']} primary={true} type="submit" />
             </fieldset>
         </form>
     )

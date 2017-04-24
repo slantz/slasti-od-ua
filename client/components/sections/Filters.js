@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import * as FilterActions from '../../actions/FilterActions'
 import Select from "react-select";
 import { FlatButton, RaisedButton } from "material-ui";
+import { ru_RU } from "../../constants/Translations";
 
 class Filters extends Component {
     constructor(props) {
@@ -125,7 +126,7 @@ class Filters extends Component {
         return (
             <aside id="sou-bakery-filters"
                    className={this.getFiltersClassName(bakery.isFiltersVisible)}>
-                <h3>Wir sind die Filtern!</h3>
+                <h3>{ru_RU['COMPONENT.SECTIONS.FILTERS.TITLE']}</h3>
                 <div className="sou-bakery-filters__list">
                     <Select
                         name="select-filter-bakery-ingredients"
@@ -133,7 +134,8 @@ class Filters extends Component {
                         valueKey="_id"
                         labelKey="type"
                         value={filters.ingredients}
-                        placeholder="ingredients"
+                        placeholder={ru_RU['COMPONENT.SECTIONS.FILTERS.PLACEHOLDER.INGREDIENTS']}
+                        noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                         options={this.getProperFields("ingredients")}
                         onChange={(values) => this.setCurrentFilters("ingredients", values)}
                     />
@@ -143,7 +145,8 @@ class Filters extends Component {
                         valueKey="_id"
                         labelKey="type"
                         value={filters.filling}
-                        placeholder="filling"
+                        placeholder={ru_RU['COMPONENT.SECTIONS.FILTERS.PLACEHOLDER.FILLING']}
+                        noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                         options={this.getProperFields("filling")}
                         onChange={(values) => this.setCurrentFilters("filling", values)}
                     />
@@ -153,7 +156,8 @@ class Filters extends Component {
                         valueKey="_id"
                         labelKey="type"
                         value={filters.basis}
-                        placeholder="basis"
+                        placeholder={ru_RU['COMPONENT.SECTIONS.FILTERS.PLACEHOLDER.BASIS']}
+                        noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                         options={this.getProperFields("basis")}
                         onChange={(values) => this.setCurrentFilters("basis", values)}
                     />
@@ -163,7 +167,8 @@ class Filters extends Component {
                         valueKey="_id"
                         labelKey="type"
                         value={filters.event}
-                        placeholder="event"
+                        placeholder={ru_RU['COMPONENT.SECTIONS.FILTERS.PLACEHOLDER.EVENT']}
+                        noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                         options={this.getPlainProperFields("event")}
                         onChange={(values) => this.setCurrentFilters("event", values)}
                     />
@@ -173,7 +178,8 @@ class Filters extends Component {
                         valueKey="_id"
                         labelKey="type"
                         value={filters.category}
-                        placeholder="category"
+                        placeholder={ru_RU['COMPONENT.SECTIONS.FILTERS.PLACEHOLDER.CATEGORY']}
+                        noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                         options={this.getPlainProperFields("category")}
                         onChange={(values) => this.setCurrentFilters("category", values)}
                     />
@@ -183,7 +189,8 @@ class Filters extends Component {
                         valueKey="_id"
                         labelKey="type"
                         value={filters.decor}
-                        placeholder="decor"
+                        placeholder={ru_RU['COMPONENT.SECTIONS.FILTERS.PLACEHOLDER.DECOR']}
+                        noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                         options={this.getPlainProperFields("decor")}
                         onChange={(values) => this.setCurrentFilters("decor", values)}
                     />
@@ -193,13 +200,14 @@ class Filters extends Component {
                         valueKey="_id"
                         labelKey="type"
                         value={filters.numberOfPieces}
-                        placeholder="numberOfPieces"
+                        placeholder={ru_RU['COMPONENT.SECTIONS.FILTERS.PLACEHOLDER.NUMBER_OF_PIECES']}
+                        noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                         options={this.getPlainProperFields("numberOfPieces")}
                         onChange={(values) => this.setCurrentFilters("numberOfPieces", values)}
                     />
                 </div>
                 <p className="sou-bakery-filters__button-holder i-text-right">
-                    <FlatButton label="Clear all filters" primary={true} onTouchTap={this.clearAllFilters} />
+                    <FlatButton label={ru_RU['COMPONENT.SECTIONS.FILTERS.CLEAR_ALL_FILTERS']} primary={true} onTouchTap={this.clearAllFilters} />
                 </p>
             </aside>
         )

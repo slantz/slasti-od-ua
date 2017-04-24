@@ -6,6 +6,7 @@ import AboutInquiryPostForm from "../popover/AboutInquiryPostForm";
 import { Link } from "react-router";
 import { Col, Grid, Row } from "react-flexbox-grid";
 import { RaisedButton } from "material-ui";
+import { ru_RU } from "../../constants/Translations";
 
 class Order extends Component {
     constructor(props) {
@@ -92,9 +93,9 @@ class Order extends Component {
         } = this.props;
 
         if (about.data.inquiry) {
-            return <h2 className="i-center">You've just placed your order.</h2>;
+            return <h2 className="i-center">{ru_RU['COMPONENT.PAGES.ORDER.YOUVE_JUST_PLACED_YOUR_ORDER']}</h2>;
         } else {
-            return <h2 className="i-pad_block_horizontal_left i-margin_block_vertical_top_0">Please enter your order details.</h2>;
+            return <h2 className="i-pad_block_horizontal_left i-margin_block_vertical_top_0">{ru_RU['COMPONENT.PAGES.ORDER.PLEASE_ENTER_YOUR_ORDER_DETAILS']}</h2>;
         }
     };
 
@@ -109,13 +110,13 @@ class Order extends Component {
                 <Grid tagName="article" className="sou-about__ordered-holder i-center" fluid>
                     <Row middle="xs">
                         <Col xs={12}>
-                            <h3>Thank you for your request!</h3>
+                            <h3>{ru_RU['COMPONENT.PAGES.ORDER.THANK_YOU_FOR_YOUR_REQUEST']}</h3>
                             <Row>
                                 <Col xs={12} sm={6}>
                                     <p>
                                         <Link to={`/cart/${about.data.inquiry.id}`}>
                                             <RaisedButton
-                                                label="Go to your order!"
+                                                label={ru_RU['COMPONENT.PAGES.ORDER.GO_TO_YOUR_ORDER']}
                                                 secondary={true} />
                                         </Link>
                                     </p>
@@ -124,7 +125,7 @@ class Order extends Component {
                                     <p>
                                         <Link to="/bakery">
                                             <RaisedButton
-                                                label="Continue browsing"
+                                                label={ru_RU['COMPONENT.PAGES.ORDER.CONTINUE_BROWSING']}
                                                 primary={true}/>
                                         </Link>
                                     </p>

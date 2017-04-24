@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as AdminActions from '../../actions/AdminActions'
+import * as CORE_CONSTANTS from '../../constants/Core';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Grid, Col, Row } from 'react-flexbox-grid/lib/index';
@@ -11,6 +12,7 @@ import AdminCreateFillingForm from '../popover/AdminCreateFillingForm';
 import AdminCreateBasisForm from '../popover/AdminCreateBasisForm';
 import AdminCreateCategoryWeightDecorForm from "../popover/AdminCreateCategoryWeightDecorForm";
 import AdminCreateEventForm from "../popover/AdminCreateEventForm";
+import { ru_RU } from "../../constants/Translations";
 
 class AdminUpdate extends Component {
     constructor(props) {
@@ -140,22 +142,22 @@ class AdminUpdate extends Component {
         hideAllForms();
 
         if (ingredientsToBeSaved.length) {
-            alert('save custom ingredients');
+            alert(ru_RU['COMPONENT.PAGES.ADMIN.UPDATE.ALERT_SAVE_CUSTOM_INGREDIENT']);
             return this.showIngredientsNewForm();
         }
 
         if (fillingToBeSaved.length) {
-            alert('save custom filling');
+            alert(ru_RU['COMPONENT.PAGES.ADMIN.UPDATE.ALERT_SAVE_CUSTOM_FILLING']);
             return this.showFillingNewForm();
         }
 
         if (basisToBeSaved.length) {
-            alert('save custom basis');
+            alert(ru_RU['COMPONENT.PAGES.ADMIN.UPDATE.ALERT_SAVE_CUSTOM_BASIS']);
             return this.showBasisNewForm();
         }
 
         if (eventToBeSaved._id === eventToBeSaved.type) {
-            alert('save custom event');
+            alert(ru_RU['COMPONENT.PAGES.ADMIN.UPDATE.ALERT_SAVE_CUSTOM_EVENT']);
             return this.showEventNewForm();
         }
 
@@ -322,12 +324,12 @@ class AdminUpdate extends Component {
                                     subtitle="Subtitle"
                                     children={<span>
                                         <span>
-                                            {bakeryItem.item.numberOfPieces} {bakeryItem.item.category}{bakeryItem.item.numberOfPieces > 1 ? "s" : null}
+                                            {bakeryItem.item.numberOfPieces} {bakeryItem.item.category}{bakeryItem.item.numberOfPieces > 1 ? "ы" : null}
                                         </span>
                                     </span>}
                                 />
                                 <CardMedia overlay={<CardTitle title={bakeryItem.name} subtitle={bakeryItem.description} />}>
-                                    <img src={`http://slasti.od.ua:3001/client/static/images/${bakeryItem.item.imgUrl}`} />
+                                    <img src={`${CORE_CONSTANTS.IMAGES_ROOT}${bakeryItem.item.imgUrl}`} />
                                 </CardMedia>
                                 <CardTitle title="Card title" subtitle="Card subtitle" />
                                 <CardText>
@@ -341,6 +343,7 @@ class AdminUpdate extends Component {
                                                 labelKey="type"
                                                 options={ingredients}
                                                 onChange={this.setCurrentIngredients}
+                                                noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                                             />
                                         </Col>
                                         <Col xs={12}>
@@ -352,6 +355,7 @@ class AdminUpdate extends Component {
                                                 labelKey="composition"
                                                 options={filling}
                                                 onChange={this.setCurrentFilling}
+                                                noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                                             />
                                         </Col>
                                         <Col xs={12}>
@@ -363,6 +367,7 @@ class AdminUpdate extends Component {
                                                 labelKey="type"
                                                 options={basis}
                                                 onChange={this.setCurrentBasis}
+                                                noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                                             />
                                         </Col>
                                         <Col xs={12}>
@@ -373,6 +378,7 @@ class AdminUpdate extends Component {
                                                 labelKey="type"
                                                 options={events}
                                                 onChange={this.setCurrentEvent}
+                                                noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                                             />
                                         </Col>
                                         <Col xs={12}>
@@ -402,7 +408,7 @@ class AdminUpdate extends Component {
                                     </Row>
                                 </CardText>
                                 <CardActions>
-                                    <RaisedButton label="Update" primary={true} onTouchTap={this.update}/>
+                                    <RaisedButton label={ru_RU['COMPONENT.PAGES.ADMIN.UPDATE.UPDATE']} primary={true} onTouchTap={this.update}/>
                                 </CardActions>
                             </Card>
                         </Col>

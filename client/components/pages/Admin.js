@@ -9,6 +9,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 import FileUpload from 'material-ui/svg-icons/file/file-upload';
 import ShoppingCart from 'material-ui/svg-icons/action/shopping-cart';
+import { ru_RU } from "../../constants/Translations";
 
 class Admin extends Component {
     constructor(props) {
@@ -19,7 +20,7 @@ class Admin extends Component {
         const { children } = this.props;
 
         if (children === null) {
-            return <section className="sou-admin__root-empty">Please select a page.</section>;
+            return <section className="sou-admin__root-empty">{ru_RU['COMPONENT.PAGES.ADMIN.ROOT_EMPTY']}</section>;
         }
 
         return null;
@@ -30,9 +31,9 @@ class Admin extends Component {
             <section id="sou-admin" className="sou-admin">
                 <Paper className="sou-admin__menu" zDepth={2} style={{'display': 'inline-block'}}>
                     <Menu>
-                        <MenuItem leftIcon={<FileUpload />} children={<Link to="/admin/upload">File upload page</Link>} />
+                        <MenuItem leftIcon={<FileUpload />} children={<Link to="/admin/upload">{ru_RU['COMPONENT.PAGES.ADMIN.MENU.FILE_UPLOAD']}</Link>} />
                         <Divider />
-                        <MenuItem leftIcon={<ShoppingCart />} children={<Link to="/admin/inquiry">Inquiries page</Link>} />
+                        <MenuItem leftIcon={<ShoppingCart />} children={<Link to="/admin/inquiry">{ru_RU['COMPONENT.PAGES.ADMIN.MENU.INQUIRIES']}</Link>} />
                         <Divider />
                     </Menu>
                 </Paper>

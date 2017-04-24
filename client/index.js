@@ -28,7 +28,7 @@ const history = syncHistoryWithStore(browserHistory, store);
 import './styles/app.scss'
 
 render(
-    <IntlProvider locale='en'>
+    <IntlProvider locale='ru'>
         <AppContainer errorReporter={Redbox}>
             <Root store={store} history={history}/>
         </AppContainer>
@@ -40,7 +40,7 @@ if (module.hot) {
     module.hot.accept('./root', () => {
         const NextRoot = require('./root').default;
         render(
-            <IntlProvider locale='en'>
+            <IntlProvider locale='ru'>
                 <AppContainer errorReporter={Redbox}>
                     <NextRoot store={store} history={history}/>
                 </AppContainer>

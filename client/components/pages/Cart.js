@@ -7,6 +7,7 @@ import TextField from 'material-ui/TextField';
 import {orange500, blue500} from 'material-ui/styles/colors';
 import { RaisedButton } from "material-ui";
 import { Link } from "react-router";
+import { ru_RU } from "../../constants/Translations";
 
 const styles = {
     floatingLabelStyle: {
@@ -43,7 +44,7 @@ class Cart extends Component {
             return (
                 <section id="sou-cart" className="sou-cart i-flex-page-vertical-header-footer">
                     <TextField
-                        floatingLabelText="Please enter Inquiry Id"
+                        floatingLabelText={ru_RU['COMPONENT.PAGES.CART.ENTER_INQUIRY_ID']}
                         floatingLabelStyle={styles.floatingLabelStyle}
                         floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
                         defaultValue={cart.cartRedirectId}
@@ -52,7 +53,7 @@ class Cart extends Component {
                     <p>
                         <Link to={`/cart/${cart.cartRedirectId}`}>
                             <RaisedButton
-                                label="Go to Your inquiry"
+                                label={ru_RU['COMPONENT.PAGES.CART.GO_TO_YOUR_INQUIRY']}
                                 secondary={true}
                                 disabled={!cart.cartRedirectId}
                                 style={styles.button}/>

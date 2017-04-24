@@ -13,6 +13,7 @@ import * as CORE_CONSTANTS from '../../constants/Core'
 import AdminCreateEventForm from "./AdminCreateEventForm";
 import { Dialog, Divider, FlatButton } from "material-ui";
 import { Col, Grid, Row } from "react-flexbox-grid";
+import { ru_RU } from "../../constants/Translations";
 
 class AdminUploadBakeryByUrl extends Component {
     constructor(props) {
@@ -164,21 +165,21 @@ class AdminUploadBakeryByUrl extends Component {
         } = this.props;
 
         if (!tempCroppedFile) {
-            alert('please crop an image first');
+            alert(ru_RU['COMPONENT.POPOVER.ADMIN_UPLOAD_BAKERY_BY_URL.CROP_FIRST']);
             return;
         }
 
         if (currentIngredients.length === 0) {
-            return alert('Set at least one ingredient');
+            return alert(ru_RU['COMPONENT.POPOVER.ADMIN_UPLOAD_BAKERY_BY_URL.SET_AT_LEAST_ONE_INGREDIENT']);
         }
         if (currentFilling.length === 0) {
-            return alert('Set at least one filling');
+            return alert(ru_RU['COMPONENT.POPOVER.ADMIN_UPLOAD_BAKERY_BY_URL.SET_AT_LEAST_ONE_FILLING']);
         }
         if (currentBasis.length === 0) {
-            return alert('Set at least one basis');
+            return alert(ru_RU['COMPONENT.POPOVER.ADMIN_UPLOAD_BAKERY_BY_URL.SET_AT_LEAST_ONE_BASIS']);
         }
         if (!currentEvent) {
-            return alert('Set at least one event');
+            return alert(ru_RU['COMPONENT.POPOVER.ADMIN_UPLOAD_BAKERY_BY_URL.SET_AT_LEAST_ONE_EVENT']);
         }
 
         let ingredientsToBeSaved = currentIngredients.filter((ingredient) => ingredient._id === ingredient.type);
@@ -189,22 +190,22 @@ class AdminUploadBakeryByUrl extends Component {
         hideAllForms();
 
         if (ingredientsToBeSaved.length) {
-            alert('save custom ingredients');
+            alert(ru_RU['COMPONENT.POPOVER.ADMIN_UPLOAD_BAKERY_BY_URL.SAVE_CUSTOM_INGREDIENT']);
             return this.showIngredientsNewForm();
         }
 
         if (fillingToBeSaved.length) {
-            alert('save custom filling');
+            alert(ru_RU['COMPONENT.POPOVER.ADMIN_UPLOAD_BAKERY_BY_URL.SAVE_CUSTOM_FILLING']);
             return this.showFillingNewForm();
         }
 
         if (basisToBeSaved.length) {
-            alert('save custom basis');
+            alert(ru_RU['COMPONENT.POPOVER.ADMIN_UPLOAD_BAKERY_BY_URL.SAVE_CUSTOM_BASIS']);
             return this.showBasisNewForm();
         }
 
         if (eventToBeSaved._id === eventToBeSaved.type) {
-            alert('save custom event');
+            alert(ru_RU['COMPONENT.POPOVER.ADMIN_UPLOAD_BAKERY_BY_URL.SAVE_CUSTOM_EVENT']);
             return this.showEventNewForm();
         }
 
@@ -212,7 +213,7 @@ class AdminUploadBakeryByUrl extends Component {
             || !form['admin-create-category-weight-decor']
             || !form['admin-create-category-weight-decor'].values
             || !form['admin-create-category-weight-decor'].values.category) {
-            alert('set category!!!');
+            alert(ru_RU['COMPONENT.POPOVER.ADMIN_UPLOAD_BAKERY_BY_URL.SET_CATEGORY']);
             return;
         }
 
@@ -220,7 +221,7 @@ class AdminUploadBakeryByUrl extends Component {
             || !form['admin-create-category-weight-decor']
             || !form['admin-create-category-weight-decor'].values
             || !form['admin-create-category-weight-decor'].values.name) {
-            alert('set name!!!');
+            alert(ru_RU['COMPONENT.POPOVER.ADMIN_UPLOAD_BAKERY_BY_URL.NAME']);
             return;
         }
 
@@ -410,7 +411,7 @@ class AdminUploadBakeryByUrl extends Component {
     getDialogSubmitAndGoToNextButton = (isNextItem) => {
         return (
             <FlatButton
-                label={"Submit" + (isNextItem ? " and go to next image" : "")}
+                label={ru_RU['COMPONENT.POPOVER.ADMIN_UPLOAD_BAKERY_BY_URL.SUBMIT'] + (isNextItem ? (" " + ru_RU['COMPONENT.POPOVER.ADMIN_UPLOAD_BAKERY_BY_URL.AND_GO_TO_NEXT_IMAGE']) : "")}
                 primary={true}
                 onTouchTap={this.submitAndGoToNextImage}
             />
@@ -500,7 +501,7 @@ class AdminUploadBakeryByUrl extends Component {
 
         return (
             <Dialog
-                title="Set all bakery data"
+                title={ru_RU['COMPONENT.POPOVER.ADMIN_UPLOAD_BAKERY_BY_URL.SET_ALL_BAKERY_DATA']}
                 actions={this.getDialogActions(isNextItem)}
                 modal={true}
                 open={true}
@@ -529,7 +530,8 @@ class AdminUploadBakeryByUrl extends Component {
                                     valueKey="_id"
                                     labelKey="type"
                                     options={ingredients}
-                                    placeholder="Select an ingredient"
+                                    placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_UPLOAD_BAKERY_BY_URL.SELECT_AN_INGREDIENT']}
+                                    noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                                     onChange={this.setCurrentIngredients}
                                 />
                             </Col>
@@ -541,7 +543,8 @@ class AdminUploadBakeryByUrl extends Component {
                                     valueKey="_id"
                                     labelKey="composition"
                                     options={filling}
-                                    placeholder="Select a filling"
+                                    placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_UPLOAD_BAKERY_BY_URL.SELECT_AN_FILLING']}
+                                    noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                                     onChange={this.setCurrentFilling}
                                 />
                             </Col>
@@ -553,7 +556,8 @@ class AdminUploadBakeryByUrl extends Component {
                                     valueKey="_id"
                                     labelKey="type"
                                     options={basis}
-                                    placeholder="Select a basis"
+                                    placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_UPLOAD_BAKERY_BY_URL.SELECT_AN_BASIS']}
+                                    noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                                     onChange={this.setCurrentBasis}
                                 />
                             </Col>
@@ -564,7 +568,8 @@ class AdminUploadBakeryByUrl extends Component {
                                     valueKey="_id"
                                     labelKey="type"
                                     options={events}
-                                    addLabelText="Select an event"
+                                    addLabelText={ru_RU['COMPONENT.POPOVER.ADMIN_UPLOAD_BAKERY_BY_URL.SELECT_AN_EVENT']}
+                                    noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                                     onChange={this.setCurrentEvent}
                                 />
                             </Col>

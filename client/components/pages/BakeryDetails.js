@@ -9,6 +9,7 @@ import { Chip, Paper } from "material-ui";
 import NoElement from "../elements/NoElement";
 import { Link } from "react-router";
 import * as CORE_CONSTANTS from "../../constants/Core";
+import { ru_RU } from "../../constants/Translations";
 
 class BakeryDetails extends Component {
     constructor(props) {
@@ -36,10 +37,9 @@ class BakeryDetails extends Component {
                                 <Card className="i-text-left c-color-background-primary-color-text-background" style={{'boxShadow': 'none', 'borderRadius': '0'}}>
                                     <CardHeader
                                         title={bake.category}
-                                        subtitle="Subtitle"
                                         children={<span>
                                             <span>
-                                                {bake.numberOfPieces} {bake.category}{bake.numberOfPieces > 1 ? "s" : null}
+                                                {bake.numberOfPieces} {bake.category}{bake.numberOfPieces > 1 ? "ов" : null}
                                             </span>
                                         </span>}
                                     />
@@ -49,54 +49,54 @@ class BakeryDetails extends Component {
                                                 title={bake.name}
                                                 subtitle={bake.description} />
                                         }>
-                                        <img src={`http://slasti.od.ua:3001/client/static/images/${bake.imgUrl}`} />
+                                        <img src={`${CORE_CONSTANTS.IMAGES_ROOT}${bake.imgUrl}`} />
                                     </CardMedia>
                                     <CardTitle title={bake.category} subtitle={bake.event ? bake.event.type : ''} />
                                     <CardText>
                                         <Row middle="xs">
                                             <Col xs={12}>
-                                                <h4>Ingredients</h4>
+                                                <h4>{ru_RU['COMPONENT.PAGES.BAKERY_DETAILS.INGREDIENTS']}</h4>
                                                 {bake.ingredients && bake.ingredients.map((ingredient) => {
                                                     return <Chip key={ingredient._id}>{ingredient.type} / {ingredient.taste} / {ingredient.substance}</Chip>;
                                                 })}
                                             </Col>
                                             <Col xs={12}>
-                                                <h4>Filling</h4>
+                                                <h4>{ru_RU['COMPONENT.PAGES.BAKERY_DETAILS.FILLING']}</h4>
                                                 {bake.filling && bake.filling.map((filling) => {
                                                     return <Chip key={filling._id}>{filling.taste} / {filling.composition}</Chip>;
                                                 })}
                                             </Col>
                                             <Col xs={12}>
-                                                <h4>Basis</h4>
+                                                <h4>{ru_RU['COMPONENT.PAGES.BAKERY_DETAILS.BASIS']}</h4>
                                                 {bake.basis && bake.basis.map((basis) => {
                                                     return <Chip key={basis._id}>{basis.type} / {basis.composition}</Chip>;
                                                 })}
                                             </Col>
                                             <Col xs={12}>
-                                                <h4>Decor</h4>
+                                                <h4>{ru_RU['COMPONENT.PAGES.BAKERY_DETAILS.DECOR']}</h4>
                                                 {bake.decor && bake.decor.map((decor, index) => {
                                                     return <Chip key={index}>{decor}</Chip>;
                                                 })}
                                             </Col>
                                             <Col xs={12}>
-                                                <h4>Event</h4>
+                                                <h4>{ru_RU['COMPONENT.PAGES.BAKERY_DETAILS.EVENT']}</h4>
                                                 <Chip>{bake.event && bake.event.type}</Chip>
                                             </Col>
                                         </Row>
                                     </CardText>
                                     <CardActions>
-                                        <RaisedButton label="Go to order page" primary={true} onTouchTap={() => this.goToOrderPageWithSomeDetails(bake)} />
+                                        <RaisedButton label={ru_RU['COMPONENT.PAGES.BAKERY_DETAILS.GO_TO_ORDER_PAGE']} primary={true} onTouchTap={() => this.goToOrderPageWithSomeDetails(bake)} />
                                         {user.admin && (
                                             <Link to={"/admin/update/" + bake._id}>
                                                 <RaisedButton
-                                                    label="Update"
+                                                    label={ru_RU['COMPONENT.PAGES.BAKERY_DETAILS.UPDATE']}
                                                     secondary={true}/>
                                             </Link>
                                         )}
                                         {user.admin && (
                                             <Link className="i-right i-margin_block_horizontal_right_0" to={"/admin/delete/" + bake._id}>
                                                 <RaisedButton
-                                                    label="Delete"
+                                                    label={ru_RU['COMPONENT.PAGES.BAKERY_DETAILS.DELETE']}
                                                     backgroundColor={CORE_CONSTANTS.COLORS.alert}
                                                     buttonStyle={{'color': CORE_CONSTANTS.COLORS.alternateTextColor}}/>
                                             </Link>

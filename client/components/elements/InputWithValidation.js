@@ -2,6 +2,7 @@ import React from 'react'
 import DatePicker from 'material-ui/DatePicker'
 import TimePicker from "material-ui/TimePicker";
 import { TextField } from "material-ui";
+import { ru_RU } from "../../constants/Translations";
 
 function stringValidator(value) {
     return !value || value.length === 0;
@@ -15,11 +16,11 @@ export const validateBasis = values => {
     const errors = {};
 
     if (stringValidator(values.type)) {
-        errors.type = 'Required type';
+        errors.type = ru_RU['COMPONENT.ELEMENT.INPUT_WITH_VALIDATION.REQUIRED_TYPE'];
     }
 
     if (stringValidator(values.composition)) {
-        errors.composition = 'Required composition';
+        errors.composition = ru_RU['COMPONENT.ELEMENT.INPUT_WITH_VALIDATION.REQUIRED_COMPOSITION'];
     }
 
     return errors;
@@ -29,11 +30,11 @@ export const validateFilling = values => {
     const errors = {};
 
     if (stringValidator(values.taste)) {
-        errors.taste = 'Required taste';
+        errors.taste = ru_RU['COMPONENT.ELEMENT.INPUT_WITH_VALIDATION.REQUIRED_TASTE'];
     }
 
     if (stringValidator(values.composition)) {
-        errors.composition = 'Required composition';
+        errors.composition = ru_RU['COMPONENT.ELEMENT.INPUT_WITH_VALIDATION.REQUIRED_COMPOSITION'];
     }
 
     return errors;
@@ -43,19 +44,19 @@ export const validateIngredients = values => {
     const errors = {};
 
     if (stringValidator(values.type)) {
-        errors.type = 'Required type';
+        errors.type = ru_RU['COMPONENT.ELEMENT.INPUT_WITH_VALIDATION.REQUIRED_TYPE'];
     }
 
     if (stringValidator(values.taste)) {
-        errors.taste = 'Required taste';
+        errors.taste = ru_RU['COMPONENT.ELEMENT.INPUT_WITH_VALIDATION.REQUIRED_TASTE'];
     }
 
     if (stringValidator(values.substance)) {
-        errors.substance = 'Required substance';
+        errors.substance = ru_RU['COMPONENT.ELEMENT.INPUT_WITH_VALIDATION.REQUIRED_SUBSTANCE'];
     }
 
     if (numberValidator(values.price)) {
-        errors.price = 'Required price';
+        errors.price = ru_RU['COMPONENT.ELEMENT.INPUT_WITH_VALIDATION.REQUIRED_PRICE'];
     }
 
     return errors;
@@ -65,15 +66,15 @@ export const validateCategoryWeightDecor = values => {
     const errors = {};
 
     if (stringValidator(values.category)) {
-        errors.category = 'Required category';
+        errors.category = ru_RU['COMPONENT.ELEMENT.INPUT_WITH_VALIDATION.REQUIRED_CATEGORY'];
     }
 
     if (numberValidator(values.weight)) {
-        errors.weight = 'Required weight';
+        errors.weight = ru_RU['COMPONENT.ELEMENT.INPUT_WITH_VALIDATION.REQUIRED_WEIGHT'];
     }
 
     if (numberValidator(values.numberOfPieces)) {
-        errors.numberOfPieces = 'Required Number Of Pieces';
+        errors.numberOfPieces = ru_RU['COMPONENT.ELEMENT.INPUT_WITH_VALIDATION.REQUIRED_NUMBER_OF_PIECES'];
     }
 
     return errors;
@@ -83,12 +84,12 @@ export const validateInquiry = values => {
     const errors = {};
 
     if (stringValidator(values.name)) {
-        errors.name = 'Required name';
+        errors.name = ru_RU['COMPONENT.ELEMENT.INPUT_WITH_VALIDATION.REQUIRED_NAME'];
     }
 
     if (stringValidator(values.email) && stringValidator(values.phone)) {
-        errors.email = 'Required at least email';
-        errors.phone = 'Required at least phone';
+        errors.email = ru_RU['COMPONENT.ELEMENT.INPUT_WITH_VALIDATION.REQUIRED_AT_LEAST_EMAIL'];
+        errors.phone = ru_RU['COMPONENT.ELEMENT.INPUT_WITH_VALIDATION.REQUIRED_AT_LEAST_PHONE'];
     }
 
     return errors;
@@ -98,18 +99,18 @@ export const warn = values => {
     const warnings = {};
 
     if (values.composition && values.composition.length < 2) {
-        warnings.composition = 'Looks like composition is too short, unclear...'
+        warnings.composition = ru_RU['COMPONENT.ELEMENT.INPUT_WITH_VALIDATION.WARNING_COMPOSITION']
     }
 
     return warnings;
 };
 
 export const renderField = ({ input, label, placeholder, type, meta: { touched, error, warning } }) => (
-    <TextField hintText={placeholder} floatingLabelText={"Enter a " + placeholder} name={input.name} type={type} errorText={touched && (error ? error : warning)} fullWidth={true} {...input}/>
+    <TextField hintText={placeholder} floatingLabelText={ru_RU['COMPONENT.ELEMENT.INPUT_WITH_VALIDATION.ENTER_A'] + " " + placeholder} name={input.name} type={type} errorText={touched && (error ? error : warning)} fullWidth={true} {...input}/>
 );
 
 export const renderMultiLineField = ({ input, label, placeholder, type, defaultValue, meta: { touched, error, warning } }) => (
-    <TextField hintText={placeholder} floatingLabelText={"Enter a " + placeholder} name={input.name} type={type} errorText={touched && (error ? error : warning)} defaultValue={defaultValue} multiLine={true} fullWidth={true} />
+    <TextField hintText={placeholder} floatingLabelText={ru_RU['COMPONENT.ELEMENT.INPUT_WITH_VALIDATION.ENTER_A'] + " " + placeholder} name={input.name} type={type} errorText={touched && (error ? error : warning)} defaultValue={defaultValue} multiLine={true} fullWidth={true} />
 );
 
 export const renderFileField = ({ input, label, placeholder, type, accept, meta: { touched, error, warning } }) => {
@@ -127,7 +128,7 @@ export const renderFileField = ({ input, label, placeholder, type, accept, meta:
 
 export const renderDatePickerField = ({ input, label, mode, onChangeDate, meta: { touched, error, warning } }) => {
     return <div>
-            <DatePicker hintText={label} floatingLabelText={"Pick a " + label} mode={mode} onChange={onChangeDate} minDate={new Date()} defaultDate={new Date()} fullWidth={true}/>
+            <DatePicker hintText={label} floatingLabelText={ru_RU['COMPONENT.ELEMENT.INPUT_WITH_VALIDATION.PICK_A'] + label} mode={mode} onChange={onChangeDate} minDate={new Date()} defaultDate={new Date()} fullWidth={true}/>
             {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
     </div>
 };
@@ -137,7 +138,7 @@ export const renderTimePickerField = ({ input, hintText, formatTime, okLabel, ca
         <div>
             <TimePicker
                 hintText={hintText}
-                floatingLabelText={"Pick a " + hintText}
+                floatingLabelText={ru_RU['COMPONENT.ELEMENT.INPUT_WITH_VALIDATION.PICK_A'] + hintText}
                 format={formatTime}
                 okLabel={okLabel}
                 cancelLabel={cancelLabel}

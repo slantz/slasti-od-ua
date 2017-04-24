@@ -7,6 +7,7 @@ import { Dialog, FlatButton } from "material-ui";
 import { Link } from "react-router";
 import Loader from "../elements/Loader";
 import NoElement from "../elements/NoElement";
+import { ru_RU } from "../../constants/Translations";
 
 class AdminDelete extends Component {
     constructor(props) {
@@ -42,7 +43,7 @@ class AdminDelete extends Component {
         return (
             <Link to={`/bakery/${params.id}`}>
                 <FlatButton
-                    label="Go back to bakery"
+                    label={ru_RU['COMPONENT.PAGES.ADMIN.DELETE.GO_BACK_TO_BAKERY']}
                     primary={true}
                 />
             </Link>
@@ -52,7 +53,7 @@ class AdminDelete extends Component {
     getDialogConfirmButton = () => {
         return (
             <FlatButton
-                label="Confirm"
+                label={ru_RU['COMPONENT.PAGES.ADMIN.DELETE.CONFIRM']}
                 primary={true}
                 onTouchTap={this.deleteBakery}
             />
@@ -76,7 +77,7 @@ class AdminDelete extends Component {
 
         return (
             <Dialog
-                title="Are you sure you want to delete this bakery?"
+                title={ru_RU['COMPONENT.PAGES.ADMIN.DELETE.DIALOG_TITLE']}
                 actions={this.getDialogActions()}
                 modal={true}
                 open={true}

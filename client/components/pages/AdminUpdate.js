@@ -343,6 +343,7 @@ class AdminUpdate extends Component {
                                                 labelKey="type"
                                                 options={ingredients}
                                                 onChange={this.setCurrentIngredients}
+                                                noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                                             />
                                         </Col>
                                         <Col xs={12}>
@@ -354,6 +355,7 @@ class AdminUpdate extends Component {
                                                 labelKey="composition"
                                                 options={filling}
                                                 onChange={this.setCurrentFilling}
+                                                noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                                             />
                                         </Col>
                                         <Col xs={12}>
@@ -365,6 +367,7 @@ class AdminUpdate extends Component {
                                                 labelKey="type"
                                                 options={basis}
                                                 onChange={this.setCurrentBasis}
+                                                noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                                             />
                                         </Col>
                                         <Col xs={12}>
@@ -375,6 +378,7 @@ class AdminUpdate extends Component {
                                                 labelKey="type"
                                                 options={events}
                                                 onChange={this.setCurrentEvent}
+                                                noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                                             />
                                         </Col>
                                         <Col xs={12}>

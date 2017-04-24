@@ -135,6 +135,7 @@ class Filters extends Component {
                         labelKey="type"
                         value={filters.ingredients}
                         placeholder={ru_RU['COMPONENT.SECTIONS.FILTERS.PLACEHOLDER.INGREDIENTS']}
+                        noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                         options={this.getProperFields("ingredients")}
                         onChange={(values) => this.setCurrentFilters("ingredients", values)}
                     />
@@ -145,6 +146,7 @@ class Filters extends Component {
                         labelKey="type"
                         value={filters.filling}
                         placeholder={ru_RU['COMPONENT.SECTIONS.FILTERS.PLACEHOLDER.FILLING']}
+                        noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                         options={this.getProperFields("filling")}
                         onChange={(values) => this.setCurrentFilters("filling", values)}
                     />
@@ -155,6 +157,7 @@ class Filters extends Component {
                         labelKey="type"
                         value={filters.basis}
                         placeholder={ru_RU['COMPONENT.SECTIONS.FILTERS.PLACEHOLDER.BASIS']}
+                        noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                         options={this.getProperFields("basis")}
                         onChange={(values) => this.setCurrentFilters("basis", values)}
                     />
@@ -165,6 +168,7 @@ class Filters extends Component {
                         labelKey="type"
                         value={filters.event}
                         placeholder={ru_RU['COMPONENT.SECTIONS.FILTERS.PLACEHOLDER.EVENT']}
+                        noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                         options={this.getPlainProperFields("event")}
                         onChange={(values) => this.setCurrentFilters("event", values)}
                     />
@@ -175,6 +179,7 @@ class Filters extends Component {
                         labelKey="type"
                         value={filters.category}
                         placeholder={ru_RU['COMPONENT.SECTIONS.FILTERS.PLACEHOLDER.CATEGORY']}
+                        noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                         options={this.getPlainProperFields("category")}
                         onChange={(values) => this.setCurrentFilters("category", values)}
                     />
@@ -185,6 +190,7 @@ class Filters extends Component {
                         labelKey="type"
                         value={filters.decor}
                         placeholder={ru_RU['COMPONENT.SECTIONS.FILTERS.PLACEHOLDER.DECOR']}
+                        noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                         options={this.getPlainProperFields("decor")}
                         onChange={(values) => this.setCurrentFilters("decor", values)}
                     />
@@ -195,6 +201,7 @@ class Filters extends Component {
                         labelKey="type"
                         value={filters.numberOfPieces}
                         placeholder={ru_RU['COMPONENT.SECTIONS.FILTERS.PLACEHOLDER.NUMBER_OF_PIECES']}
+                        noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                         options={this.getPlainProperFields("numberOfPieces")}
                         onChange={(values) => this.setCurrentFilters("numberOfPieces", values)}
                     />

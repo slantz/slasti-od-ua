@@ -44,6 +44,7 @@ let AdminCreateCategoryWeightDecorForm = (props) => {
                 value={currentDecor}
                 options={[]}
                 placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_CATEGORY.SELECT']}
+                noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                 onChange={onSetCurrentDecor}
             />
         </form>

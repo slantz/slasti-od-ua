@@ -531,6 +531,7 @@ class AdminUploadBakeryByUrl extends Component {
                                     labelKey="type"
                                     options={ingredients}
                                     placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_UPLOAD_BAKERY_BY_URL.SELECT_AN_INGREDIENT']}
+                                    noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                                     onChange={this.setCurrentIngredients}
                                 />
                             </Col>
@@ -543,6 +544,7 @@ class AdminUploadBakeryByUrl extends Component {
                                     labelKey="composition"
                                     options={filling}
                                     placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_UPLOAD_BAKERY_BY_URL.SELECT_AN_FILLING']}
+                                    noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                                     onChange={this.setCurrentFilling}
                                 />
                             </Col>
@@ -555,6 +557,7 @@ class AdminUploadBakeryByUrl extends Component {
                                     labelKey="type"
                                     options={basis}
                                     placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_UPLOAD_BAKERY_BY_URL.SELECT_AN_BASIS']}
+                                    noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                                     onChange={this.setCurrentBasis}
                                 />
                             </Col>
@@ -566,6 +569,7 @@ class AdminUploadBakeryByUrl extends Component {
                                     labelKey="type"
                                     options={events}
                                     addLabelText={ru_RU['COMPONENT.POPOVER.ADMIN_UPLOAD_BAKERY_BY_URL.SELECT_AN_EVENT']}
+                                    noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                                     onChange={this.setCurrentEvent}
                                 />
                             </Col>

@@ -77,6 +77,11 @@ body {
         }
         &__toolbar {
             height: 60px !important;
+            &__login {
+                @media #{$medium-up} {
+                    padding-left: 0.75 * $smallSpacing;
+                }
+            }
             &__greet {
                 @media #{$medium-up} {
                     padding-left: $oneAndQuarterSpacing;
@@ -104,6 +109,7 @@ body {
                 height: auto !important;
                 padding: 0 !important;
                 flex-direction: column;
+                &__login,
                 &__greet {
                     margin-right: 0 !important;
                     border-bottom: 1px solid $primary-color;

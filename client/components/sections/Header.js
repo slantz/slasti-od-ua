@@ -73,18 +73,40 @@ class Header extends Component {
     };
 
     compileLoginWithVkLink = () => {
-        const { core: { user } } = this.props;
+        const { core: { user }, cart } = this.props;
 
         if (user.payload.name) {
             return null;
         }
 
-        return <ToolbarGroup lastChild={true} >
-            <RaisedButton
-                label={ru_RU['COMPONENT.SECTIONS.HEADER.VK_LOGIN']}
-                secondary={true}
-                onTouchTap={this.loginWithVk} />
-        </ToolbarGroup>;
+        return (
+            <ToolbarGroup className="sou-header__toolbar__login" lastChild={true} >
+                <RaisedButton
+                    label={ru_RU['COMPONENT.SECTIONS.HEADER.VK_LOGIN']}
+                    secondary={true}
+                    onTouchTap={this.loginWithVk} />
+                <ToolbarSeparator />
+                <IconMenu
+                    onTouchTap={this.getInquiry}
+                    width={200}
+                    iconButtonElement={
+                        <IconButton touch={true}>
+                            <NavigationMenuIcon />
+                        </IconButton>
+                    }>
+                    <div className="i-hide-medium-up">
+                        <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MENU.BAKERY']} onTouchTap={this.goToBakery} />
+                        <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MENU.ABOUT']} onTouchTap={this.goToAbout} />
+                        <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MENU.CART']} onTouchTap={this.goToCart} />
+                        <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MENU.ORDER']} onTouchTap={this.goToOrder} />
+                        <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MENU.ADMIN']} onTouchTap={this.goToAdmin} />
+                        <Divider/>
+                    </div>
+                    {cart.data.inquiry && <MenuItem primaryText={cart.data.inquiry.isResolved ? ru_RU['COMPONENT.SECTIONS.HEADER.MY_ORDER_IS_READY'] : ru_RU['COMPONENT.SECTIONS.HEADER.MY_ORDER_IS_IN_PROGRESS']} onTouchTap={this.goToCartDetails} />}
+                    {!cart.data.inquiry && <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MAYBE_PLACE_AN_ORDER']} onTouchTap={this.goToOrder} />}
+                </IconMenu>
+            </ToolbarGroup>
+        );
     };
 
     greet = () => {

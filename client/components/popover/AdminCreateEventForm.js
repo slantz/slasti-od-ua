@@ -15,7 +15,8 @@ let AdminCreateEventForm = (props) => {
                        component={InputWithValidation.renderField}
                        type="text"
                        label={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_EVENT_FORM.EVENT']}
-                       placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_EVENT_FORM.EVENT']}/>
+                       placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_EVENT_FORM.EVENT']}
+                       placeholderAccusative={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_EVENT_FORM.EVENT_ACCUSATIVE']}/>
             </fieldset>
             <fieldset>
                 <RaisedButton primary={true} label={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_EVENT_FORM.SUBMIT']} type="submit" />

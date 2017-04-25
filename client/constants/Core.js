@@ -7,8 +7,9 @@ import {grey900} from 'material-ui/styles/colors';
 import {grey600} from 'material-ui/styles/colors';
 import {grey400} from 'material-ui/styles/colors';
 
+export const LOCALE = "ru-RU";
+
 export const CROP_IMAGE_RATIO = 4/3;
-export const CV = 'CV';
 export const API_ROOT = `http://slasti.od.ua${module.hot ? ':3001' : ''}`;
 export const IMAGES_ROOT = `http://slasti.od.ua${module.hot ? ':3001' : ''}/client/static/images/`;
 export const GRAPHICS_ROOT = `http://slasti.od.ua${module.hot ? ':3001' : ''}/client/static/graphics/`;

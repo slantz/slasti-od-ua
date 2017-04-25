@@ -25,21 +25,24 @@ let AboutInquiryPostForm = (props) => {
                                component={InputWithValidation.renderField}
                                type="text"
                                label={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.NAME']}
-                               placeholder={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.NAME']}/>
+                               placeholder={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.NAME']}
+                               placeholderAccusative={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.NAME_ACCUSATIVE']}/>
                     </Col>
                     <Col xs={12} sm={6} md={4}>
                         <Field name="email"
                                component={InputWithValidation.renderField}
                                type="email"
                                label={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.EMAIL']}
-                               placeholder={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.EMAIL']}/>
+                               placeholder={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.EMAIL']}
+                               placeholderAccusative={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.EMAIL_ACCUSATIVE']}/>
                     </Col>
                     <Col xs={12} sm={6} md={4}>
                         <Field name="phone"
                                component={InputWithValidation.renderField}
                                type="text"
                                label={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.PHONE']}
-                               placeholder={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.PHONE']}/>
+                               placeholder={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.PHONE']}
+                               placeholderAccusative={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.PHONE_ACCUSATIVE']}/>
                     </Col>
                     <Col xs={12} sm={6} md={4}>
                         <Field name="date"
@@ -53,8 +56,6 @@ let AboutInquiryPostForm = (props) => {
                                component={InputWithValidation.renderTimePickerField}
                                hintText={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.SUITABLE_TIME']}
                                formatTime="24hr"
-                               okLabel={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.OK']}
-                               cancelLabel={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.CANCEL']}
                                onChangeTime={setCurrentTime}/>
                     </Col>
                     <Col xs={12} sm={6} md={4}>
@@ -63,7 +64,8 @@ let AboutInquiryPostForm = (props) => {
                                type="text"
                                label={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.COMMENT']}
                                defaultValue={getDefaultComment()}
-                               placeholder={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.COMMENT']}/>
+                               placeholder={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.COMMENT']}
+                               placeholderAccusative={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.COMMENT_ACCUSATIVE']}/>
                     </Col>
                 </Row>
                 <Row>

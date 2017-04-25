@@ -3,6 +3,15 @@ import DatePicker from 'material-ui/DatePicker'
 import TimePicker from "material-ui/TimePicker";
 import { TextField } from "material-ui";
 import { ru_RU } from "../../constants/Translations";
+import { LOCALE } from "../../constants/Core";
+
+// if (areIntlLocalesSupported(['ru-RU'])) {
+//     DateTimeFormat = global.Intl.DateTimeFormat;
+// } else {
+//     const IntlPolyfill = intl;
+//     DateTimeFormat = IntlPolyfill.DateTimeFormat;
+//     require('intl/locale-data/jsonp/ru-RU');
+// }
 
 function stringValidator(value) {
     return !value || value.length === 0;
@@ -105,12 +114,12 @@ export const warn = values => {
     return warnings;
 };
 
-export const renderField = ({ input, label, placeholder, type, meta: { touched, error, warning } }) => (
-    <TextField hintText={placeholder} floatingLabelText={ru_RU['COMPONENT.ELEMENT.INPUT_WITH_VALIDATION.ENTER_A'] + " " + placeholder} name={input.name} type={type} errorText={touched && (error ? error : warning)} fullWidth={true} {...input}/>
+export const renderField = ({ input, label, placeholder, placeholderAccusative, type, meta: { touched, error, warning } }) => (
+    <TextField hintText={placeholder} floatingLabelText={ru_RU['COMPONENT.ELEMENT.INPUT_WITH_VALIDATION.ENTER_A'] + " " + placeholderAccusative} name={input.name} type={type} errorText={touched && (error ? error : warning)} fullWidth={true} {...input}/>
 );
 
-export const renderMultiLineField = ({ input, label, placeholder, type, defaultValue, meta: { touched, error, warning } }) => (
-    <TextField hintText={placeholder} floatingLabelText={ru_RU['COMPONENT.ELEMENT.INPUT_WITH_VALIDATION.ENTER_A'] + " " + placeholder} name={input.name} type={type} errorText={touched && (error ? error : warning)} defaultValue={defaultValue} multiLine={true} fullWidth={true} />
+export const renderMultiLineField = ({ input, label, placeholder, placeholderAccusative, type, defaultValue, meta: { touched, error, warning } }) => (
+    <TextField hintText={placeholder} floatingLabelText={ru_RU['COMPONENT.ELEMENT.INPUT_WITH_VALIDATION.ENTER_A'] + " " + placeholderAccusative} name={input.name} type={type} errorText={touched && (error ? error : warning)} defaultValue={defaultValue} multiLine={true} fullWidth={true} />
 );
 
 export const renderFileField = ({ input, label, placeholder, type, accept, meta: { touched, error, warning } }) => {
@@ -128,20 +137,30 @@ export const renderFileField = ({ input, label, placeholder, type, accept, meta:
 
 export const renderDatePickerField = ({ input, label, mode, onChangeDate, meta: { touched, error, warning } }) => {
     return <div>
-            <DatePicker hintText={label} floatingLabelText={ru_RU['COMPONENT.ELEMENT.INPUT_WITH_VALIDATION.PICK_A'] + label} mode={mode} onChange={onChangeDate} minDate={new Date()} defaultDate={new Date()} fullWidth={true}/>
+            <DatePicker locale={LOCALE}
+                        DateTimeFormat={global.Intl.DateTimeFormat}
+                        hintText={label}
+                        floatingLabelText={ru_RU['COMPONENT.ELEMENT.INPUT_WITH_VALIDATION.PICK_A'] + ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.DATE_ACCUSATIVE']}
+                        mode={mode}
+                        onChange={onChangeDate}
+                        okLabel={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.OK']}
+                        cancelLabel={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.CANCEL']}
+                        minDate={new Date()}
+                        defaultDate={new Date()}
+                        fullWidth={true}/>
             {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
     </div>
 };
 
-export const renderTimePickerField = ({ input, hintText, formatTime, okLabel, cancelLabel, onChangeTime, meta: { touched, error, warning } }) => {
+export const renderTimePickerField = ({ input, hintText, formatTime, onChangeTime, meta: { touched, error, warning } }) => {
     return <div>
         <div>
             <TimePicker
                 hintText={hintText}
                 floatingLabelText={ru_RU['COMPONENT.ELEMENT.INPUT_WITH_VALIDATION.PICK_A'] + hintText}
                 format={formatTime}
-                okLabel={okLabel}
-                cancelLabel={cancelLabel}
+                okLabel={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.OK']}
+                cancelLabel={ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.CANCEL']}
                 onChange={onChangeTime}
                 fullWidth={true}
             />

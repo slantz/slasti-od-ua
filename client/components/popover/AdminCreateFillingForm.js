@@ -16,12 +16,14 @@ let AdminCreateFillingForm = (props) => {
                        component={InputWithValidation.renderField}
                        type="text"
                        label={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_FILLING_FORM.TASTE']}
-                       placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_FILLING_FORM.TASTE']}/>
+                       placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_FILLING_FORM.TASTE']}
+                       placeholderAccusative={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_FILLING_FORM.TASTE_ACCUSATIVE']}/>
                 <Field name="composition"
                        component={InputWithValidation.renderField}
                        type="text"
                        label={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_FILLING_FORM.COMPOSITION']}
-                       placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_FILLING_FORM.COMPOSITION']}/>
+                       placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_FILLING_FORM.COMPOSITION']}
+                       placeholderAccusative={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_FILLING_FORM.COMPOSITION_ACCUSATIVE']}/>
             </fieldset>
             <fieldset>
                 <RaisedButton primary={true} label={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_FILLING_FORM.SUBMIT']} type="submit" />

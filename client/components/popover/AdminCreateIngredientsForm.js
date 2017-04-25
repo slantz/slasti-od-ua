@@ -16,22 +16,26 @@ let AdminCreateIngredientsForm = (props) => {
                        component={InputWithValidation.renderField}
                        type="text"
                        label={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_INGREDIENTS_FORM.TYPE']}
-                       placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_INGREDIENTS_FORM.TYPE']}/>
+                       placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_INGREDIENTS_FORM.TYPE']}
+                       placeholderAccusative={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_INGREDIENTS_FORM.TYPE_ACCUSATIVE']}/>
                 <Field name="taste"
                        component={InputWithValidation.renderField}
                        type="text"
                        label={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_INGREDIENTS_FORM.TASTE']}
-                       placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_INGREDIENTS_FORM.TASTE']}/>
+                       placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_INGREDIENTS_FORM.TASTE']}
+                       placeholderAccusative={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_INGREDIENTS_FORM.TASTE_ACCUSATIVE']}/>
                 <Field name="substance"
                        component={InputWithValidation.renderField}
                        type="text"
                        label={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_INGREDIENTS_FORM.SUBSTANCE']}
-                       placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_INGREDIENTS_FORM.SUBSTANCE']}/>
+                       placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_INGREDIENTS_FORM.SUBSTANCE']}
+                       placeholderAccusative={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_INGREDIENTS_FORM.SUBSTANCE_ACCUSATIVE']}/>
                 <Field name="price"
                        component={InputWithValidation.renderField}
                        type="number"
                        label={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_INGREDIENTS_FORM.PRICE']}
-                       placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_INGREDIENTS_FORM.PRICE']}/>
+                       placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_INGREDIENTS_FORM.PRICE']}
+                       placeholderAccusative={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_INGREDIENTS_FORM.PRICE_ACCUSATIVE']}/>
             </fieldset>
             <fieldset>
                 <RaisedButton label={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_INGREDIENTS_FORM.SUBMIT']} primary={true} type="submit" />

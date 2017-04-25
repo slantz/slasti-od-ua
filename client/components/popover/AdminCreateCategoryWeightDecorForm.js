@@ -15,29 +15,34 @@ let AdminCreateCategoryWeightDecorForm = (props) => {
                    type="text"
                    label={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_CATEGORY.CATEGORY']}
                    placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_CATEGORY.CATEGORY']}
+                   placeholderAccusative={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_CATEGORY.CATEGORY_ACCUSATIVE']}
                    required/>
             <Field name="name"
                    component={InputWithValidation.renderField}
                    type="text"
                    label={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_CATEGORY.NAME']}
                    placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_CATEGORY.NAME']}
+                   placeholderAccusative={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_CATEGORY.NAME_ACCUSATIVE']}
                    required/>
             <Field name="description"
                    component={InputWithValidation.renderField}
                    type="text"
                    label={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_CATEGORY.DESCRIPTION']}
                    placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_CATEGORY.DESCRIPTION']}
+                   placeholderAccusative={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_CATEGORY.DESCRIPTION_ACCUSATIVE']}
                    required/>
             <Field name="weight"
                    component={InputWithValidation.renderField}
                    type="number"
                    label={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_CATEGORY.WEIGHT']}
-                   placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_CATEGORY.WEIGHT']}/>
+                   placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_CATEGORY.WEIGHT']}
+                   placeholderAccusative={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_CATEGORY.WEIGHT_ACCUSATIVE']}/>
             <Field name="numberOfPieces"
                    component={InputWithValidation.renderField}
                    type="number"
                    label={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_CATEGORY.NUMBER_OF_PIECES']}
-                   placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_CATEGORY.NUMBER_OF_PIECES']}/>
+                   placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_CATEGORY.NUMBER_OF_PIECES']}
+                   placeholderAccusative={ru_RU['COMPONENT.POPOVER.ADMIN_CREATE_CATEGORY.NUMBER_OF_PIECES_ACCUSATIVE']}/>
             <Select.Creatable
                 name="decor"
                 multi={true}

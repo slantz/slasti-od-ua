@@ -140,7 +140,6 @@ class Header extends Component {
                         <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MENU.ABOUT']} onTouchTap={this.goToAbout} />
                         <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MENU.CART']} onTouchTap={this.goToCart} />
                         <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MENU.ORDER']} onTouchTap={this.goToOrder} />
-                        <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MENU.ADMIN']} onTouchTap={this.goToAdmin} />
                         {this.getAdminLink(user)}
                         <Divider/>
                     </div>

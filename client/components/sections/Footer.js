@@ -24,7 +24,7 @@ export default class Footer extends Component {
                             <Row right="xs">
                                 <Col xs={12} sm={6}>
                                     <h4>{ru_RU['COMPONENT.SECTIONS.FOOTER.TELEPHONE']}:</h4>
-                                    <div>+380(63)213-06-13</div>
+                                    <a href="tel:+380632130613">+380 (63) 213-06-13</a>
                                     <h4>{ru_RU['COMPONENT.SECTIONS.FOOTER.EMAIL']}:</h4>
                                     <div>slasti.od.ua@gmail.com</div>
                                 </Col>

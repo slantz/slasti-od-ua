@@ -73,7 +73,7 @@ class Header extends Component {
         logoutCurrentUser();
     };
 
-    getAdminLink = () => {
+    getAdminLink = (user) => {
         if (checkUserIsAuthorized(user)) {
             return <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MENU.ADMIN']} onTouchTap={this.goToAdmin} />;
         }

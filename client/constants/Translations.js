@@ -180,6 +180,7 @@ export const ru_RU = {
     'COMPONENT.SECTIONS.FOOTER.EMAIL': 'Электронная почта',
     'COMPONENT.SECTIONS.FOOTER.SOCIAL_MEDIA': 'Социальные сети',
 
+    'COMPONENT.SECTIONS.HEADER.GO_TO_HOME_PAGE': 'Перейти на главную страницу',
     'COMPONENT.SECTIONS.HEADER.VK_LOGIN': 'VK Вход',
     'COMPONENT.SECTIONS.HEADER.GREETINGS': 'Добрый день',
     'COMPONENT.SECTIONS.HEADER.MENU.BAKERY': 'Выпечка',

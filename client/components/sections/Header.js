@@ -13,6 +13,7 @@ import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui
 import Nav from './Nav'
 import { Divider } from "material-ui";
 import { ru_RU } from "../../constants/Translations";
+import { Link } from "react-router";
 
 class Header extends Component {
     constructor(props) {
@@ -143,7 +144,9 @@ class Header extends Component {
             <header role="banner" className="sou-header">
                 <Toolbar className="sou-header__toolbar">
                     <ToolbarGroup className="sou-header__logo i-transit-all" firstChild={true}>
-                        <img src={`${CORE_CONSTANTS.GRAPHICS_ROOT}logo_big.png`} height="45px" alt="Logo Slasti Od Ua"/>
+                        <Link to="/bakery" title={ru_RU['COMPONENT.SECTIONS.HEADER.GO_TO_HOME_PAGE']}>
+                            <img src={`${CORE_CONSTANTS.GRAPHICS_ROOT}logo_big.png`} height="45px" alt="Logo Slasti Od Ua"/>
+                        </Link>
                     </ToolbarGroup>
                     <ToolbarGroup className="sou-header__navigation_holder i-hide-medium-down">
                         <Nav user={user} segment={segment} />

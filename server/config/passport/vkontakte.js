@@ -15,7 +15,7 @@ const User = mongoose.model('User');
 module.exports = new VKontakteStrategy({
     clientID: process.env.VK_CLIENTID,
     clientSecret: process.env.VK_SECRET,
-    callbackURL: 'http://slasti.od.ua:3001/auth/vk/callback',
+    callbackURL: `http://slasti.od.ua${module.hot ? ':3001' : ''}/auth/vk/callback`,
     scope: ['email'],
     profileFields: ['email', 'city', 'bdate'],
     apiVersion: '5.60'

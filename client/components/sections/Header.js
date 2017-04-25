@@ -14,6 +14,7 @@ import Nav from './Nav'
 import { Divider } from "material-ui";
 import { ru_RU } from "../../constants/Translations";
 import { Link } from "react-router";
+import { checkUserIsAuthorized } from "../../middleware/auth";
 
 class Header extends Component {
     constructor(props) {
@@ -72,6 +73,13 @@ class Header extends Component {
         logoutCurrentUser();
     };
 
+    getAdminLink = () => {
+        if (checkUserIsAuthorized(user)) {
+            return <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MENU.ADMIN']} onTouchTap={this.goToAdmin} />;
+        }
+        return null;
+    };
+
     compileLoginWithVkLink = () => {
         const { core: { user }, cart } = this.props;
 
@@ -99,7 +107,6 @@ class Header extends Component {
                         <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MENU.ABOUT']} onTouchTap={this.goToAbout} />
                         <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MENU.CART']} onTouchTap={this.goToCart} />
                         <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MENU.ORDER']} onTouchTap={this.goToOrder} />
-                        <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MENU.ADMIN']} onTouchTap={this.goToAdmin} />
                         <Divider/>
                     </div>
                     {cart.data.inquiry && <MenuItem primaryText={cart.data.inquiry.isResolved ? ru_RU['COMPONENT.SECTIONS.HEADER.MY_ORDER_IS_READY'] : ru_RU['COMPONENT.SECTIONS.HEADER.MY_ORDER_IS_IN_PROGRESS']} onTouchTap={this.goToCartDetails} />}
@@ -134,6 +141,7 @@ class Header extends Component {
                         <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MENU.CART']} onTouchTap={this.goToCart} />
                         <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MENU.ORDER']} onTouchTap={this.goToOrder} />
                         <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MENU.ADMIN']} onTouchTap={this.goToAdmin} />
+                        {this.getAdminLink(user)}
                         <Divider/>
                     </div>
                     {cart.data.inquiry && <MenuItem primaryText={cart.data.inquiry.isResolved ? ru_RU['COMPONENT.SECTIONS.HEADER.MY_ORDER_IS_READY'] : ru_RU['COMPONENT.SECTIONS.HEADER.MY_ORDER_IS_IN_PROGRESS']} onTouchTap={this.goToCartDetails} />}

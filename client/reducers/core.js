@@ -36,8 +36,8 @@ userFetchingPromises.all = new Promise(function(resolve, reject){
         ]),
         userFetchingPromises.request
     ]).then(
-        function(){
-            resolve(CONSTANTS.USER.STATUS.OK);
+        function(userFetchingPromiseData){
+            resolve(userFetchingPromiseData[0]);
         }
     ).catch(
         function(){
@@ -57,13 +57,14 @@ export default function core(state = {
 }, { type, payload }) {
     switch(type) {
         case CONSTANTS.SUCCESS:
-            actionPromisesCallbacks.success();
+            let userData = {
+                status: CONSTANTS.USER.STATUS.OK,
+                isFetching: false,
+                payload
+            };
+            actionPromisesCallbacks.success(userData);
             return Object.assign({}, state, {
-                user: {
-                    status: CONSTANTS.USER.STATUS.OK,
-                    isFetching: false,
-                    payload
-                }
+                user: userData
             });
         case CONSTANTS.FAILURE:
             actionPromisesCallbacks.failure();

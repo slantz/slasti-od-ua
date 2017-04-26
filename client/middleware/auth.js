@@ -50,8 +50,8 @@ export const REQUIRE_ADMIN = (nextState, replace, cb, store) => {
             store.dispatch(CoreActions.getCurrentUser());
             user.fetcher
                 .then(
-                    function() {
-                        if (!checkUserIsAdmin(user)) {
+                    function(userData) {
+                        if (!checkUserIsAdmin(userData)) {
                             replace('/');
                         }
                         cb();

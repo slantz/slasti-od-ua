@@ -36,7 +36,9 @@ class Header extends Component {
 
     goToCartDetails = () => {
         const { cart, CartActions: { goToCartDetails } } = this.props;
-        return goToCartDetails(cart.cartRedirectId);
+        let redirectToIdLink = cart.cartRedirectId || cart.data.inquiry.id;
+
+        return goToCartDetails(redirectToIdLink);
     };
 
     goToBakery = () => {

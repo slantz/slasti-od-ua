@@ -31,7 +31,11 @@ class CartDetails extends Component {
     convertToReadableDate = (rawDate) => {
         let date = new Date(rawDate);
 
-        return `${CORE_CONSTANTS.DATES.DAYS[date.getUTCDay()]}, ${CORE_CONSTANTS.DATES.MONTHS[date.getMonth()]} ${date.getDate()} ${date.getUTCFullYear()}`;
+        if (CORE_CONSTANTS.LOCALE === "ru-RU") {
+            return `${CORE_CONSTANTS.DATES[CORE_CONSTANTS.LOCALE].DAYS[date.getUTCDay()]}, ${date.getDate()} ${CORE_CONSTANTS.DATES[CORE_CONSTANTS.LOCALE].MONTHS[date.getMonth()]} ${date.getUTCFullYear()}`;
+        }
+
+        return `${CORE_CONSTANTS.DATES[CORE_CONSTANTS.LOCALE].DAYS[date.getUTCDay()]}, ${CORE_CONSTANTS.DATES[CORE_CONSTANTS.LOCALE].MONTHS[date.getMonth()]} ${date.getDate()}, ${date.getUTCFullYear()}`;
     };
 
     getInquiry = () => {

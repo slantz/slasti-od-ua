@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link, IndexLink } from 'react-router'
 import {Tabs, Tab} from 'material-ui/Tabs';
 
-import { checkUserIsAuthorized } from '../../middleware/auth'
+import { checkUserIsAdmin } from '../../middleware/auth'
 import { SIZES } from "../../constants/Core";
 import { ru_RU } from "../../constants/Translations";
 
@@ -26,7 +26,7 @@ export default class Nav extends Component {
         const { user, segment } = this.props;
 
         let adminLink = function() {
-            if (checkUserIsAuthorized(user)) {
+            if (checkUserIsAdmin(user)) {
                 return  <Tab label={<Link to="/admin" className="sou-header__nav__link">{ru_RU['COMPONENT.SECTIONS.NAV.ADMIN']}</Link>} value="admin" style={{'height': SIZES.HEADER.HEIGHT}}/>;
             }
             return null;

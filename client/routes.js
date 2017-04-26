@@ -15,7 +15,7 @@ import AdminUpload from './components/pages/AdminUpload'
 import AdminInquiry from './components/pages/AdminInquiry'
 import AdminUploadBakeryByUrl from './components/popover/AdminUploadBakeryByUrl'
 
-import { REQUIRE_LOGIN } from './middleware/auth'
+import { REQUIRE_ADMIN } from './middleware/auth';
 
 export default class RTRouter extends Component {
 
@@ -34,7 +34,7 @@ export default class RTRouter extends Component {
                 <Route path="cart" component={Cart}>
                     <Route path=":id" component={CartDetails}/>
                 </Route>
-                <Route path="admin" component={Admin} onEnter={(nextState, replace, callback) => { this.requireLogin(nextState, replace, callback) }}>
+                <Route path="admin" component={Admin} onEnter={(nextState, replace, callback) => { this.requireAdmin(nextState, replace, callback) }}>
                     <Route path="update/:id" component={AdminUpdate}/>
                     <Route path="delete/:id" component={AdminDelete}/>
                     <Route path="upload" component={AdminUpload}>
@@ -46,8 +46,8 @@ export default class RTRouter extends Component {
         );
     }
 
-    requireLogin = (nextState, replace, cb) => {
-        REQUIRE_LOGIN(nextState, replace, cb, this.props.store);
+    requireAdmin = (nextState, replace, cb) => {
+        REQUIRE_ADMIN(nextState, replace, cb, this.props.store);
     };
 
     render() {

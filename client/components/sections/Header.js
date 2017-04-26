@@ -14,7 +14,7 @@ import Nav from './Nav'
 import { Divider } from "material-ui";
 import { ru_RU } from "../../constants/Translations";
 import { Link } from "react-router";
-import { checkUserIsAuthorized } from "../../middleware/auth";
+import { checkUserIsAdmin } from "../../middleware/auth";
 
 class Header extends Component {
     constructor(props) {
@@ -74,7 +74,7 @@ class Header extends Component {
     };
 
     getAdminLink = (user) => {
-        if (checkUserIsAuthorized(user)) {
+        if (checkUserIsAdmin(user)) {
             return <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MENU.ADMIN']} onTouchTap={this.goToAdmin} />;
         }
         return null;

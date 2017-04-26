@@ -44,6 +44,7 @@ class Cart extends Component {
             return (
                 <section id="sou-cart" className="sou-cart i-flex-page-vertical-header-footer">
                     <TextField
+                        className="sou-cart__inquiry-id-input"
                         floatingLabelText={ru_RU['COMPONENT.PAGES.CART.ENTER_INQUIRY_ID']}
                         floatingLabelStyle={styles.floatingLabelStyle}
                         floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
@@ -53,10 +54,10 @@ class Cart extends Component {
                     <p>
                         <Link to={`/cart/${cart.cartRedirectId}`}>
                             <RaisedButton
+                                className="sou-cart__go-to-cart-details-button"
                                 label={ru_RU['COMPONENT.PAGES.CART.GO_TO_YOUR_INQUIRY']}
                                 secondary={true}
-                                disabled={!cart.cartRedirectId}
-                                style={styles.button}/>
+                                disabled={!cart.cartRedirectId}/>
                         </Link>
                     </p>
                 </section>

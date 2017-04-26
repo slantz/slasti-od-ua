@@ -244,6 +244,10 @@ body {
                 padding: $smallSpacing $smallSpacing / 4;
             }
         }
+        &__inquiry-id-input,
+        &__go-to-cart-details-button {
+            min-width: 265px !important;
+        }
     }
     &-footer {
         &__title {

@@ -46,8 +46,8 @@ const InquirySchema = new Schema({
         default: ''
     },
     isResolved: {
-        type: Boolean,
-        default: false
+        type: String,
+        default: "CREATED"
     }
 });
 

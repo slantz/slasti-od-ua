@@ -118,7 +118,7 @@ export default store => next => action => {
                 },
                 error => next(actionWith({
                     type : failureType,
-                    payload : {}
+                    payload : error
                 }))
             );
         }
@@ -134,7 +134,7 @@ export default store => next => action => {
                 },
                 error => next(actionWith({
                     type : failureType,
-                    payload : {}
+                    payload : error
                 }))
             )
         }

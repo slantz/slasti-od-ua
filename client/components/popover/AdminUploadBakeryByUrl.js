@@ -130,8 +130,12 @@ class AdminUploadBakeryByUrl extends Component {
             image.fileBlob.name
         ));
 
-        bulkUploadImages(formData).then(() => {
-            this.updateBakeryWithStuff(images);
+        bulkUploadImages(formData).then((e) => {
+            if (e) {
+                alert(e.payload.error);
+            } else {
+                this.updateBakeryWithStuff(images);
+            }
         });
     };
 

@@ -111,7 +111,7 @@ class Header extends Component {
                         <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MENU.ORDER']} onTouchTap={this.goToOrder} />
                         <Divider/>
                     </div>
-                    {cart.data.inquiry && <MenuItem primaryText={cart.data.inquiry.isResolved ? ru_RU['COMPONENT.SECTIONS.HEADER.MY_ORDER_IS_READY'] : ru_RU['COMPONENT.SECTIONS.HEADER.MY_ORDER_IS_IN_PROGRESS']} onTouchTap={this.goToCartDetails} />}
+                    {cart.data.inquiry && <MenuItem primaryText={cart.data.inquiry.isResolved !== "CREATED" ? ru_RU['COMPONENT.SECTIONS.HEADER.MY_ORDER_IS_READY'] : ru_RU['COMPONENT.SECTIONS.HEADER.MY_ORDER_IS_IN_PROGRESS']} onTouchTap={this.goToCartDetails} />}
                     {!cart.data.inquiry && <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MAYBE_PLACE_AN_ORDER']} onTouchTap={this.goToOrder} />}
                 </IconMenu>
             </ToolbarGroup>
@@ -145,7 +145,7 @@ class Header extends Component {
                         {this.getAdminLink(user)}
                         <Divider/>
                     </div>
-                    {cart.data.inquiry && <MenuItem primaryText={cart.data.inquiry.isResolved ? ru_RU['COMPONENT.SECTIONS.HEADER.MY_ORDER_IS_READY'] : ru_RU['COMPONENT.SECTIONS.HEADER.MY_ORDER_IS_IN_PROGRESS']} onTouchTap={this.goToCartDetails} />}
+                    {cart.data.inquiry && <MenuItem primaryText={cart.data.inquiry.isResolved !== "CREATED" ? ru_RU['COMPONENT.SECTIONS.HEADER.MY_ORDER_IS_READY'] : ru_RU['COMPONENT.SECTIONS.HEADER.MY_ORDER_IS_IN_PROGRESS']} onTouchTap={this.goToCartDetails} />}
                     {!cart.data.inquiry && <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.MAYBE_PLACE_AN_ORDER']} onTouchTap={this.goToOrder} />}
                     <Divider />
                     <MenuItem primaryText={ru_RU['COMPONENT.SECTIONS.HEADER.LOGOUT']} onTouchTap={this.logoutCurrentUser}/>

@@ -238,7 +238,7 @@ function resolveAnInquiry(data) {
             method: CORE_CONSTANTS.METHOD.PUT,
             body: {
                 inquiry: {
-                    _id: data.id,
+                    _id: data._id,
                     isResolved: data.isResolved
                 }
             },

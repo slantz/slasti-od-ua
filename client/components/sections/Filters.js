@@ -9,6 +9,7 @@ import { ru_RU } from "../../constants/Translations";
 class Filters extends Component {
     constructor(props) {
         super(props);
+        this.wereFiltersViible=false;
     }
 
     getProperFields = (fieldName) => {
@@ -114,11 +115,18 @@ class Filters extends Component {
         if (!isFiltersVisible) {
             className += " sou-bakery-filters_hidden";
         } else {
-            window.scrollTo(0, 0);
+            if (isFiltersVisible !== this.wereFiltersViible) {
+                this.wereFiltersViible = isFiltersVisible;
+                window.scrollTo(0, 0);
+            }
         }
 
         return className;
     };
+
+    componentWillMount() {
+        this.wereFiltersViible = this.props.bakery.isFiltersVisible;
+    }
 
     render() {
         const { bakery, filter: { filters }} = this.props;

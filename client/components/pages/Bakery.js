@@ -102,7 +102,7 @@ class Bakery extends Component {
                     </CardMedia>
                     <CardTitle title={bake.name} subtitle={bake.description} />
                     <CardText>
-                        <p>{bake.event && bake.event.type}</p>
+                        <p>{ru_RU['COMPONENT.PAGES.BAKERY.EVENT_LABEL']}: {bake.event && bake.event.type}</p>
                     </CardText>
                     <CardActions className="sou-bakery-items__card__action">
                         <Link to={"/bakery/" + bake._id}>

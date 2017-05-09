@@ -57,6 +57,7 @@ export const ru_RU = {
     'COMPONENT.PAGES.BAKERY.MORE_DETAILS': 'Детальнее',
     'COMPONENT.PAGES.BAKERY.MORE_DETAILS_ABOUT': 'Больше деталей о',
     'COMPONENT.PAGES.BAKERY.TYPE.ANY': 'ЛЮБОЕ',
+    'COMPONENT.PAGES.BAKERY.EVENT_LABEL': 'Событие',
 
     'COMPONENT.PAGES.BAKERY_DETAILS.GO_TO_ORDER_PAGE': 'Перейти на страницу заказа',
     'COMPONENT.PAGES.BAKERY_DETAILS.INGREDIENTS': 'Ингредиенты',

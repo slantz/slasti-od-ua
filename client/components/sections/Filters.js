@@ -129,6 +129,17 @@ class Filters extends Component {
                 <h3>{ru_RU['COMPONENT.SECTIONS.FILTERS.TITLE']}</h3>
                 <div className="sou-bakery-filters__list">
                     <Select
+                        name="select-filter-bakery-category"
+                        multi={true}
+                        valueKey="_id"
+                        labelKey="type"
+                        value={filters.category}
+                        placeholder={ru_RU['COMPONENT.SECTIONS.FILTERS.PLACEHOLDER.CATEGORY']}
+                        noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
+                        options={this.getPlainProperFields("category")}
+                        onChange={(values) => this.setCurrentFilters("category", values)}
+                    />
+                    <Select
                         name="select-filter-bakery-ingredients"
                         multi={true}
                         valueKey="_id"
@@ -171,17 +182,6 @@ class Filters extends Component {
                         noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
                         options={this.getPlainProperFields("event")}
                         onChange={(values) => this.setCurrentFilters("event", values)}
-                    />
-                    <Select
-                        name="select-filter-bakery-category"
-                        multi={true}
-                        valueKey="_id"
-                        labelKey="type"
-                        value={filters.category}
-                        placeholder={ru_RU['COMPONENT.SECTIONS.FILTERS.PLACEHOLDER.CATEGORY']}
-                        noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
-                        options={this.getPlainProperFields("category")}
-                        onChange={(values) => this.setCurrentFilters("category", values)}
                     />
                     <Select
                         name="select-filter-bakery-decor"

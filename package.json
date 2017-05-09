@@ -1,6 +1,6 @@
 {
   "name": "slasti-od-ua",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Just site where homemade bakery lives.",
   "main": "index.js",
   "scripts": {

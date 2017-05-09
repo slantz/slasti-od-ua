@@ -621,3 +621,18 @@ export function updatePriceForInquiry(id, price) {
         return null;
     }
 }
+
+export function setCurrentImageRatio(currentImageRatio) {
+    return (dispatch) => {
+        return dispatch({
+            type: ADMIN_CONSTANTS.SET_CURRENT_IMAGE_RATIO,
+            payload: currentImageRatio
+        });
+    }
+}
+
+export function redirectToAdminUploadPage() {
+    return (dispatch) => {
+        dispatch(push('/admin/upload'));
+    }
+}

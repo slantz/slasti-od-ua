@@ -1,4 +1,5 @@
 import * as ADMIN_CONSTANTS from '../constants/Admin'
+import * as CORE_CONSTANTS from '../constants/Core'
 
 export default function admin(state = {
     bakery: {
@@ -36,6 +37,10 @@ export default function admin(state = {
     currentDecor: [],
     currentFileToCrop: null,
     nextFileIndex: null,
+    currentImageRatio: {
+        visual: "4/3",
+        type: CORE_CONSTANTS.CROP_IMAGE_RATIO["4/3"]
+    },
     ingredients_showCreateNewForm: false,
     filling_showCreateNewForm: false,
     basis_showCreateNewForm: false,
@@ -645,6 +650,11 @@ export default function admin(state = {
                     isFetching: false,
                     items: state.inquiry.items
                 }
+            });
+            break;
+        case ADMIN_CONSTANTS.SET_CURRENT_IMAGE_RATIO:
+            assignedState = Object.assign({}, state, {
+                currentImageRatio: payload
             });
             break;
         default: assignedState = state

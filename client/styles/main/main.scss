@@ -270,6 +270,20 @@ body {
     }
     &-admin {
         display: flex;
+        &-upload {
+            &-dialog-actions {
+                .Select {
+                    display: inline-block;
+                    vertical-align: middle;
+                    min-width: 200px;
+                    text-align: left;
+                }
+                .Select-menu-outer {
+                    bottom: 100%;
+                    top: auto;
+                }
+            }
+        }
         &__menu {
             flex: 0 1 auto;
         }

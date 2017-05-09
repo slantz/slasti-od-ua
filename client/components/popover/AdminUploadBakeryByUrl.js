@@ -412,6 +412,34 @@ class AdminUploadBakeryByUrl extends Component {
         }).then(() => this.submitAndGoToNextImage());
     };
 
+    setCurrentImageRatio = (ratio) => {
+        const { AdminActions: { setCurrentImageRatio } } = this.props;
+        setCurrentImageRatio(ratio);
+    };
+
+    getCropRatios = () => {
+        return Object.keys(CORE_CONSTANTS.CROP_IMAGE_RATIO).map((ratio) => {
+            return {visual : ratio, type : CORE_CONSTANTS.CROP_IMAGE_RATIO[ratio]};
+        });
+    };
+
+    getRatioSelect = () => {
+        let { admin: { currentImageRatio } } = this.props;
+
+        return (
+            <Select
+                name="select-image-crop-ratio"
+                valueKey="type"
+                labelKey="visual"
+                value={currentImageRatio}
+                placeholder={ru_RU['COMPONENT.POPOVER.ADMIN_UPLOAD_BAKERY_BY_URL.CROP_RATIO']}
+                noResultsText={ru_RU['COMPONENT.SECTIONS.FILTERS.NO_RESULTS_TEXT']}
+                options={this.getCropRatios()}
+                onChange={(value) => this.setCurrentImageRatio(value)}
+            />
+        );
+    };
+
     getDialogSubmitAndGoToNextButton = (isNextItem) => {
         return (
             <FlatButton
@@ -423,7 +451,12 @@ class AdminUploadBakeryByUrl extends Component {
     };
 
     getDialogActions = (isNextItem) => {
-        return [ this.getDialogSubmitAndGoToNextButton(isNextItem) ];
+        return [ this.getRatioSelect(), this.getDialogSubmitAndGoToNextButton(isNextItem) ];
+    };
+
+    dialogHandleClose = () => {
+        const { AdminActions: { redirectToAdminUploadPage } } = this.props;
+        redirectToAdminUploadPage();
     };
 
     componentWillMount() {
@@ -490,6 +523,7 @@ class AdminUploadBakeryByUrl extends Component {
                 },
                 currentDecor,
                 currentFileToCrop,
+                currentImageRatio,
                 nextFileIndex,
                 ingredients_showCreateNewForm,
                 filling_showCreateNewForm,
@@ -507,9 +541,11 @@ class AdminUploadBakeryByUrl extends Component {
             <Dialog
                 title={ru_RU['COMPONENT.POPOVER.ADMIN_UPLOAD_BAKERY_BY_URL.SET_ALL_BAKERY_DATA']}
                 actions={this.getDialogActions(isNextItem)}
-                modal={true}
+                actionsContainerClassName="sou-admin-upload-dialog-actions"
+                modal={false}
                 open={true}
                 autoScrollBodyContent={true}
+                onRequestClose={this.dialogHandleClose}
                 bodyStyle={{'min-height': CORE_CONSTANTS.SIZES.ADMIN_UPLOAD_DIALOG_MIN_HEIGHT}}
             >
                 <aside>
@@ -517,7 +553,7 @@ class AdminUploadBakeryByUrl extends Component {
                         <Grid tagName="article" id="sou-catalog-bulk-images-uploaded" fluid={true}>
                             <Row>
                                 <Col xs={12}>
-                                    <ReactCrop src={currentFileToCrop.target.result} crop={{aspect: CORE_CONSTANTS.CROP_IMAGE_RATIO}} onComplete={this.cropImage}/>
+                                    <ReactCrop src={currentFileToCrop.target.result} crop={{aspect: currentImageRatio.type}} onComplete={this.cropImage}/>
                                     <canvas id="canvas111" className="i-none"></canvas>
                                 </Col>
                             </Row>

@@ -232,13 +232,14 @@ function deleteBakeryById(id) {
     }
 }
 
-function resolveAnInquiry(id) {
+function resolveAnInquiry(data) {
     return {
         [CALL_API]: {
             method: CORE_CONSTANTS.METHOD.PUT,
             body: {
                 inquiry: {
-                    _id: id
+                    _id: data._id,
+                    isResolved: data.isResolved
                 }
             },
             types: [
@@ -246,7 +247,7 @@ function resolveAnInquiry(id) {
                 ADMIN_CONSTANTS.ADMIN_RESOLVE_INQUIRY_SUCCESS,
                 ADMIN_CONSTANTS.ADMIN_RESOLVE_INQUIRY_FAILURE
             ],
-            endpoint: `/api/inquiry/${id}/resolve`
+            endpoint: `/api/inquiry/${data.id}/resolve`
         }
     }
 }
@@ -603,10 +604,10 @@ export function getInquiry() {
     }
 }
 
-export function resolveInquiry(id) {
+export function resolveInquiry(data) {
     return (dispatch, getState) => {
         if (shouldMakeAdminRequest(getState().admin.inquiry)) {
-            return dispatch(resolveAnInquiry(id));
+            return dispatch(resolveAnInquiry(data));
         }
         return null;
     }

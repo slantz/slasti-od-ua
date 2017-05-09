@@ -1,5 +1,7 @@
 'use strict';
 
+const INQUIRY_STATUSES = require('../../api/constants/inquiry');
+
 /*
  *  Generic DTO validator
  */
@@ -98,6 +100,16 @@ function validateInquiryPrice(req, res) {
     }
 }
 
+function validateInquiryIsResolved(req, res) {
+    if (!req.body.inquiry || !req.body.inquiry.isResolved) {
+        return badRequestError(res, "No or empty [inquiry] [isResolved] field");
+    }
+
+    if (!Object.keys(INQUIRY_STATUSES.STATUS).some((status) => INQUIRY_STATUSES.STATUS[status] === req.body.inquiry.isResolved)) {
+        return badRequestError(res, "Unsupported [inquiry] [isResolved] field value");
+    }
+}
+
 exports.validateIngredient = function(req, res, next) {
     validateIngredient(req, res);
     return next();
@@ -130,5 +142,10 @@ exports.validateInquiry = function(req, res, next) {
 
 exports.validateInquiryPrice = function(req, res, next) {
     validateInquiryPrice(req, res);
+    return next();
+};
+
+exports.validateInquiryIsResolved = function(req, res, next) {
+    validateInquiryIsResolved(req, res);
     return next();
 };

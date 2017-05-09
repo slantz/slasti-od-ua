@@ -16,8 +16,8 @@
     "url": "https://github.com/slantz/slasti-od-ua.git"
   },
   "engines": {
-    "node": "5",
-    "npm": "3"
+    "node": "7",
+    "npm": "4"
   },
   "keywords": [
     "react",

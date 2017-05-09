@@ -38,16 +38,16 @@ class AdminInquiry extends Component {
 
         return (
             <article>{inquiry.items.map((item, index) => {
-                return <Card key={index} className={item.isResolved ? "c-color-background-primary-color-light" : "c-color-background-triad-yellow-from-primary"}>
+                return <Card key={index} className={item.isResolved !== "CREATED" ? "c-color-background-primary-color-light" : "c-color-background-triad-yellow-from-primary"}>
                             <CardHeader
                                 title={item.name}
-                                titleColor={item.isResolved ? CORE_CONSTANTS.COLORS.alternateTextColor : CORE_CONSTANTS.COLORS.textColor}
+                                titleColor={item.isResolved !== "CREATED" ? CORE_CONSTANTS.COLORS.alternateTextColor : CORE_CONSTANTS.COLORS.textColor}
                                 actAsExpander={true}
                                 showExpandableButton={true}
                             />
                             <CardActions>
-                                <RaisedButton label={ru_RU['COMPONENT.PAGES.ADMIN.INQUIRY.UPDATE_PRICE']} primary={true} onTouchTap={() => this.updatePriceForInquiry(item)} disabled={item.isResolved} />
-                                <RaisedButton label={ru_RU['COMPONENT.PAGES.ADMIN.INQUIRY.RESOLVE']} secondary={true} onTouchTap={() => this.resolve(item)} disabled={item.isResolved} />
+                                <RaisedButton label={ru_RU['COMPONENT.PAGES.ADMIN.INQUIRY.UPDATE_PRICE']} primary={true} onTouchTap={() => this.updatePriceForInquiry(item)} disabled={item.isResolved === "RESOLVED" || item.isResolved === "CANCELLED"} />
+                                <RaisedButton label={ru_RU['COMPONENT.PAGES.ADMIN.INQUIRY.RESOLVE']} secondary={true} onTouchTap={() => this.resolve(item)} disabled={item.isResolved === "RESOLVED" || item.isResolved === "CANCELLED"} />
                             </CardActions>
                             <CardText expandable={true}>
                                 <Paper zDepth={2}>
@@ -73,11 +73,14 @@ class AdminInquiry extends Component {
     resolve = (item) => {
         const { AdminActions: { resolveInquiry } } = this.props;
 
-        if (item.isResolved) {
+        if (item.isResolved === "RESOLVED" || item.isResolved === "CANCELLED") {
             return;
         }
 
-        return resolveInquiry(item._id);
+        return resolveInquiry({
+            id: item.id,
+            isResolved: "RESOLVED"
+        });
     };
 
     updatePriceForInquiry = (item) => {

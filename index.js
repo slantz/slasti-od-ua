@@ -257,7 +257,7 @@ app.post('/api/inquiry', validation.validateInquiry, inquiry.post);
 
 app.get('/api/inquiry/:id', inquiry.byId);
 
-app.put('/api/inquiry/:id/resolve', inquiry.resolve);
+app.put('/api/inquiry/:id/resolve', validation.validateInquiryIsResolved, inquiry.resolve);
 
 app.put('/api/inquiry/:id/price', validation.validateInquiryPrice, inquiry.updatePrice);
 

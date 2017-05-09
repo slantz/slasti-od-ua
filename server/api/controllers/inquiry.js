@@ -81,15 +81,19 @@ exports.post = async(function* (req, res) {
 exports.resolve = async(function* (req, res) {
     let { body : { inquiry }} = req;
 
-
     let updatedInquiry = yield new Promise(function(resolve, reject){
-        Inquiry.findOneAndUpdate({ _id: inquiry._id }, { isResolved: true }, {new: true}, function(err, doc) {
+        Inquiry.findOneAndUpdate({ id: req.params.id }, { isResolved: inquiry.isResolved }, {new: true}, function(err, doc) {
             if (err) {
                 console.log('PUT | api/inquiry | Inquiry.findOneAndUpdate | ', err);
                 reject();
             } else {
-                console.log('[%s] inquiry was successfully updated.', doc._id);
-                resolve(doc);
+                if (doc === null) {
+                    res.status(401).json({ error: "No item was found, please check the [id] field." });
+                    reject();
+                } else {
+                    console.log('[%s] inquiry was successfully updated.', doc._id);
+                    resolve(doc);
+                }
             }
         });
     });

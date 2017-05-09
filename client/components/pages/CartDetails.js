@@ -23,7 +23,7 @@ class CartDetails extends Component {
     clearOrderIdIfResolved = () => {
         const { cart, CartActions: { removeInquiryIdFromLocalStorage } } = this.props;
 
-        if (cart.data.inquiry && cart.data.inquiry.isResolved) {
+        if (cart.data.inquiry && cart.data.inquiry.isResolved && cart.data.inquiry.isResolved === "RESOLVED") {
             return removeInquiryIdFromLocalStorage();
         }
     };
@@ -65,11 +65,11 @@ class CartDetails extends Component {
                             <Paper zDepth={3} rounded={false}>
                                 <Card className="i-text-left c-color-background-primary-color-text-background" style={{'boxShadow': 'none', 'borderRadius': '0'}}>
                                     <CardHeader
-                                        className={cart.data.inquiry.isResolved ? "c-color-background-triad-dark-green-from-primary" : "c-color-background-triad-yellow-from-primary"}
+                                        className={cart.data.inquiry.isResolved !== "CREATED" ? "c-color-background-triad-dark-green-from-primary" : "c-color-background-triad-yellow-from-primary"}
                                         title={cart.data.inquiry.id}
-                                        titleColor={cart.data.inquiry.isResolved && CORE_CONSTANTS.COLORS.alternateTextColor}
-                                        subtitleColor={cart.data.inquiry.isResolved && CORE_CONSTANTS.COLORS.alternateTextColor}
-                                        subtitle={cart.data.inquiry.isResolved ? ru_RU['COMPONENT.PAGES.CART_DETAILS.ORDER_IS_READY'] : ru_RU['COMPONENT.PAGES.CART_DETAILS.ORDER_IS_PROCESSED']}
+                                        titleColor={cart.data.inquiry.isResolved !== "CREATED" && CORE_CONSTANTS.COLORS.alternateTextColor}
+                                        subtitleColor={cart.data.inquiry.isResolved !== "CREATED" && CORE_CONSTANTS.COLORS.alternateTextColor}
+                                        subtitle={cart.data.inquiry.isResolved !== "CREATED" ? ru_RU['COMPONENT.PAGES.CART_DETAILS.ORDER_IS_READY'] : ru_RU['COMPONENT.PAGES.CART_DETAILS.ORDER_IS_PROCESSED']}
                                     />
                                     <CardTitle title={this.getPriceMessage(cart.data.inquiry.price)} />
                                     <CardText>

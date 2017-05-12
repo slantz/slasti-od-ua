@@ -33,7 +33,7 @@ export default class Nav extends Component {
         };
 
         return (
-            <Tabs className="sou-header__nav" initialSelectedIndex={this.setCurrentActiveTabIndex(segment)} value={segment}>
+            <Tabs className="sou-header__nav" initialSelectedIndex={this.setCurrentActiveTabIndex(segment)} value={segment} role="navigation">
                 <Tab label={<Link to="/bakery" className="sou-header__nav__link">{ru_RU['COMPONENT.SECTIONS.NAV.BAKERY']}</Link>} value="bakery" style={{'height': SIZES.HEADER.HEIGHT}}/>
                 <Tab label={<Link to="/about" className="sou-header__nav__link">{ru_RU['COMPONENT.SECTIONS.NAV.ABOUT']}</Link>} value="about" style={{'height': SIZES.HEADER.HEIGHT}}/>
                 <Tab label={<Link to="/order" className="sou-header__nav__link">{ru_RU['COMPONENT.SECTIONS.NAV.ORDER']}</Link>} value="order" style={{'height': SIZES.HEADER.HEIGHT}}/>

@@ -57,19 +57,19 @@ class BakeryDetails extends Component {
                                             <Col xs={12}>
                                                 <h4>{ru_RU['COMPONENT.PAGES.BAKERY_DETAILS.INGREDIENTS']}</h4>
                                                 {bake.ingredients && bake.ingredients.map((ingredient) => {
-                                                    return <Chip key={ingredient._id}>{ingredient.type} / {ingredient.taste} / {ingredient.substance}</Chip>;
+                                                    return <Chip key={ingredient._id}>{ingredient.type} / {ingredient.taste}</Chip>;
                                                 })}
                                             </Col>
                                             <Col xs={12}>
                                                 <h4>{ru_RU['COMPONENT.PAGES.BAKERY_DETAILS.FILLING']}</h4>
                                                 {bake.filling && bake.filling.map((filling) => {
-                                                    return <Chip key={filling._id}>{filling.taste} / {filling.composition}</Chip>;
+                                                    return <Chip key={filling._id}>{filling.taste}</Chip>;
                                                 })}
                                             </Col>
                                             <Col xs={12}>
                                                 <h4>{ru_RU['COMPONENT.PAGES.BAKERY_DETAILS.BASIS']}</h4>
                                                 {bake.basis && bake.basis.map((basis) => {
-                                                    return <Chip key={basis._id}>{basis.type} / {basis.composition}</Chip>;
+                                                    return <Chip key={basis._id}>{basis.type}</Chip>;
                                                 })}
                                             </Col>
                                             <Col xs={12}>

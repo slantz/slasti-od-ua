@@ -125,6 +125,15 @@ app.get('/auth/vk/callback',
     })
 );
 
+app.get('/auth/fb', passport.authenticate('facebook'));
+
+app.get('/auth/fb/callback',
+    passport.authenticate('facebook', {
+        successRedirect: '/',
+        failureRedirect: '/login'
+    })
+);
+
 app.get('/auth/logout', function(req, res){
     req.logout();
     res.json({
@@ -287,6 +296,7 @@ app.get(/^\/.*(?!(auth|api)).*$/, function(req, res) {
   res.render('index', {
     env: env,
     ga: process.env.GA,
+    fb_clientid: process.env.FB_CLIENTID,
     user: req.user
   });
 });

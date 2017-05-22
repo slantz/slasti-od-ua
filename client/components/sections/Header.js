@@ -70,6 +70,10 @@ class Header extends Component {
         window.location.href = '/auth/vk'
     };
 
+    loginWithFb = () => {
+        window.location.href = '/auth/fb'
+    };
+
     logoutCurrentUser = () => {
         const { CoreActions: { logoutCurrentUser } } = this.props;
         logoutCurrentUser();
@@ -95,6 +99,11 @@ class Header extends Component {
                     label={ru_RU['COMPONENT.SECTIONS.HEADER.VK_LOGIN']}
                     secondary={true}
                     onTouchTap={this.loginWithVk} />
+                <ToolbarSeparator />
+                <RaisedButton
+                    label={ru_RU['COMPONENT.SECTIONS.HEADER.FB_LOGIN']}
+                    secondary={true}
+                    onTouchTap={this.loginWithFb} />
                 <ToolbarSeparator />
                 <IconMenu
                     onTouchTap={this.getInquiry}

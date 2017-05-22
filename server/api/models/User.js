@@ -9,7 +9,8 @@ const crypto = require('crypto');
 
 const Schema = mongoose.Schema;
 const oAuthTypes = [
-    'vkontakte'
+    'vkontakte',
+    'facebook'
 ];
 
 /**
@@ -25,7 +26,8 @@ const UserSchema = new Schema({
     hashed_password: { type: String, default: '' },
     salt: { type: String, default: '' },
     authToken: { type: String, default: '' },
-    vk: {}
+    vk: {},
+    fb: {}
 });
 
 const validatePresenceOf = value => value && value.length;

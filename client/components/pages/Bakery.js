@@ -111,6 +111,12 @@ class Bakery extends Component {
                                 secondary={true}
                                 alt={`${ru_RU['COMPONENT.PAGES.BAKERY.MORE_DETAILS_ABOUT']} ${bake.name}`}/>
                         </Link>
+                        <div
+                            className="fb-like"
+                            data-share="true"
+                            data-width="450"
+                            data-show-faces="true">
+                        </div>
                     </CardActions>
                 </Card>
             </Col>

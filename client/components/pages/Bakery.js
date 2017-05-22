@@ -105,18 +105,19 @@ class Bakery extends Component {
                         <p>{ru_RU['COMPONENT.PAGES.BAKERY.EVENT_LABEL']}: {bake.event && bake.event.type}</p>
                     </CardText>
                     <CardActions className="sou-bakery-items__card__action">
-                        <Link to={"/bakery/" + bake._id}>
-                            <RaisedButton
-                                label={ru_RU['COMPONENT.PAGES.BAKERY.MORE_DETAILS']}
-                                secondary={true}
-                                alt={`${ru_RU['COMPONENT.PAGES.BAKERY.MORE_DETAILS_ABOUT']} ${bake.name}`}/>
-                        </Link>
-                        <div
-                            className="fb-like"
-                            data-share="true"
-                            data-width="450"
-                            data-show-faces="true">
-                        </div>
+                        <Row between="xs" middle="xs" className="i-margin_block_horizontal_right_0">
+                            <Col xs={6}>
+                                <Link to={"/bakery/" + bake._id}>
+                                    <RaisedButton
+                                        label={ru_RU['COMPONENT.PAGES.BAKERY.MORE_DETAILS']}
+                                        secondary={true}
+                                        alt={`${ru_RU['COMPONENT.PAGES.BAKERY.MORE_DETAILS_ABOUT']} ${bake.name}`}/>
+                                </Link>
+                            </Col>
+                            <Col xs={6}>
+                                <div className="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+                            </Col>
+                        </Row>
                     </CardActions>
                 </Card>
             </Col>

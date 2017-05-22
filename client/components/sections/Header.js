@@ -89,6 +89,10 @@ class Header extends Component {
     compileLoginWithVkLink = () => {
         const { core: { user }, cart } = this.props;
 
+        const loginButtonMarginStyles = {
+            'margin': '10px'
+        };
+
         if (user.payload.name) {
             return null;
         }
@@ -98,12 +102,13 @@ class Header extends Component {
                 <RaisedButton
                     label={ru_RU['COMPONENT.SECTIONS.HEADER.VK_LOGIN']}
                     secondary={true}
-                    onTouchTap={this.loginWithVk} />
-                <ToolbarSeparator />
+                    onTouchTap={this.loginWithVk}
+                    style={loginButtonMarginStyles}/>
                 <RaisedButton
                     label={ru_RU['COMPONENT.SECTIONS.HEADER.FB_LOGIN']}
                     secondary={true}
-                    onTouchTap={this.loginWithFb} />
+                    onTouchTap={this.loginWithFb}
+                    style={loginButtonMarginStyles}/>
                 <ToolbarSeparator />
                 <IconMenu
                     onTouchTap={this.getInquiry}

@@ -114,8 +114,15 @@ class Bakery extends Component {
                                         alt={`${ru_RU['COMPONENT.PAGES.BAKERY.MORE_DETAILS_ABOUT']} ${bake.name}`}/>
                                 </Link>
                             </Col>
-                            <Col xs={6}>
-                                <div className="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+                            <Col xs={6} className="i-text-right">
+                                <div
+                                    className="fb-like"
+                                    data-href={window.location.origin + this.props.location.pathname + "/" + bake._id}
+                                    data-layout="button_count"
+                                    data-action="like"
+                                    data-size="small"
+                                    data-show-faces="true"
+                                    data-share="true" />
                             </Col>
                         </Row>
                     </CardActions>

@@ -70,6 +70,10 @@ class Header extends Component {
         window.location.href = '/auth/vk'
     };
 
+    loginWithFb = () => {
+        window.location.href = '/auth/fb'
+    };
+
     logoutCurrentUser = () => {
         const { CoreActions: { logoutCurrentUser } } = this.props;
         logoutCurrentUser();
@@ -85,6 +89,10 @@ class Header extends Component {
     compileLoginWithVkLink = () => {
         const { core: { user }, cart } = this.props;
 
+        const loginButtonMarginStyles = {
+            'margin': '10px'
+        };
+
         if (user.payload.name) {
             return null;
         }
@@ -94,7 +102,13 @@ class Header extends Component {
                 <RaisedButton
                     label={ru_RU['COMPONENT.SECTIONS.HEADER.VK_LOGIN']}
                     secondary={true}
-                    onTouchTap={this.loginWithVk} />
+                    onTouchTap={this.loginWithVk}
+                    style={loginButtonMarginStyles}/>
+                <RaisedButton
+                    label={ru_RU['COMPONENT.SECTIONS.HEADER.FB_LOGIN']}
+                    secondary={true}
+                    onTouchTap={this.loginWithFb}
+                    style={loginButtonMarginStyles}/>
                 <ToolbarSeparator />
                 <IconMenu
                     onTouchTap={this.getInquiry}

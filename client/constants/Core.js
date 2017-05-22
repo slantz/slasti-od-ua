@@ -16,9 +16,9 @@ export const CROP_IMAGE_RATIO = {
     "9/16": 9/16
 };
 
-export const API_ROOT = `http://${module.hot ? 'local.slasti:3001' : 'slasti.od.ua'}`;
-export const IMAGES_ROOT = `http://${module.hot ? 'local.slasti:3001' : 'slasti.od.ua'}/client/static/images/`;
-export const GRAPHICS_ROOT = `http://${module.hot ? 'local.slasti:3001' : 'slasti.od.ua'}/client/static/graphics/`;
+export const API_ROOT = `http://${module.hot ? 'local.slasti.od.ua:3001' : 'slasti.od.ua'}`;
+export const IMAGES_ROOT = `http://${module.hot ? 'local.slasti.od.ua:3001' : 'slasti.od.ua'}/client/static/images/`;
+export const GRAPHICS_ROOT = `http://${module.hot ? 'local.slasti.od.ua:3001' : 'slasti.od.ua'}/client/static/graphics/`;
 
 export const REQUEST = 'CORE_REQUEST';
 export const SUCCESS = 'CORE_SUCCESS';

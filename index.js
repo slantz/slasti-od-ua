@@ -275,9 +275,7 @@ app.delete('/api/inquiry/:id', function(req, res, next) {
 });
 
 var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './client/static/images')
-    },
+    destination: './client/static/images',
     filename: function (req, file, cb) {
         var extension;
 

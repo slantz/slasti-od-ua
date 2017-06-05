@@ -11,13 +11,14 @@ export const LOCALE = "ru-RU";
 
 export const CROP_IMAGE_RATIO = {
     "4/3": 4/3,
-    "3/4": 4/3,
+    "3/4": 3/4,
     "16/9": 16/9,
     "9/16": 9/16
 };
 
 export const API_ROOT = `http://${module.hot ? 'local.slasti.od.ua:3001' : 'slasti.od.ua'}`;
 export const IMAGES_ROOT = `http://${module.hot ? 'local.slasti.od.ua:3001' : 'slasti.od.ua'}/client/static/images/`;
+export const THUMBNAILS_ROOT = `http://${module.hot ? 'local.slasti.od.ua:3001' : 'slasti.od.ua'}/client/static/thumbnails/`;
 export const GRAPHICS_ROOT = `http://${module.hot ? 'local.slasti.od.ua:3001' : 'slasti.od.ua'}/client/static/graphics/`;
 
 export const REQUEST = 'CORE_REQUEST';

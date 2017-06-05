@@ -45,4 +45,6 @@ client/dist
 
 client/static/images
 
+client/static/thumbnails
+
 server/resources/mail/config

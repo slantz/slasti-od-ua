@@ -292,6 +292,8 @@ var upload = multer({ storage: storage });
 //UPLOAD ADMIN FILES
 app.post('/api/admin/upload/images', upload.array('images'), admin.thumbnails, admin.upload);
 
+app.put('/api/admin/thumbnails', admin.generateThumbnails);
+
 app.get(/^\/.*(?!(auth|api)).*$/, function(req, res) {
   res.render('index', {
     env: env,

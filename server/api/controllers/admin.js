@@ -7,6 +7,7 @@
 const CORE_CONSTANTS = require('../constants/core');
 
 const mongoose = require('mongoose');
+const fs = require('fs');
 const { wrap: async } = require('co');
 const gm = require('gm').subClass({imageMagick: true});
 const Bakery = mongoose.model('Bakery');
@@ -50,8 +51,6 @@ exports.thumbnails = async(function* (req, res, next) {
         }
     });
 
-    console.log(filePaths);
-
     try {
         yield new Promise((resolve, reject) => {
             filePaths.forEach(async(function* (file) {
@@ -67,4 +66,40 @@ exports.thumbnails = async(function* (req, res, next) {
     }
 
     next();
+});
+
+exports.generateThumbnails = async(function* (req, res, next) {
+    let processedFiles = yield new Promise((resolve, reject) => {
+        fs.readdir(CORE_CONSTANTS.ROOT_PATH + CORE_CONSTANTS.IMAGES_PATH, function(err, files) {
+            files.forEach(async(function* (file) {
+                let imagePath = CORE_CONSTANTS.ROOT_PATH + CORE_CONSTANTS.IMAGES_PATH + CORE_CONSTANTS.RELATIVE_PATH + file;
+                let thumbnailPath = CORE_CONSTANTS.ROOT_PATH + CORE_CONSTANTS.THUMBNAILS_PATH + CORE_CONSTANTS.RELATIVE_PATH + file;
+
+                try {
+                    yield new Promise((generationResolve, generationReject) => {
+                        gm(imagePath).thumb(CORE_CONSTANTS.THUMBNAIL.WIDTH,
+                                            CORE_CONSTANTS.THUMBNAIL.WIDTH * CORE_CONSTANTS.THUMBNAIL.RATIO,
+                                            thumbnailPath,
+                                            CORE_CONSTANTS.THUMBNAIL.QUALITY,
+                                            (err) => {
+                                                if (err) {
+                                                    generationReject(err);
+                                                } else {
+                                                    generationResolve();
+                                                }
+                                            })
+                    });
+                } catch(e) {
+                    res.status(400).json({ error: new Error("Thumbnail creation failed: [" + e.message + "]").toString() });
+                }
+            }));
+
+            resolve(files);
+        });
+    });
+
+    res.json({
+        status: 'All thumbnails are successfully generated',
+        processedFiles
+    });
 });

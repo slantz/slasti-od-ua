@@ -1,2 +1,7 @@
 # slasti-od-ua
-this is slasti
+This is slasti
+
+## Requirements
+- Necessary to generate thumbnails
+    - `brew install imagemagick`
+    - `npm install -g gm`

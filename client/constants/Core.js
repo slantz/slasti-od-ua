@@ -11,7 +11,7 @@ export const LOCALE = "ru-RU";
 
 export const CROP_IMAGE_RATIO = {
     "4/3": 4/3,
-    "3/4": 4/3,
+    "3/4": 3/4,
     "16/9": 16/9,
     "9/16": 9/16
 };

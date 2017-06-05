@@ -242,6 +242,9 @@ body {
         &-details {
             &__column {
                 padding: $smallSpacing $smallSpacing / 4;
+                @media #{$medium-up} {
+                    min-width: 600px;
+                }
             }
         }
         &__inquiry-id-input,

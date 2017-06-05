@@ -4,6 +4,7 @@ import * as InputWithValidation from '../elements/InputWithValidation'
 import { RaisedButton } from "material-ui";
 import { Col, Grid, Row } from "react-flexbox-grid";
 import { ru_RU } from "../../constants/Translations";
+import { API_ROOT } from "../../constants/Core";
 
 let AboutInquiryPostForm = (props) => {
     const { handleSubmit, setCurrentDate, setCurrentTime, defaultBakeForComment } = props;
@@ -13,7 +14,7 @@ let AboutInquiryPostForm = (props) => {
             return "";
         }
 
-        return `${ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.I_LIKED_THIS_BAKERY']} [${defaultBakeForComment._id}] ${ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.FOR_THIS']} [${defaultBakeForComment.event.type}] ${ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.ADVICE']}`;
+        return `${ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.I_LIKED_THIS_BAKERY']} [${API_ROOT}/bakery/${defaultBakeForComment._id}] ${ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.FOR_THIS']} [${defaultBakeForComment.event.type}] ${ru_RU['COMPONENT.POPOVER.ABOUT_INQUIRY_POST_FORM.ADVICE']}`;
     }
 
     return (

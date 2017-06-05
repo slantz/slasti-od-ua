@@ -92,41 +92,33 @@ class Bakery extends Component {
     getBakeryCollectionElement = (bake) => {
         return (
             <Col xs={12} sm={6} md={4} className="i-margin_block_vertical_bottom" key={bake._id}>
-                <Card className="i-text-left">
-                    <CardMedia
-                        overlay={
-                            <CardTitle
-                                title={bake.category}
-                                subtitle={`${bake.numberOfPieces} ${bake.category}${bake.numberOfPieces > 1 ? "ов" : ""}`} />}>
-                        <img src={`${CORE_CONSTANTS.THUMBNAILS_ROOT}${bake.imgUrl}`} />
-                    </CardMedia>
-                    <CardTitle title={bake.name} subtitle={bake.description} />
-                    <CardText>
-                        <p>{ru_RU['COMPONENT.PAGES.BAKERY.EVENT_LABEL']}: {bake.event && bake.event.type}</p>
-                    </CardText>
-                    <CardActions className="sou-bakery-items__card__action">
-                        <Row between="xs" middle="xs" className="i-margin_block_horizontal_right_0">
-                            <Col xs={6}>
-                                <Link to={"/bakery/" + bake._id}>
-                                    <RaisedButton
-                                        label={ru_RU['COMPONENT.PAGES.BAKERY.MORE_DETAILS']}
-                                        secondary={true}
-                                        alt={`${ru_RU['COMPONENT.PAGES.BAKERY.MORE_DETAILS_ABOUT']} ${bake.name}`}/>
-                                </Link>
-                            </Col>
-                            <Col xs={6} className="i-text-right">
-                                <div
-                                    className="fb-like"
-                                    data-href={window.location.origin + this.props.location.pathname + "/" + bake._id}
-                                    data-layout="button_count"
-                                    data-action="like"
-                                    data-size="small"
-                                    data-show-faces="true"
-                                    data-share="true" />
-                            </Col>
-                        </Row>
-                    </CardActions>
-                </Card>
+                <Link to={"/bakery/" + bake._id} title={`${bake.name} ${bake.category} page`}>
+                    <Card className="i-text-left">
+                        <CardMedia
+                            overlay={
+                                <CardTitle
+                                    title={bake.category}
+                                    subtitle={`${bake.numberOfPieces} ${bake.category}${bake.numberOfPieces > 1 ? "ов" : ""}`} />}>
+                            <img src={`${CORE_CONSTANTS.THUMBNAILS_ROOT}${bake.imgUrl}`} />
+                        </CardMedia>
+                        <CardTitle title={bake.name} subtitle={bake.description} />
+                        <CardText>
+                            <p>{ru_RU['COMPONENT.PAGES.BAKERY.EVENT_LABEL']}: {bake.event && bake.event.type}</p>
+                        </CardText>
+                        <CardActions className="sou-bakery-items__card__action">
+                            <Row between="xs" middle="xs" className="i-margin_block_horizontal_right_0">
+                                <Col xs={12}>
+                                    <Link to={"/bakery/" + bake._id} title={`${bake.name} ${bake.category} page`}>
+                                        <RaisedButton
+                                            label={ru_RU['COMPONENT.PAGES.BAKERY.MORE_DETAILS']}
+                                            secondary={true}
+                                            alt={`${ru_RU['COMPONENT.PAGES.BAKERY.MORE_DETAILS_ABOUT']} ${bake.name}`}/>
+                                    </Link>
+                                </Col>
+                            </Row>
+                        </CardActions>
+                    </Card>
+                </Link>
             </Col>
         );
     };

@@ -85,22 +85,36 @@ class BakeryDetails extends Component {
                                         </Row>
                                     </CardText>
                                     <CardActions>
-                                        <RaisedButton label={ru_RU['COMPONENT.PAGES.BAKERY_DETAILS.GO_TO_ORDER_PAGE']} primary={true} onTouchTap={() => this.goToOrderPageWithSomeDetails(bake)} />
-                                        {user.admin && (
-                                            <Link to={"/admin/update/" + bake._id}>
-                                                <RaisedButton
-                                                    label={ru_RU['COMPONENT.PAGES.BAKERY_DETAILS.UPDATE']}
-                                                    secondary={true}/>
-                                            </Link>
-                                        )}
-                                        {user.admin && (
-                                            <Link className="i-right i-margin_block_horizontal_right_0" to={"/admin/delete/" + bake._id}>
-                                                <RaisedButton
-                                                    label={ru_RU['COMPONENT.PAGES.BAKERY_DETAILS.DELETE']}
-                                                    backgroundColor={CORE_CONSTANTS.COLORS.alert}
-                                                    buttonStyle={{'color': CORE_CONSTANTS.COLORS.alternateTextColor}}/>
-                                            </Link>
-                                        )}
+                                        <Row between="xs" middle="xs" className="i-margin_block_horizontal_right_0">
+                                            <Col xs={12}>
+                                                <RaisedButton label={ru_RU['COMPONENT.PAGES.BAKERY_DETAILS.GO_TO_ORDER_PAGE']} primary={true} onTouchTap={() => this.goToOrderPageWithSomeDetails(bake)} />
+                                                {user.admin && (
+                                                    <Link to={"/admin/update/" + bake._id}>
+                                                        <RaisedButton
+                                                            label={ru_RU['COMPONENT.PAGES.BAKERY_DETAILS.UPDATE']}
+                                                            secondary={true}/>
+                                                    </Link>
+                                                )}
+                                                {user.admin && (
+                                                    <Link className="i-right i-margin_block_horizontal_right_0" to={"/admin/delete/" + bake._id}>
+                                                        <RaisedButton
+                                                            label={ru_RU['COMPONENT.PAGES.BAKERY_DETAILS.DELETE']}
+                                                            backgroundColor={CORE_CONSTANTS.COLORS.alert}
+                                                            buttonStyle={{'color': CORE_CONSTANTS.COLORS.alternateTextColor}}/>
+                                                    </Link>
+                                                )}
+                                            </Col>
+                                            <Col xs={12} className="i-text-right">
+                                                <div
+                                                    className="fb-like"
+                                                    data-href={window.location.origin + this.props.location.pathname + "/" + bake._id}
+                                                    data-layout="button_count"
+                                                    data-action="like"
+                                                    data-size="small"
+                                                    data-show-faces="true"
+                                                    data-share="true" />
+                                            </Col>
+                                        </Row>
                                     </CardActions>
                                 </Card>
                             </Paper>

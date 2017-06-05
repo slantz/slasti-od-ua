@@ -98,7 +98,7 @@ class Bakery extends Component {
                             <CardTitle
                                 title={bake.category}
                                 subtitle={`${bake.numberOfPieces} ${bake.category}${bake.numberOfPieces > 1 ? "ов" : ""}`} />}>
-                        <img src={`${CORE_CONSTANTS.IMAGES_ROOT}${bake.imgUrl}`} />
+                        <img src={`${CORE_CONSTANTS.THUMBNAILS_ROOT}${bake.imgUrl}`} />
                     </CardMedia>
                     <CardTitle title={bake.name} subtitle={bake.description} />
                     <CardText>

@@ -3,6 +3,8 @@
 require('dotenv').config();
 require('dotenv').config({path: "server/resources/mail/config/.config"});
 
+const CORE_CONSTANTS = require('./server/api/constants/core');
+
 var fs = require('fs');
 var path = require('path');
 var join = require('path').join;
@@ -60,7 +62,7 @@ app.use(prerender_node.set('prerenderToken', process.env.PRERENDER_IO_TOKEN));
 app.use(compress());
 app.use(cors());
 app.use(layouts);
-app.use('/client', express.static(path.join(process.cwd(), '/client')));
+app.use(CORE_CONSTANTS.RELATIVE_PATH + CORE_CONSTANTS.CLIENT_PATH, express.static(path.join(process.cwd(), CORE_CONSTANTS.RELATIVE_PATH + CORE_CONSTANTS.CLIENT_PATH)));
 
 // expose package.json to views
 app.use(function (req, res, next) {
@@ -275,7 +277,7 @@ app.delete('/api/inquiry/:id', function(req, res, next) {
 });
 
 var storage = multer.diskStorage({
-    destination: './client/static/images',
+    destination: CORE_CONSTANTS.ROOT_PATH + CORE_CONSTANTS.IMAGES_PATH,
     filename: function (req, file, cb) {
         var extension;
 
@@ -288,7 +290,7 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 //UPLOAD ADMIN FILES
-app.post('/api/admin/upload/images', upload.array('images'), admin.upload);
+app.post('/api/admin/upload/images', upload.array('images'), admin.thumbnails, admin.upload);
 
 app.get(/^\/.*(?!(auth|api)).*$/, function(req, res) {
   res.render('index', {
@@ -321,8 +323,8 @@ if (env.production === false) {
   var webpackDevConfig = require('./webpack.config.development');
 
   new WebpackDevServer(webpack(webpackDevConfig), {
-    publicPath: '/client/',
-    contentBase: './client/',
+    publicPath: CORE_CONSTANTS.RELATIVE_PATH + CORE_CONSTANTS.CLIENT_PATH + CORE_CONSTANTS.RELATIVE_PATH,
+    contentBase: CORE_CONSTANTS.ROOT_PATH + CORE_CONSTANTS.CLIENT_PATH + CORE_CONSTANTS.RELATIVE_PATH,
     inline: true,
     hot: true,
     stats: false,

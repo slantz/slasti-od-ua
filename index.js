@@ -20,7 +20,7 @@ var passport = require('passport');
 const multer = require('multer');
 const uuid = require('uuid');
 
-const prerender_node = require('prerender-node');
+// const prerender_node = require('prerender-node');
 
 const mongoStore = require('connect-mongo')(session);
 const cookieParser = require('cookie-parser');
@@ -58,7 +58,7 @@ app.set('view engine', 'ejs');
 app.set('view options', {layout: 'layout'});
 app.set('views', path.join(process.cwd(), '/server/views'));
 
-app.use(prerender_node.set('prerenderToken', process.env.PRERENDER_IO_TOKEN));
+// app.use(prerender_node.set('prerenderToken', process.env.PRERENDER_IO_TOKEN));
 app.use(compress());
 app.use(cors());
 app.use(layouts);

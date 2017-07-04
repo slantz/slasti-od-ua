@@ -4,6 +4,7 @@ var webpack = require('webpack');
 var config = require('./webpack.config.base.js');
 
 var SaveAssetsJson = require('assets-webpack-plugin');
+var ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 
 config.bail = true;
 config.profile = false;
@@ -17,15 +18,18 @@ config.output = {
 
 config.plugins = config.plugins.concat([
   new webpack.optimize.OccurrenceOrderPlugin(true),
-  new webpack.optimize.UglifyJsPlugin({
-    output: {
-      comments: false
-    },
-    compress: {
-      warnings: false,
-      screw_ie8: true
-    },
-    sourcemap: false
+  new ParallelUglifyPlugin({
+    cacheDir: '.cache/',
+    uglifyJS: {
+        output: {
+            comments: false
+        },
+        compress: {
+            warnings: false,
+            screw_ie8: true
+        },
+        sourcemap: false
+    }
   }),
   new SaveAssetsJson({
     path: process.cwd(),

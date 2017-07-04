@@ -39,6 +39,7 @@ jspm_packages
 # generated root for js bundle files
 assets.json
 .env
+.cache/
 
 # build files for development
 client/dist

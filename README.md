@@ -1,5 +1,5 @@
 # slasti-od-ua
-This is slasti
+This is slasti super sweet bakery.
 
 ## Requirements
 - Necessary to generate thumbnails
